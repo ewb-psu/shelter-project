@@ -1,0 +1,27 @@
+h1{
+  text-align: center;
+}
+.FieldSelector {
+  max-width: 50%;
+  margin: 0 auto;
+  border: 1px solid red;
+  //display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  .GenderSelector{
+    justify-content: space-evenly;
+    border: #282c34 solid 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    .Male{
+      border: 1px solid blue;
+      //flex-grow: 1;
+    }
+    .Female{
+      border: 1px solid blue;
+      //flex-grow: 1;
+    }
+
+  }
+}
