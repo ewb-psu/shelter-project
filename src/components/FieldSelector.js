@@ -7,7 +7,7 @@ class FieldSelector extends React.Component {
         <div className={"FieldSelector"}>
             <h1> Gender </h1>
             <div className={"GenderSelector"}>
-                <div className={"Male"}>Male</div>
+                <div className={"Male"} onSelect={"Back"}>Male</div>
                 <div className={"Transgender Male"}>Transgender Male</div>
                 <div className={"Female"}>Female</div>
 
