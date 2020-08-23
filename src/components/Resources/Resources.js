@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import FieldSelectorContext from '../context/fieldSelectorContext/FieldSelectorContext';
 import SearchBar from '../SearchBar/SearchBar';
-import CategorySelector from '../CategorySelector/CategorySelector';
+import CategorySelector from '../CategorySelector/CategorySelector.js';
 import InputLabel from '../InputLabel';
 import SubmitButton from '../SubmitButton/SubmitButton.js';
 //import ThemeDataContext from '../context/themeData/ThemeDataContext.js';
