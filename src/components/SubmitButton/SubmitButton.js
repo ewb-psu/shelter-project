@@ -1,69 +1,73 @@
-import React from 'react';
-import './SubmitButton.css';
-import { useHistory } from "react-router-dom";
-import APIWrapper from '../../APIWrapper.js';
 
+import React, { useContext } from 'react';
+import './SubmitButton.css';
+import { useHistory } from 'react-router-dom';
+import APIWrapper from '../../APIWrapper.js';
+import ApiDataContext from '../context/apiData/ApiDataContext';
+import FieldSelectorContext from '../context/fieldSelectorContext/FieldSelectorContext';
 
 function SubmitButton(props) {
-  let history = useHistory()
-  const APIKey = process.env.REACT_APP_211_API_KEY
-  const API = new APIWrapper(APIKey)
-  API.initialize()
-  let obj ={
-    sn : props.fieldSelectorState.service,
-    st: '',
-    age: Number(props.fieldSelectorState.age),
-    gender: props.fieldSelectorState.gender,
-    zip: Number(props.fieldSelectorState.zip),
-    county: props.fieldSelectorState.county,
-    catid: props.fieldSelectorState.catID
-  }
-  
-  async function handleClick() {
-    props.handleIsLoading()
-      await props.goBehavior();
-        if(props.isPageDataValid()){
-          console.log(props.fieldSelectorState)
-          //save field selector state to local storage for use if / when user navigates backwards
-          localStorage.setItem('fieldSelectorState', JSON.stringify(props.fieldSelectorState))
-          //props.setResources(await API.getKeywords(obj))
-          history.push("/info");
+	let history = useHistory();
+	const APIKey = process.env.REACT_APP_211_API_KEY;
+	const API = new APIWrapper(APIKey);
+	const apiDataContext = useContext(ApiDataContext);
+	const fieldSelectorContext = useContext(FieldSelectorContext);
 
-          //If category selected
-            //Make getResource call with category data
-          //If subCategory selected
-            ////Make getResource call with subCategory data
-          //If subestCategory selected
-            ////Make getResource call with service name data
 
-          console.log(props.categorySelected)
-          if(props.categorySelected === 3){
-            obj['st'] = 's'
-            console.log(obj)
-            console.log(props.categorySelected)
-            props.setResources(await API.getResource(obj))
-          }
-          else if(props.categorySelected === 2){
-            obj['st'] = 'sc'
-            obj['sn'] = ''
-            console.log(obj)
-            props.setResources(await API.getResource(obj))
-          }
-          else{
-            obj['st'] = 'c'
-            obj['sn'] = ''
-            console.log(obj)
-            props.setResources(await API.getResource(obj))
-          }
+	// API.initialize();
+	let obj = {
+		sn: fieldSelectorContext.serviceName,
+		st: '',
+		age: Number(fieldSelectorContext.age),
+		gender: fieldSelectorContext.gender,
+		zip: Number(fieldSelectorContext.zipCode),
+		county: fieldSelectorContext.county,
+		catid: fieldSelectorContext.categoryId,
+	};
 
-        }
-        props.handleIsLoading()
-    }
 
-    return (
-      <button type="button" onClick={handleClick}>
-        Go
-      </button>
-    )
+	async function handleClick() {
+
+		try {
+			props.handleIsLoading();
+			await fieldSelectorContext.goBehavior();
+			if (fieldSelectorContext.setIsPageDataValid()) {
+				//save submit button state to local storage for use if / when user navigates backwards
+				localStorage.setItem('apiDataContext', JSON.stringify(apiDataContext));
+				localStorage.setItem('fsContext', JSON.stringify(fieldSelectorContext));
+
+				//apiDataContext.setResources(await API.getKeywords(obj))
+				
+				history.push('/info');
+
+				//If category selected
+				//Make getResource call with category data
+				//If subCategory selected
+				//Make getResource call with subCategory data
+				//If subestCategory selected
+				//Make getResource call with service name data
+
+				if (fieldSelectorContext.categorySelected === 3) {
+					obj['st'] = 's';
+					apiDataContext.setResources(await API.getResource(obj));
+				} else if (fieldSelectorContext.categorySelected === 2) {
+					obj['st'] = 'sc';
+					obj['sn'] = '';
+					apiDataContext.setResources(await API.getResource(obj));
+				} else {
+					obj['st'] = 'c';
+					obj['sn'] = '';
+					apiDataContext.setResources(await API.getResource(obj));
+				}
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}
+	return (
+		<button type='button' onClick={handleClick}>
+			Go
+		</button>
+	);
 }
-export default SubmitButton
+export default SubmitButton;

@@ -1,121 +1,95 @@
-import React, {PureComponent} from 'react';
-import logo from './logo.svg';
+/** @format */
+
+import React, { useState, useEffect, useContext } from 'react';
 import './App.scss';
-import FieldSelector from "./components/FieldSelector";
-import NavBlock from "./components/NavigationBlock";
-import NavBar from "./components/Navbar";
-import Footer from "./components/Footer";
-import APIWrapper from "./APIWrapper.js";
-import ExclusiveOption from "./components/ExclusiveOption";
-import Section from './components/Section';
-import { ThemeContext } from './ThemeContext';
+import APIWrapper from './APIWrapper.js';
+import MainLayout from './components/mainLayout/MainLayout';
+import FieldSelector from './components/FieldSelector';
+import Shelter from './components/shetler.js';
+import ApiDataState from './components/context/apiData/ApiDataState';
+import FieldSelectorState from './components/context/fieldSelectorContext/FieldSelectorState';
+import ThemeDataState from './components/context/themeData/ThemeDataState';
+import ApiDataContext from './components/context/apiData/ApiDataContext';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect
-} from "react-router-dom";
-import Shelter from './components/shetler.js'
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link,
+	Redirect,
+} from 'react-router-dom';
 
-
+// can we get rid of this?
 const navbar = {};
-navbar.brand = {linkTo: "#", text: "Portland Shelters"};
+navbar.brand = { linkTo: '#', text: 'Portland Shelters' };
 navbar.links = [
-  {linkTo: "#", text: "Contact Us"},
-  {linkTo: "#", text: "How many links do we need?"},
-  {
-    dropdown: false, text: "Do we want a Dropdown?",
-    links: [
-      {linkTo: "#", text: "Dropdown Link 1"},
-      {linkTo: "#", text: "Dropdown Link 2"}
-    ]
-  }
+	{ linkTo: '#', text: 'Contact Us' },
+	{ linkTo: '#', text: 'How many links do we need?' },
+	{
+		dropdown: false,
+		text: 'Do we want a Dropdown?',
+		links: [
+			{ linkTo: '#', text: 'Dropdown Link 1' },
+			{ linkTo: '#', text: 'Dropdown Link 2' },
+		],
+	},
 ];
 
-const APIKey = process.env.REACT_APP_211_API_KEY
-const API = new APIWrapper(APIKey)
+const APIKey = process.env.REACT_APP_211_API_KEY;
+const API = new APIWrapper(APIKey);
 
-class App extends React.Component {
-  constructor(props){
-    super(props)
-    if(JSON.parse(localStorage.getItem('appState'))) {
-      console.log('trigger')
-      this.state = JSON.parse(localStorage.getItem('appState'))
-    } else {      
-      this.state = {
-        themeColor: 'light',
-        sessionID: null,
-        categories: [],
-        resources: [], 
-      };
-    }
-      //this.apiCaller = this.apiCaller.bind(this)
-      this.setResources = this.setResources.bind(this)
-  }
+const App = () => {
+	//search localStorage for saved apiDataState and use it to set categories if found.
+	const apiDataContext = useContext(ApiDataContext);
+	useEffect(() => {
+		if (JSON.parse(localStorage.getItem('apiDataState'))) {
+			console.log('trigger local storage');
+			apiDataContext.setCategories(
+				JSON.parse(localStorage.getItem('appState'))
+			);
+		}
 
-  setResources = (resources) => {
-    localStorage.setItem('appState', JSON.stringify(this.state))
-    this.setState({ resources: resources }) 
-  } 
+		//a function to remove user data from localstorage
+		const cleanUp = () => {
+			localStorage.removeItem('sessionId');
+			localStorage.removeItem('fsContext')
+			localStorage.removeItem('apiDataContext')
+			localStorage.removeItem('categories') // this is redundant, remove and change refferences to apiDataContext.categories
 
-  /*async apiCaller() {
-    await API.initialize()
-    this.setState({categories: await API.getCategories()});
-    console.log(this.state.categories)
-  }
-  componentDidMount(){
-    this.apiCaller()
-  }*/
+		}
 
-  componentDidMount() {
-    //when user navigates away from the page or closes the browser tab, remove appState fieldselectorstate and categoryselectorstate and sessionId from localstorage
-    //after 30 minutes, remove users sessionId from localStorage. 
-    window.addEventListener('beforeunload', localStorage.removeItem('appState')) 
-    window.addEventListener('beforeunload', localStorage.removeItem('fieldSelectorState')) 
-    window.addEventListener('beforeunload', localStorage.removeItem('categorySelectorState')) 
-    window.addEventListener('beforeunload', localStorage.removeItem('sessionId'))
-    setTimeout( () => {localStorage.removeItem('sessionId')}, 1800000)
-  }
-  render() {
-    return (
-      <ThemeContext.Provider value={this.state.themeColor}>
-      <Router>
-        <div className={'app ' + this.state.themeColor }>
-          <div id='left-gutter-container'>
-            <button onClick={e => this.setState({
-              themeColor: this.state.themeColor === 'light' ? 'dark' : 'light'
-            })}>
-              Swap Theme
-            </button>
+		//after 30 minutes, remove users sessionId from localStorage.
+		setTimeout(() => {
+			localStorage.removeItem('sessionId');
+		}, 1800000);
 
-            Left Gutter
-          </div>
+		//when user hits refresh, navigates away from the page or closes the browser tab, remove state values from localstorage.
+		window.addEventListener(
+			'beforeunload',
+			cleanUp
+		);
+		return () => {
+			window.removeEventListener('beforeUnload', cleanUp )
+		}
+	}, []);
 
-          <div id='main-container'>
-            Main Container
-            <Route
-              exact path="/"
-            >
-              <FieldSelector setResources={this.setResources}/>
-            </Route>
-
-            <Route
-              path="/info"
-            >
-              <Shelter shelters={this.state.resources}/>
-            </Route>
-          </div>
-
-          <div id='right-gutter-container'>
-            Right Gutter
-          </div>
-        </div>
-        </Router>
-      </ThemeContext.Provider>
-    );
-
-  }
-}
+	return (
+		<FieldSelectorState>
+			<ApiDataState>
+				<ThemeDataState>
+					<MainLayout>
+						<Router>
+							<Route exact path='/'>
+								<FieldSelector />
+							</Route>
+							<Route path='/info'>
+								<Shelter />
+							</Route>
+						</Router>
+					</MainLayout>
+				</ThemeDataState>
+			</ApiDataState>
+		</FieldSelectorState>
+	);
+};
 
 export default App;

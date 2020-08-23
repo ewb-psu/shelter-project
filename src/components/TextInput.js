@@ -1,82 +1,195 @@
-import React from 'react';
+/** @format */
+
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import '../Assets/TextInput.scss';
 import InvalidEntryMessage from './InvalidEntryMessage';
-import {ThemeContext} from '../ThemeContext';
+import ThemeDataContext from './context/themeData/ThemeDataContext'
+import FieldSelectorContext from '../components/context/fieldSelectorContext/FieldSelectorContext';
 
-class TextInput extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-  
-  static contextType = ThemeContext
-  invalidEntryMessage = ''
-  valid = null
+const TextInput = (props) => {
+	const fieldSelectorContext = useContext(FieldSelectorContext);
+	const themeDataContext = useContext(ThemeDataContext);
+	let invalidEntryMessage = '';
+	let valid = null;
+
+	const onlyNumbers = (str) => {
+		let characterArray = str.split('');
+		let numberArray = characterArray.filter(
+			(character) => '0123456789'.indexOf(character) !== -1
+		);
+		return numberArray.join('');
+	};
+
+	let textInputState = useRef({})
+	useEffect(() => {
+		const inputName = props.name
+		switch(inputName) {
+			case 'age':
+			textInputState.current = {
+				name: props.name,
+				value: fieldSelectorContext.age,
+				validator: fieldSelectorContext.setIsAgeValid,
+				onChange: fieldSelectorContext.setAge
+			}
+			break
+			case 'zip':
+			textInputState.current = {
+				name: props.name,
+				value: fieldSelectorContext.zipCode,
+				validator: fieldSelectorContext.setIsZipCodeValid,
+				onChange: fieldSelectorContext.setZipcode
+			}
+			break
+			case 'county':
+			textInputState.current = {
+				name: props.name,
+				value: fieldSelectorContext.county,
+				validator: fieldSelectorContext.setIsCountyValid,
+				onChange: fieldSelectorContext.setCounty
+			}
+			break
+			case 'familySize':
+			textInputState.current = {
+				name: props.name,
+				value: fieldSelectorContext.familySize,
+				validator: fieldSelectorContext.setIsFamilySizeValid,
+				onChange: fieldSelectorContext.setFamilySize
+			}
+			break
+			default: 
+			break
+
+		}
+	}, [fieldSelectorContext])
 
 
-  validate() {
-
-      if(!this.props.validator)
-      return {valid: true, message: ''}
-
-    let value = this.props.value
-    let validEntryClass = ''
-    let invalidEntryMessage = ''
-
-    // Check if given value is valid
-    let validityObject = this.props.validator(value)
-
-    // Note the results for reference in the render
-    this.valid = validityObject.valid
-
-    if(validityObject.valid === false)
-      this.invalidEntryMessage = validityObject.message
-
-    if(validityObject.valid === true)
-      this.invalidEntryMessage = ''
-
-  }
+	const handleChange = (e) => {
+		let newValue = e.currentTarget.value;
+		if (props.name === 'Age' || props.name === 'ZIP') newValue = onlyNumbers(newValue);
+		textInputState.current.onChange(newValue);
+	};
 
 
-  render() {
-    let value = this.props.value
-    let validEntryClass = ''
+	const validate = () => {
+		if (!props.validator) return { valid: true, message: '' };
+		let value = props.value;
+		let validEntryClass = '';
+		let invalidEntryMessage = '';
 
-    // Find the correct validity class to add to our elements
-    if(this.valid === true)
-      validEntryClass = 'valid-entry '
-    if(this.valid === false)
-      validEntryClass = 'invalid-entry '
+		// Check if given value is valid
+		let validityObject = props.validator(value)
+		// let validityObject = FieldSelectorContext.setIsCountyValid(value);
 
-    // Apply filter to entry, if one exists
-    if(this.props.filter)
-      value = this.props.filter(value)
+		// Note the results for reference in the render
+		const valid = validityObject.valid;
 
-    // If we've been asked to validate, do it
-    if(this.props.shouldValidate)
-      this.validate()
+		if (validityObject.valid === false)
+			invalidEntryMessage = validityObject.message;
+
+		if (validityObject.valid === true) invalidEntryMessage = '';
+	};
+
+	let value = props.value;
+	let validEntryClass = '';
+	// Find the correct validity class to add to our elements
+	if (valid === true) validEntryClass = 'valid-entry ';
+	if (valid === false) validEntryClass = 'invalid-entry ';
+
+	// Apply filter to entry, if one exists
+	if (props.filter) value = props.filter(value);
+
+	// If we've been asked to validate, do it
+
+	if (fieldSelectorContext.doValidation) validate();
 
 
-    return(
-      <>
-        <input
-          value={value}
-          placeholder={this.props.placeholder}
-          id={this.props.name.toLowerCase()+'-input'}
-          className={'text-input ' + validEntryClass + this.context}
-          onChange={ e => {
-              let newValue = e.currentTarget.value
-              if(this.props.filter)
-                newValue = this.props.filter(newValue)
-              this.props.onChange(newValue)
-            }
-          }
-          type='text'
-        />
-        <div className={'underline ' + validEntryClass + this.context}></div>
-        <InvalidEntryMessage message={this.invalidEntryMessage} />
-      </>
-    );
-  }
+	return (
+		<>
+			<input
+				value={value}
+				placeholder={props.placeholder}
+				id={props.name.toLowerCase() + '-input'}
+				className={'text-input ' + validEntryClass + themeDataContext.themeColor}
+				onChange={handleChange}
+				type='text'
+			/>
+			<div className={'underline ' + validEntryClass + themeDataContext.themeColor}></div>
+			<InvalidEntryMessage message={invalidEntryMessage} />
+		</>
+	);
 };
 
 export default TextInput;
+// /** @format */
+
+// import React, { useContext } from 'react';
+// import '../Assets/TextInput.scss';
+// import InvalidEntryMessage from './InvalidEntryMessage';
+// import { ThemeContext } from '../ThemeContext';
+// import FieldSelectorContext from '../components/context/fieldSelectorContext/FieldSelectorContext';
+
+// const TextInput = (props) => {
+// 	const fieldSelectorContext = useContext(FieldSelectorContext);
+// 	const themeContext = useContext(ThemeContext);
+// 	let invalidEntryMessage = '';
+// 	let valid = null;
+
+
+
+// 	const handleChange = (e) => {
+// 		let newValue = e.currentTarget.value;
+// 		if (props.filter) newValue = props.filter(newValue);
+// 		props.onChange(newValue);
+// 	};
+
+// 	const validate = () => {
+// 		if (!props.validator) return { valid: true, message: '' };
+// 		let value = props.value;
+// 		let validEntryClass = '';
+// 		let invalidEntryMessage = '';
+
+// 		// Check if given value is valid
+// 		// let validityObject = props.validator(value)
+// 		let validityObject = FieldSelectorContext.setIsCountyValid(value);
+
+// 		// Note the results for reference in the render
+// 		const valid = validityObject.valid;
+
+// 		if (validityObject.valid === false)
+// 			invalidEntryMessage = validityObject.message;
+
+// 		if (validityObject.valid === true) invalidEntryMessage = '';
+// 	};
+
+// 	let value = props.value;
+// 	let validEntryClass = '';
+// 	// Find the correct validity class to add to our elements
+// 	if (valid === true) validEntryClass = 'valid-entry ';
+// 	if (valid === false) validEntryClass = 'invalid-entry ';
+
+// 	// Apply filter to entry, if one exists
+// 	if (props.filter) value = props.filter(value);
+
+// 	// If we've been asked to validate, do it
+// 	// if(props.shouldValidate)
+// 	// console.log(fieldSelectorContext);
+// 	if (fieldSelectorContext.doValidation) validate();
+
+
+// 	return (
+// 		<>
+// 			<input
+// 				value={value}
+// 				placeholder={props.placeholder}
+// 				id={props.name.toLowerCase() + '-input'}
+// 				className={'text-input ' + validEntryClass + themeContext}
+// 				onChange={handleChange}
+// 				type='text'
+// 			/>
+// 			<div className={'underline ' + validEntryClass + themeContext}></div>
+// 			<InvalidEntryMessage message={invalidEntryMessage} />
+// 		</>
+// 	);
+// };
+
+// export default TextInput;

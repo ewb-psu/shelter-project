@@ -3,15 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
     "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
     "@material-ui/lab": "latest",
     "bootstrap": "^3.3.5",
+    "jest-fetch-mock": "^3.0.3",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.0.1",
+    "react-test-renderer": "^16.13.1",
     "string-similarity": "^4.0.1"
   },
   "scripts": {
