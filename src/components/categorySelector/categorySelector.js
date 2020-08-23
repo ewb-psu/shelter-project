@@ -5,6 +5,7 @@ import ApiDataContext from '../context/apiData/ApiDataContext'
 import FieldSelectorContext from '../context/fieldSelectorContext/FieldSelectorContext';
 import ThemeDataContext from '../context/themeData/ThemeDataContext'
 
+
 const CategorySelector = () => {
 	const apiDataContext = useContext(ApiDataContext)
 	const fieldSelectorContext = useContext(FieldSelectorContext)
@@ -12,7 +13,7 @@ const CategorySelector = () => {
 	const [categories, setCategories] = useState([]);
 	const [keyz, setTheKeyz] = useState([]);
 
-	//
+	
 	useEffect(() => {
 		const labelsWithImages = createLabelWithImage(
 			apiDataContext.categories,
@@ -20,8 +21,7 @@ const CategorySelector = () => {
 		);
 		setCategories([labelsWithImages]);
 
-		//look for categorySelectorState in localStorage. if its there, use it to determine which tier of buttons should be expanded or collapsed when navigating backwards..
-		//TODO change this refference to localStorage.getItem().apiDataContext.categories
+		//look for categories in localStorage. if its there, use it to determine which tier of buttons should be expanded or collapsed when navigating backwards..
 		if (JSON.parse(localStorage.getItem('categories')))
 			setCategories(JSON.parse(localStorage.getItem('categories')));
 
@@ -47,6 +47,7 @@ const CategorySelector = () => {
 		return objArray;
 	};
 
+	//TODO need to make menu collapse back down to first button row
 	const appendCategory = (row, id) => {
 		let newCategory = categories.slice();
 		//remove subCategories and keys if user clicks at a higher level of the tree

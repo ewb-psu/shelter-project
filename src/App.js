@@ -48,26 +48,28 @@ const App = () => {
 			);
 		}
 
-		//when user hits refresh, navigates away from the page or closes the browser tab, remove state values from localstorage.
-		//after 30 minutes, remove users sessionId from localStorage.
-		//TODO remove the event listeners after refactor
-
-		window.addEventListener(
-			'beforeunload',
+		//a function to remove user data from localstorage
+		const cleanUp = () => {
+			localStorage.removeItem('sessionId');
 			localStorage.removeItem('fsContext')
-		);
-		window.addEventListener(
-			'beforeunload',
 			localStorage.removeItem('apiDataContext')
-		);
-		window.addEventListener('beforeunload', localStorage.removeItem('keyz'));
-		window.addEventListener(
-			'beforeunload',
 			localStorage.removeItem('categories') // this is redundant, remove and change refferences to apiDataContext.categories
-		);
+
+		}
+
+		//after 30 minutes, remove users sessionId from localStorage.
 		setTimeout(() => {
 			localStorage.removeItem('sessionId');
 		}, 1800000);
+
+		//when user hits refresh, navigates away from the page or closes the browser tab, remove state values from localstorage.
+		window.addEventListener(
+			'beforeunload',
+			cleanUp
+		);
+		return () => {
+			window.removeEventListener('beforeUnload', cleanUp )
+		}
 	}, []);
 
 	return (
