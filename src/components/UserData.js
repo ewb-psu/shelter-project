@@ -102,9 +102,9 @@ const UserData = (props) => {
 
 	const nextPage = () => {
 		console.log(fieldSelectorContext)
-		if(fieldSelectorContext.setDoValidation('true')){
+		//if(fieldSelectorContext.setDoValidation('true')){
 			history.push('/resources')
-		}
+		//}
 	}
 
 	//return a spinner while waiting for data from api to populate category buttons
