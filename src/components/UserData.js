@@ -5,24 +5,25 @@ import TextInput from './TextInput';
 import '../Assets/FieldSelector.scss';
 import APIWrapper from '../APIWrapper.js';
 import InputLabel from './InputLabel';
-import SubmitButton from './SubmitButton/SubmitButton.js';
-import CategorySelector from './categorySelector/categorySelector.js';
 import CountySelect from './CountySelect';
 import Spinner from '../Assets/spinner.gif';
-import SearchBar from './SearchBar/SearchBar';
 import ApiDataContext from './context/apiData/ApiDataContext';
 import FieldSelectorContext from './context/fieldSelectorContext/FieldSelectorContext';
 import ThemeDataContext from './context/themeData/ThemeDataContext';
+import { useHistory } from 'react-router-dom';
+
 
 const APIKey = process.env.REACT_APP_211_API_KEY;
 const API = new APIWrapper(APIKey);
 
-const FieldSelector = (props) => {
+const UserData = (props) => {
 	const fieldSelectorContext = useContext(FieldSelectorContext);
 	const apiDataContext = useContext(ApiDataContext);
 	const themeDataContext = useContext(ThemeDataContext);
+	let history = useHistory();
 
 	async function callAPI() {
+
 		//check category state to see if it has already been populated from local storage, possibly avoid making another api call (even though it would be with the same session id)
 		console.log('trigger callAPI');
 		console.log(apiDataContext.categories.length);
@@ -42,6 +43,7 @@ const FieldSelector = (props) => {
 		fieldSelectorContext.setZipcode('97206');
 		fieldSelectorContext.setCounty('Clackamas');
 	};
+
 
 	//restores form state upon backwards navigation
 	useEffect(() => {
@@ -98,6 +100,13 @@ const FieldSelector = (props) => {
 		handleValidZip();
 	}, [fieldSelectorContext.zipCode]);
 
+	const nextPage = () => {
+		console.log(fieldSelectorContext)
+		if(fieldSelectorContext.setDoValidation('true')){
+			history.push('/resources')
+		}
+	}
+
 	//return a spinner while waiting for data from api to populate category buttons
 	if (apiDataContext.categories.length === 0 || isLoading) {
 		return <img src={Spinner} style={{ width: '200px' }} alt='a spinner gif, indicating that something is still loading'/>;
@@ -105,10 +114,6 @@ const FieldSelector = (props) => {
 
 	return (
 		<div className={'field-selector ' + themeDataContext.themeColor}>
-			<SearchBar handleIsLoading={handleIsLoading} />
-			<InputLabel label='Service'>
-				<CategorySelector />
-			</InputLabel>
 			<InputLabel label='Gender'>
 				<ExclusiveOption
 					items={['Male', 'Female', 'Trans Male', 'Trans Female']}
@@ -160,9 +165,11 @@ const FieldSelector = (props) => {
 				Your location
 			</button>
 
-			<SubmitButton handleIsLoading={handleIsLoading} />
+			<button id='toResources' onClick={nextPage}>
+				resources
+			</button>
 		</div>
 	);
 };
 
-export default FieldSelector;
+export default UserData;

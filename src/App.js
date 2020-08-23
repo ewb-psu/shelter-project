@@ -4,7 +4,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import './App.scss';
 import APIWrapper from './APIWrapper.js';
 import MainLayout from './components/mainLayout/MainLayout';
-import FieldSelector from './components/FieldSelector';
+import UserData from './components/UserData';
 import Shelter from './components/shetler.js';
 import ApiDataState from './components/context/apiData/ApiDataState';
 import FieldSelectorState from './components/context/fieldSelectorContext/FieldSelectorState';
@@ -17,6 +17,8 @@ import {
 	Link,
 	Redirect,
 } from 'react-router-dom';
+import Resources from './components/Resources/Resources.js';
+
 
 // can we get rid of this?
 const navbar = {};
@@ -79,7 +81,10 @@ const App = () => {
 					<MainLayout>
 						<Router>
 							<Route exact path='/'>
-								<FieldSelector />
+								<UserData />
+							</Route>
+							<Route path='/resources'>
+								<Resources />
 							</Route>
 							<Route path='/info'>
 								<Shelter />

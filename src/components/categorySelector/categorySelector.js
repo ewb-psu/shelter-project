@@ -13,7 +13,7 @@ const CategorySelector = () => {
 	const [categories, setCategories] = useState([]);
 	const [keyz, setTheKeyz] = useState([]);
 
-	
+
 	useEffect(() => {
 		const labelsWithImages = createLabelWithImage(
 			apiDataContext.categories,

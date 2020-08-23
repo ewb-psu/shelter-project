@@ -37,7 +37,7 @@ function SubmitButton(props) {
 				localStorage.setItem('fsContext', JSON.stringify(fieldSelectorContext));
 
 				//apiDataContext.setResources(await API.getKeywords(obj))
-				
+
 				history.push('/info');
 
 				//If category selected
@@ -59,6 +59,7 @@ function SubmitButton(props) {
 					obj['sn'] = '';
 					apiDataContext.setResources(await API.getResource(obj));
 				}
+				console.log('handleClick')
 			}
 		} catch (error) {
 			console.log(error);
