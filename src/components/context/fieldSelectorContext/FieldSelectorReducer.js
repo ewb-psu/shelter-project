@@ -34,7 +34,7 @@ const FieldSelectorReducer = (state, action) => {
 		case 'SET_IS_FAMILY_SIZE_VALID':
 			return { ...state, isFamilySizeValid: action.payload };
 		case 'SET_IS_GENDER_VALID':
-			return { ...state, isFamilySizeValid: action.payload };
+			return { ...state, isGenderValid: action.payload };
 
 
 

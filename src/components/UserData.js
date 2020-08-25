@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useContext } from 'react';
 import ExclusiveOption from './ExclusiveOption';
 import TextInput from './TextInput';
@@ -102,9 +101,9 @@ const UserData = (props) => {
 
 	const nextPage = () => {
 		console.log(fieldSelectorContext)
-		//if(fieldSelectorContext.setDoValidation('true')){
+		if(fieldSelectorContext.setIsPageDataValid()){
 			history.push('/resources')
-		//}
+		}
 	}
 
 	//return a spinner while waiting for data from api to populate category buttons
@@ -117,14 +116,14 @@ const UserData = (props) => {
 			<InputLabel label='Gender'>
 				<ExclusiveOption
 					items={['Male', 'Female', 'Trans Male', 'Trans Female']}
-					validator={fieldSelectorContext.setIsGenderValid}
+					validator={fieldSelectorContext.isGenderValid}
 				/>
 			</InputLabel>
 			<InputLabel label='Age'>
 				<TextInput
 					name='age'
 					value={fieldSelectorContext.age}
-					validator={fieldSelectorContext.setIsAgeValid}
+					validator={fieldSelectorContext.isAgeValid}
 					placeholder='32'
 				/>
 			</InputLabel>
@@ -133,7 +132,7 @@ const UserData = (props) => {
 					<TextInput
 						name='zip'
 						value={fieldSelectorContext.zipCode}
-						validator={fieldSelectorContext.setIsZipCodeValid}
+						validator={fieldSelectorContext.isZipCodeValid}
 						placeholder='97333'
 					/>
 				</InputLabel>
@@ -146,7 +145,7 @@ const UserData = (props) => {
 						<TextInput
 							name='county'
 							value={fieldSelectorContext.county}
-							validator={fieldSelectorContext.setIsCountyValid}
+							validator={fieldSelectorContext.isCountyValid}
 							placeholder='Multnomah'
 						/>
 					</InputLabel>
@@ -155,7 +154,7 @@ const UserData = (props) => {
 					<TextInput
 						name='familySize'
 						value={fieldSelectorContext.familySize}
-						validator={fieldSelectorContext.setIsFamilySizeValid}
+						validator={fieldSelectorContext.isFamilySizeValid}
 						placeholder='How many people are in your family?'
 					/>
 				</InputLabel>

@@ -163,6 +163,11 @@ export const FieldSelectorState = (props) => {
 		console.log(setIsAgeValid(state.age).valid);
 		console.log(setIsZipCodeValid(state.zipCode).valid);
 		console.log(setIsFamilySizeValid(state.familySize).valid);
+		setIsCountyValid(state.county);
+		setIsGenderValid(state.gender)
+		setIsAgeValid(state.age)
+		setIsZipCodeValid(state.zipCode)
+		setIsFamilySizeValid(state.familySize)
 		return (
 			setIsCountyValid(state.county).valid &&
 			setIsGenderValid(state.gender).valid &&
