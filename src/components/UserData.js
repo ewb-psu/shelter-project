@@ -77,6 +77,7 @@ const UserData = (props) => {
 	//an api call is made to populate an array with all the possible counties that zipcode could be in.
 	useEffect(() => {
 		const handleValidZip = async () => {
+			console.log('handleValidZip')
 			if (
 				fieldSelectorContext.setIsZipCodeValid(fieldSelectorContext.zipCode)
 					.valid
