@@ -26,7 +26,7 @@ export const FieldSelectorState = (props) => {
 		validCounty: 'null', //bool
 		isCountyValid: '', // obj
 		isAgeValid: '',
-		isZipCodeValid: '',
+		isZipCodeValid: 'null',
 		isFamilySizeValid: '',
 		isGenderValid: ''
 	};
@@ -94,9 +94,7 @@ export const FieldSelectorState = (props) => {
 
 	const setIsFamilySizeValid = (familySize) => {
 		let message = '';
-		let empty = familySize === '';
-
-		if (empty) return { valid: false, message: 'Required entry.' };
+		message = (familySize === ''? 'Invalid Entry' : '')
 
 		let valid = familySize >= 0 && familySize <= 16;
 		if (!valid) message = 'You don have that many chilren!';
@@ -119,12 +117,10 @@ export const FieldSelectorState = (props) => {
 	const setIsAgeValid = (age) => {
 		let message = '';
 
-		if (!age) return { valid: false, message: 'Required entry.' };
-
 		// Using a regex here to recognize positive non-leading zero integers
 		let isPositiveInteger = /^[1-9]([0-9]*)$/.test(age);
 		if (!isPositiveInteger)
-			message = 'Please enter a positive round number like 18 or 56.';
+			message = 'Invalid Entry';
 
 		// TODO: Maybe remove this case.
 		let isReallyOld = parseInt(age) >= 120;
@@ -136,10 +132,10 @@ export const FieldSelectorState = (props) => {
 		return { valid, message };
 	};
 
-
 	const setIsZipCodeValid = (zip) => {
+
 		let message = '';
-		if (!zip) return { valid: false, message: 'Required entry.' };
+
 
 		let isPositiveInteger = /^([0-9]\d*)$/.test(zip);
 		if (!isPositiveInteger)
@@ -151,6 +147,8 @@ export const FieldSelectorState = (props) => {
 			message = 'ZIP codes are usually 5 digits long. Is this mistyped?';
 
 		let valid = correctLength && isPositiveInteger;
+		message = (state.isZipCodeValid === 'null' ? '' : message)
+
 		dispatch({ type: 'SET_IS_ZIP_CODE_VALID', payload: { valid, message } });
 		return { valid, message };
 	};
@@ -163,6 +161,11 @@ export const FieldSelectorState = (props) => {
 		console.log(setIsAgeValid(state.age).valid);
 		console.log(setIsZipCodeValid(state.zipCode).valid);
 		console.log(setIsFamilySizeValid(state.familySize).valid);
+		setIsZipCodeValid(state.zipCode)
+		setIsCountyValid(state.county);
+		setIsGenderValid(state.gender)
+		setIsAgeValid(state.age)
+		setIsFamilySizeValid(state.familySize)
 		return (
 			setIsCountyValid(state.county).valid &&
 			setIsGenderValid(state.gender).valid &&

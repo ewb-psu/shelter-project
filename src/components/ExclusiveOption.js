@@ -88,7 +88,7 @@ const ExclusiveGroup = (props) => {
 	};
 
 	if (fieldSelectorContext.doValidation) validate();
-	
+
 	if (typeof props.appendCategory == 'function') {
 		return (
 			<div className='exclusive-group-container'>
@@ -110,7 +110,7 @@ const ExclusiveGroup = (props) => {
 						/>
 					))}
 				</div>
-				<InvalidEntryMessage message={invalidEntryMessage} />
+				<InvalidEntryMessage message={props.validator ? props.validator.message : ''} />
 			</div>
 		);
 	}
@@ -134,7 +134,7 @@ const ExclusiveGroup = (props) => {
 					/>
 				))}
 			</div>
-			<InvalidEntryMessage message={invalidEntryMessage} />
+			<InvalidEntryMessage message={props.validator ? props.validator.message : ''} />
 		</div>
 	);
 };

@@ -1,28 +1,28 @@
-
 import React, { useState, useEffect, useContext } from 'react';
 import ExclusiveOption from './ExclusiveOption';
 import TextInput from './TextInput';
 import '../Assets/FieldSelector.scss';
 import APIWrapper from '../APIWrapper.js';
 import InputLabel from './InputLabel';
-import SubmitButton from './SubmitButton/SubmitButton.js';
-import CategorySelector from './categorySelector/categorySelector.js';
 import CountySelect from './CountySelect';
 import Spinner from '../Assets/spinner.gif';
-import SearchBar from './SearchBar/SearchBar';
 import ApiDataContext from './context/apiData/ApiDataContext';
 import FieldSelectorContext from './context/fieldSelectorContext/FieldSelectorContext';
 import ThemeDataContext from './context/themeData/ThemeDataContext';
+import { useHistory } from 'react-router-dom';
+
 
 const APIKey = process.env.REACT_APP_211_API_KEY;
 const API = new APIWrapper(APIKey);
 
-const FieldSelector = (props) => {
+const UserData = (props) => {
 	const fieldSelectorContext = useContext(FieldSelectorContext);
 	const apiDataContext = useContext(ApiDataContext);
 	const themeDataContext = useContext(ThemeDataContext);
+	let history = useHistory();
 
 	async function callAPI() {
+
 		//check category state to see if it has already been populated from local storage, possibly avoid making another api call (even though it would be with the same session id)
 		console.log('trigger callAPI');
 		console.log(apiDataContext.categories.length);
@@ -42,6 +42,7 @@ const FieldSelector = (props) => {
 		fieldSelectorContext.setZipcode('97206');
 		fieldSelectorContext.setCounty('Clackamas');
 	};
+
 
 	//restores form state upon backwards navigation
 	useEffect(() => {
@@ -76,6 +77,7 @@ const FieldSelector = (props) => {
 	//an api call is made to populate an array with all the possible counties that zipcode could be in.
 	useEffect(() => {
 		const handleValidZip = async () => {
+			console.log('handleValidZip')
 			if (
 				fieldSelectorContext.setIsZipCodeValid(fieldSelectorContext.zipCode)
 					.valid
@@ -98,6 +100,13 @@ const FieldSelector = (props) => {
 		handleValidZip();
 	}, [fieldSelectorContext.zipCode]);
 
+	const nextPage = () => {
+		console.log(fieldSelectorContext)
+		if(fieldSelectorContext.setIsPageDataValid()){
+			history.push('/resources')
+		}
+	}
+
 	//return a spinner while waiting for data from api to populate category buttons
 	if (apiDataContext.categories.length === 0 || isLoading) {
 		return <img src={Spinner} style={{ width: '200px' }} alt='a spinner gif, indicating that something is still loading'/>;
@@ -105,21 +114,17 @@ const FieldSelector = (props) => {
 
 	return (
 		<div className={'field-selector ' + themeDataContext.themeColor}>
-			<SearchBar handleIsLoading={handleIsLoading} />
-			<InputLabel label='Service'>
-				<CategorySelector />
-			</InputLabel>
 			<InputLabel label='Gender'>
 				<ExclusiveOption
 					items={['Male', 'Female', 'Trans Male', 'Trans Female']}
-					validator={fieldSelectorContext.setIsGenderValid}
+					validator={fieldSelectorContext.isGenderValid}
 				/>
 			</InputLabel>
 			<InputLabel label='Age'>
 				<TextInput
 					name='age'
 					value={fieldSelectorContext.age}
-					validator={fieldSelectorContext.setIsAgeValid}
+					validator={fieldSelectorContext.isAgeValid}
 					placeholder='32'
 				/>
 			</InputLabel>
@@ -128,7 +133,7 @@ const FieldSelector = (props) => {
 					<TextInput
 						name='zip'
 						value={fieldSelectorContext.zipCode}
-						validator={fieldSelectorContext.setIsZipCodeValid}
+						validator={fieldSelectorContext.isZipCodeValid}
 						placeholder='97333'
 					/>
 				</InputLabel>
@@ -141,7 +146,7 @@ const FieldSelector = (props) => {
 						<TextInput
 							name='county'
 							value={fieldSelectorContext.county}
-							validator={fieldSelectorContext.setIsCountyValid}
+							validator={fieldSelectorContext.isCountyValid}
 							placeholder='Multnomah'
 						/>
 					</InputLabel>
@@ -150,7 +155,7 @@ const FieldSelector = (props) => {
 					<TextInput
 						name='familySize'
 						value={fieldSelectorContext.familySize}
-						validator={fieldSelectorContext.setIsFamilySizeValid}
+						validator={fieldSelectorContext.isFamilySizeValid}
 						placeholder='How many people are in your family?'
 					/>
 				</InputLabel>
@@ -160,9 +165,11 @@ const FieldSelector = (props) => {
 				Your location
 			</button>
 
-			<SubmitButton handleIsLoading={handleIsLoading} />
+			<button id='toResources' onClick={nextPage}>
+				resources
+			</button>
 		</div>
 	);
 };
 
-export default FieldSelector;
+export default UserData;
