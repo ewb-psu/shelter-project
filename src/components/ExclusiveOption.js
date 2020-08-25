@@ -110,7 +110,7 @@ const ExclusiveGroup = (props) => {
 						/>
 					))}
 				</div>
-				<InvalidEntryMessage message={props.validator.message} />
+				<InvalidEntryMessage message={props.validator ? props.validator.message : ''} />
 			</div>
 		);
 	}
@@ -134,7 +134,7 @@ const ExclusiveGroup = (props) => {
 					/>
 				))}
 			</div>
-			<InvalidEntryMessage message={props.validator.message} />
+			<InvalidEntryMessage message={props.validator ? props.validator.message : ''} />
 		</div>
 	);
 };

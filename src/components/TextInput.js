@@ -56,7 +56,7 @@ const TextInput = (props) => {
 				onChange: fieldSelectorContext.setFamilySize
 			}
 			break
-			default: 
+			default:
 			break
 
 		}
@@ -114,7 +114,7 @@ const TextInput = (props) => {
 				type='text'
 			/>
 			<div className={'underline ' + validEntryClass + themeDataContext.themeColor}></div>
-			<InvalidEntryMessage message={invalidEntryMessage} />
+			<InvalidEntryMessage message={props.validator ? props.validator.message : ''} />
 		</>
 	);
 };
