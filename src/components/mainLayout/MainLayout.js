@@ -18,15 +18,15 @@ const MainLayout = (props) => {
 						'linear-gradient(to right, rgba(33, 241, 141, 0), #21F18D)',
 				}}></div>
 			<div className='grid grid-auto-rows grid-cols-3'>
-				<div className='ml-16 col-start-1 col-span-3 lg:-col-span-1 row-start-1 '>
-					<div className='flex-none' style={{ width: '300px' }}>
+				<div className=' col-start-1 col-span-3 lg:-col-span-1  row-start-1 '>
+					<div className='mx-auto lg:ml-16' style={{ width: '300px' }}>
 						<Link to='/'>
 							{' '}
 							<img className='w-full pl-5 pt-5' alt='211 logo' src={logo} />
 						</Link>
 					</div>
 				</div>
-				<div className=' col-start-1 col-span-3 row-start-2 md:col-start-2 lg:col-span-2 lg:row-start-1'>
+				<div className=' col-start-1 col-span-3 row-start-2 lg:col-start-2 lg:col-span-2 lg:row-start-1'>
 				<nav className=''>
 					<ul className='flex  mt-10 mr-16 flex-wrap justify-center rounded shadow'>
 						<li className='pr-5 pl-2'>

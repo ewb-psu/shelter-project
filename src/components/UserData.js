@@ -119,39 +119,53 @@ const UserData = (props) => {
 	}
 
 	return (
-		<div
-			className={
-				'border mt-16 sm:mx-16 grid grid-cols-4 grid-auto-rows gap-8 field-selector ' +
-				themeDataContext.themeColor
-			}>
-			<div className='mt-5 col-start-1 col-span-4 sm:col-start-2 sm:col-span-2'>
-				<InputLabel label='Gender'>
-					<ExclusiveOption
-						items={['Male', 'Female', 'Trans Male', 'Trans Female']}
-						validator={fieldSelectorContext.isGenderValid}
-					/>
-				</InputLabel>
+		<div>
+			<div className='text-center mt-16'>
+				<h1>Welcome to the 211 info web application.</h1>
+				<p>
+					tell us a little about yourself so we can find you the best services.
+				</p>
 			</div>
-			<div className='col-start-1 col-span-3 row-start-2 sm:col-start-2 sm:col-span-2 '>
-				<InputLabel label='Age'>
-					<TextInput
-						name='age'
-						value={fieldSelectorContext.age}
-						validator={fieldSelectorContext.isAgeValid}
-						placeholder='32'
-					/>
-				</InputLabel>
-			</div>
-			<div className='col-start-1 col-span-3 row-start-3 sm:col-start-2 sm:col-span-2 '>
-				<div id='zip-and-county' className='flex'>
-					<InputLabel label='ZIP' className=''>
-						<TextInput
-							name='zip'
-							value={fieldSelectorContext.zipCode}
-							validator={fieldSelectorContext.isZipCodeValid}
-							placeholder='97333'
+
+			<div
+				className={
+					'py-16 sm:mx-16 grid grid-cols-4 grid-auto-rows gap-y-5 field-selector ' +
+					themeDataContext.themeColor
+				}>
+				<div className='mt-5 col-start-1 col-span-4 '>
+					<InputLabel label='Gender'>
+						<ExclusiveOption
+							items={['Male', 'Female', 'Trans Male', 'Trans Female']}
+							validator={fieldSelectorContext.isGenderValid}
 						/>
 					</InputLabel>
+				</div>
+
+				<div className='col-start-1 col-span-4 row-start-2 '>
+					<InputLabel label='Age'>
+						<TextInput
+							name='age'
+							value={fieldSelectorContext.age}
+							validator={fieldSelectorContext.isAgeValid}
+							placeholder='32'
+						/>
+					</InputLabel>
+				</div>
+
+				<div className='col-start-1 col-span-4 row-start-3'>
+					<div id='zip-and-county' className='flex flex-col'>
+						<InputLabel label='ZIP' className=''>
+							<TextInput
+								name='zip'
+								value={fieldSelectorContext.zipCode}
+								validator={fieldSelectorContext.isZipCodeValid}
+								placeholder='97333'
+							/>
+						</InputLabel>
+					</div>
+				</div>
+
+				<div className='col-start-1 col-span-4 row-start-4'>
 					{fieldSelectorContext.possibleCounties ? (
 						<InputLabel label='County'>
 							<CountySelect name='County' />
@@ -167,9 +181,9 @@ const UserData = (props) => {
 						</InputLabel>
 					)}
 				</div>
-			</div>
-			<div className='col-start-1 col-span-3 row-start-4 sm:col-start-2 sm:col-span-2 '>
-			<InputLabel label='Family Size'>
+
+				{/* <div className='col-start-1 col-span-3 row-start-5'>
+				<InputLabel label='Family Size'>
 					<TextInput
 						name='familySize'
 						value={fieldSelectorContext.familySize}
@@ -177,9 +191,9 @@ const UserData = (props) => {
 						placeholder='How many people are in your family?'
 					/>
 				</InputLabel>
-			</div>
+			</div> */}
 
-			{/* <div className='mb-5'>
+				{/* <div className='mb-5'>
 			<InputLabel label='Gender'>
 				<ExclusiveOption
 					items={['Male', 'Female', 'Trans Male', 'Trans Female']}
@@ -228,15 +242,18 @@ const UserData = (props) => {
 						placeholder='How many people are in your family?'
 					/>
 				</InputLabel>
-			</div>
+			</div>*/}
 
-			<button id='your-location-button' className='p-2 border' onClick={findLocation}>
+			{/* <button id='your-location-button' className='p-2 border' onClick={findLocation}>
 				Your location
-			</button>
-
-			<button id='toResources' className='p-2 border' onClick={nextPage}>
-				resources
 			</button> */}
+			<div className='col-start-3'>
+
+			<button id='toResources' className='p-2 border ' onClick={nextPage}>
+				Get Started
+			</button> 
+			</div>
+			</div>
 		</div>
 	);
 };

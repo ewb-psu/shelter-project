@@ -219,11 +219,11 @@ const ExclusiveButton = (props) => {
 	}
 
 	return (
-		<div className='p-1'>
+		<div className=' border overflow-hidden'>
 			<button
 				style={{ width: '100px' }}
 				className={
-					'flex flex-wrap exclusive-button ' +
+					'flex exclusive-button ' +
 					(props.selected ? 'selected ' : ' ') +
 					themeDataContext.themeColor
 				} // changes CSS and appearance when an option is selected/deselected

@@ -10,13 +10,13 @@ class InputLabel extends React.Component {
 				id={
 					this.props.label.toLowerCase().replace(' ', '-') + '-input-container'
 				}
-				className='input-container flex flex-wrap w-full'>
+				className='input-container grid grid-auto-rows grid-cols-4'>
 				<div
 					id={this.props.label.toLowerCase().replace(' ', '-') + '-input-label'}
-					className='input-label mr-16'>
-					{this.props.label} 
+					className='input-label col-start-1 col-span-2 lg:col-start-2 lg:col-span-1'>
+					{this.props.label}
 				</div>
-				{this.props.children}
+				<div className='col-start-1 col-span-4 lg:col-start-3 lg:col-span-2 row-start-2 lg:row-start-1 '>{this.props.children}</div>
 			</div>
 		);
 	}
