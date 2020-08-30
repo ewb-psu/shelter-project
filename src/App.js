@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useState, useEffect, useContext } from 'react';
-import './App.scss';
+// import './App.scss';
 import APIWrapper from './APIWrapper.js';
 import MainLayout from './components/mainLayout/MainLayout';
 import UserData from './components/UserData';
@@ -78,8 +78,8 @@ const App = () => {
 		<FieldSelectorState>
 			<ApiDataState>
 				<ThemeDataState>
-					<MainLayout>
 						<Router>
+					<MainLayout>
 							<Route exact path='/'>
 								<UserData />
 							</Route>
@@ -89,8 +89,8 @@ const App = () => {
 							<Route path='/info'>
 								<Shelter />
 							</Route>
-						</Router>
 					</MainLayout>
+						</Router>
 				</ThemeDataState>
 			</ApiDataState>
 		</FieldSelectorState>

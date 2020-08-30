@@ -27,7 +27,7 @@ const Resources = (props) => {
 				<CategorySelector />
 			</div>
 			{/* </InputLabel> */}
-      <div className='mt-64'>
+      <div className='mt-32'>
 			<SubmitButton handleIsLoading={handleIsLoading} />
       </div>
 		</div>

@@ -8,7 +8,7 @@
  */
 
 import React, { useState, useEffect, useContext } from 'react';
-// import '../Assets/ExclusiveOption.scss';
+import '../Assets/ExclusiveOption.scss';
 import InvalidEntryMessage from './InvalidEntryMessage';
 import ThemeDataContext from './context/themeData/ThemeDataContext';
 import FieldSelectorContext from './context/fieldSelectorContext/FieldSelectorContext';
@@ -19,6 +19,7 @@ const ExclusiveGroup = (props) => {
 
 	//a wrapper function for setting state of variable 'selected', determines buttons style (chosen, not chosen)
 	const handleSetSelected = (data) => {
+		console.log('trigger', data)
 		setSelected(data);
 	};
 
@@ -27,7 +28,7 @@ const ExclusiveGroup = (props) => {
 
 	//sets Selected state, saves information about buttons state in fieldSelectorContext, to be saved later in localStorage.
 	const handleClick = (event, data, id, row) => {
-		setSelected(data);
+		handleSetSelected(data);
 		if (typeof data === 'string' && props.appendCategory) {
 			fieldSelectorContext.setServiceName(data);
 			props.appendCategory(this.props.row, id);
@@ -93,7 +94,7 @@ const ExclusiveGroup = (props) => {
 	if (typeof props.appendCategory == 'function') {
 		return (
 			<div className='exclusive-group-container w-1/2 mx-auto'>
-				<div className='exclusive-group flex flex-no-wrap overflow-x-auto'>
+				<div className='exclusive-group flex overflow-x-auto'>
 					{props.items.map((item, i) => (
 						<ExclusiveButton
 							handleSetSelected={handleSetSelected}
@@ -119,8 +120,8 @@ const ExclusiveGroup = (props) => {
 	}
 
 	return (
-		<div className='exclusive-group-container w-1/2 mx-auto'>
-			<div className='exclusive-group flex flex-no-wrap overflow-x-auto'>
+		<div className='exclusive-group-container'>
+			<div className='exclusive-group flex overflow-x-auto'>
 				{props.items.map((item, i) => (
 					<ExclusiveButton
 						handleSetSelected={handleSetSelected}
@@ -176,11 +177,11 @@ const ExclusiveButton = (props) => {
 	if (typeof props.data !== 'string' && props.appendCategory) {
 		// Assume object like {label, image} and build an SVG button
 		return (
-			<div className='p-5'>
+			<div className='p-3'>
 				<button
-				style={{ width: '75px' }}
+					style={{ width: '50px' }}
 					className={
-						'exclusive-button' +
+						'exclusive-button ' +
 						(props.selected ? 'selected ' : ' ') +
 						themeDataContext.themeColor
 					} // changes CSS and appearance when an option is selected/deselected
@@ -198,10 +199,11 @@ const ExclusiveButton = (props) => {
 	if (typeof props.data !== 'string') {
 		// Assume object like {label, image} and build an SVG button
 		return (
-			<div className=''>
+			<div className='p-3'>
 				<button
+					style={{ width: '50px' }}
 					className={
-						'exclusive-button w-1/2' +
+						'exclusive-button ' +
 						(props.selected ? 'selected ' : ' ') +
 						themeDataContext.themeColor
 					} // changes CSS and appearance when an option is selected/deselected
@@ -209,7 +211,7 @@ const ExclusiveButton = (props) => {
 						props.onClick(e, props.data, props.id);
 					}} // changes the name of the pick in ExGroup's state.
 				>
-					<img src={props.data.image} style={{ width: '50px' }}></img>
+					<img src={props.data.image}></img>
 					{props.data.label}
 				</button>
 			</div>
@@ -217,10 +219,11 @@ const ExclusiveButton = (props) => {
 	}
 
 	return (
-		<div>
+		<div className='p-1'>
 			<button
+				style={{ width: '100px' }}
 				className={
-					'exclusive-button ' +
+					'flex flex-wrap exclusive-button ' +
 					(props.selected ? 'selected ' : ' ') +
 					themeDataContext.themeColor
 				} // changes CSS and appearance when an option is selected/deselected

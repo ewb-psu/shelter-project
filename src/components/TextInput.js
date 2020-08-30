@@ -113,7 +113,9 @@ const TextInput = (props) => {
 				onChange={handleChange}
 				type='text'
 			/>
-			<div className={'underline ' + validEntryClass + themeDataContext.themeColor}></div>
+			<hr className={'border underline ' + validEntryClass + themeDataContext.themeColor} />
+			
+
 			<InvalidEntryMessage message={props.validator ? props.validator.message : ''} />
 		</>
 	);

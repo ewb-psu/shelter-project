@@ -1,7 +1,9 @@
+/** @format */
+
 import React, { useState, useEffect, useContext } from 'react';
 import ExclusiveOption from './ExclusiveOption';
 import TextInput from './TextInput';
-import '../Assets/FieldSelector.scss';
+// import '../Assets/FieldSelector.scss';
 import APIWrapper from '../APIWrapper.js';
 import InputLabel from './InputLabel';
 import CountySelect from './CountySelect';
@@ -10,7 +12,6 @@ import ApiDataContext from './context/apiData/ApiDataContext';
 import FieldSelectorContext from './context/fieldSelectorContext/FieldSelectorContext';
 import ThemeDataContext from './context/themeData/ThemeDataContext';
 import { useHistory } from 'react-router-dom';
-
 
 const APIKey = process.env.REACT_APP_211_API_KEY;
 const API = new APIWrapper(APIKey);
@@ -22,7 +23,6 @@ const UserData = (props) => {
 	let history = useHistory();
 
 	async function callAPI() {
-
 		//check category state to see if it has already been populated from local storage, possibly avoid making another api call (even though it would be with the same session id)
 		console.log('trigger callAPI');
 		console.log(apiDataContext.categories.length);
@@ -42,7 +42,6 @@ const UserData = (props) => {
 		fieldSelectorContext.setZipcode('97206');
 		fieldSelectorContext.setCounty('Clackamas');
 	};
-
 
 	//restores form state upon backwards navigation
 	useEffect(() => {
@@ -77,7 +76,7 @@ const UserData = (props) => {
 	//an api call is made to populate an array with all the possible counties that zipcode could be in.
 	useEffect(() => {
 		const handleValidZip = async () => {
-			console.log('handleValidZip')
+			console.log('handleValidZip');
 			if (
 				fieldSelectorContext.setIsZipCodeValid(fieldSelectorContext.zipCode)
 					.valid
@@ -101,26 +100,93 @@ const UserData = (props) => {
 	}, [fieldSelectorContext.zipCode]);
 
 	const nextPage = () => {
-		console.log(fieldSelectorContext)
-		if(fieldSelectorContext.setIsPageDataValid()){
-			history.push('/resources')
+		console.log(fieldSelectorContext);
+		if (fieldSelectorContext.setIsPageDataValid()) {
+			history.push('/resources');
 		}
-	}
+	};
 
 	//return a spinner while waiting for data from api to populate category buttons
 	if (apiDataContext.categories.length === 0 || isLoading) {
-		return <img src={Spinner} className='mx-auto' style={{ width: '200px' }} alt='a spinner gif, indicating that something is still loading'/>;
+		return (
+			<img
+				src={Spinner}
+				className='mx-auto'
+				style={{ width: '200px' }}
+				alt='a spinner gif, indicating that something is still loading'
+			/>
+		);
 	}
 
 	return (
-		<div className={'field-selector ' + themeDataContext.themeColor}>
+		<div
+			className={
+				'border mt-16 sm:mx-16 grid grid-cols-4 grid-auto-rows gap-8 field-selector ' +
+				themeDataContext.themeColor
+			}>
+			<div className='mt-5 col-start-1 col-span-4 sm:col-start-2 sm:col-span-2'>
+				<InputLabel label='Gender'>
+					<ExclusiveOption
+						items={['Male', 'Female', 'Trans Male', 'Trans Female']}
+						validator={fieldSelectorContext.isGenderValid}
+					/>
+				</InputLabel>
+			</div>
+			<div className='col-start-1 col-span-3 row-start-2 sm:col-start-2 sm:col-span-2 '>
+				<InputLabel label='Age'>
+					<TextInput
+						name='age'
+						value={fieldSelectorContext.age}
+						validator={fieldSelectorContext.isAgeValid}
+						placeholder='32'
+					/>
+				</InputLabel>
+			</div>
+			<div className='col-start-1 col-span-3 row-start-3 sm:col-start-2 sm:col-span-2 '>
+				<div id='zip-and-county' className='flex'>
+					<InputLabel label='ZIP' className=''>
+						<TextInput
+							name='zip'
+							value={fieldSelectorContext.zipCode}
+							validator={fieldSelectorContext.isZipCodeValid}
+							placeholder='97333'
+						/>
+					</InputLabel>
+					{fieldSelectorContext.possibleCounties ? (
+						<InputLabel label='County'>
+							<CountySelect name='County' />
+						</InputLabel>
+					) : (
+						<InputLabel label='County'>
+							<TextInput
+								name='county'
+								value={fieldSelectorContext.county}
+								validator={fieldSelectorContext.isCountyValid}
+								placeholder='Multnomah'
+							/>
+						</InputLabel>
+					)}
+				</div>
+			</div>
+			<div className='col-start-1 col-span-3 row-start-4 sm:col-start-2 sm:col-span-2 '>
+			<InputLabel label='Family Size'>
+					<TextInput
+						name='familySize'
+						value={fieldSelectorContext.familySize}
+						validator={fieldSelectorContext.isFamilySizeValid}
+						placeholder='How many people are in your family?'
+					/>
+				</InputLabel>
+			</div>
 
+			{/* <div className='mb-5'>
 			<InputLabel label='Gender'>
 				<ExclusiveOption
 					items={['Male', 'Female', 'Trans Male', 'Trans Female']}
 					validator={fieldSelectorContext.isGenderValid}
 				/>
 			</InputLabel>
+			</div>
 
 			 <InputLabel label='Age'>
 				<TextInput
@@ -164,13 +230,13 @@ const UserData = (props) => {
 				</InputLabel>
 			</div>
 
-			<button id='your-location-button' onClick={findLocation}>
+			<button id='your-location-button' className='p-2 border' onClick={findLocation}>
 				Your location
 			</button>
 
-			<button id='toResources' onClick={nextPage}>
+			<button id='toResources' className='p-2 border' onClick={nextPage}>
 				resources
-			</button>
+			</button> */}
 		</div>
 	);
 };
