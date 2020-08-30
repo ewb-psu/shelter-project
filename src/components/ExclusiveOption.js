@@ -8,7 +8,7 @@
  */
 
 import React, { useState, useEffect, useContext } from 'react';
-import '../Assets/ExclusiveOption.scss';
+// import '../Assets/ExclusiveOption.scss';
 import InvalidEntryMessage from './InvalidEntryMessage';
 import ThemeDataContext from './context/themeData/ThemeDataContext';
 import FieldSelectorContext from './context/fieldSelectorContext/FieldSelectorContext';
@@ -93,8 +93,10 @@ const ExclusiveGroup = (props) => {
 
 	if (typeof props.appendCategory == 'function') {
 		return (
-			<div className='exclusive-group-container w-1/2 mx-auto'>
-				<div className='exclusive-group flex overflow-x-auto'>
+			<div className='px-16'>
+
+			<div className='exclusive-group-container w-2/3 mx-auto'>
+				<div className='exclusive-group flex overflow-x-auto '>
 					{props.items.map((item, i) => (
 						<ExclusiveButton
 							handleSetSelected={handleSetSelected}
@@ -116,12 +118,13 @@ const ExclusiveGroup = (props) => {
 					message={props.validator ? props.validator.message : ''}
 				/>
 			</div>
+			</div>
 		);
 	}
 
 	return (
 		<div className='exclusive-group-container'>
-			<div className='exclusive-group flex overflow-x-auto'>
+			<div className='exclusive-group flex flex-wrap overflow-x-auto'>
 				{props.items.map((item, i) => (
 					<ExclusiveButton
 						handleSetSelected={handleSetSelected}
@@ -177,7 +180,7 @@ const ExclusiveButton = (props) => {
 	if (typeof props.data !== 'string' && props.appendCategory) {
 		// Assume object like {label, image} and build an SVG button
 		return (
-			<div className='p-3'>
+			<div className='p-3 w-full'>
 				<button
 					style={{ width: '50px' }}
 					className={
@@ -199,7 +202,7 @@ const ExclusiveButton = (props) => {
 	if (typeof props.data !== 'string') {
 		// Assume object like {label, image} and build an SVG button
 		return (
-			<div className='p-3'>
+			<div className='p-3 w-full'>
 				<button
 					style={{ width: '50px' }}
 					className={
@@ -221,7 +224,8 @@ const ExclusiveButton = (props) => {
 	return (
 		<div className=' border overflow-hidden'>
 			<button
-				style={{ width: '100px' }}
+
+				style={{ width: '108px' }}
 				className={
 					'flex exclusive-button ' +
 					(props.selected ? 'selected ' : ' ') +

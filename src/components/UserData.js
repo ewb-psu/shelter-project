@@ -120,7 +120,7 @@ const UserData = (props) => {
 
 	return (
 		<div>
-			<div className='text-center mt-16'>
+			<div className='text-center mt-16 px-16'>
 				<h1>Welcome to the 211 info web application.</h1>
 				<p>
 					tell us a little about yourself so we can find you the best services.
@@ -129,7 +129,7 @@ const UserData = (props) => {
 
 			<div
 				className={
-					'py-16 sm:mx-16 grid grid-cols-4 grid-auto-rows gap-y-5 field-selector ' +
+					'py-16 mx-16 sm:mx-16 lg:mx-32 grid grid-cols-4 grid-auto-rows gap-y-5 border shadow field-selector ' +
 					themeDataContext.themeColor
 				}>
 				<div className='mt-5 col-start-1 col-span-4 '>
@@ -182,73 +182,11 @@ const UserData = (props) => {
 					)}
 				</div>
 
-				{/* <div className='col-start-1 col-span-3 row-start-5'>
-				<InputLabel label='Family Size'>
-					<TextInput
-						name='familySize'
-						value={fieldSelectorContext.familySize}
-						validator={fieldSelectorContext.isFamilySizeValid}
-						placeholder='How many people are in your family?'
-					/>
-				</InputLabel>
-			</div> */}
+			<div className='col-start-1 lg:col-start-3'>
 
-				{/* <div className='mb-5'>
-			<InputLabel label='Gender'>
-				<ExclusiveOption
-					items={['Male', 'Female', 'Trans Male', 'Trans Female']}
-					validator={fieldSelectorContext.isGenderValid}
-				/>
-			</InputLabel>
-			</div>
-
-			 <InputLabel label='Age'>
-				<TextInput
-					name='age'
-					value={fieldSelectorContext.age}
-					validator={fieldSelectorContext.isAgeValid}
-					placeholder='32'
-				/>
-			</InputLabel>
-
-			<div id='zip-and-county'>
-				<InputLabel label='ZIP'>
-					<TextInput
-						name='zip'
-						value={fieldSelectorContext.zipCode}
-						validator={fieldSelectorContext.isZipCodeValid}
-						placeholder='97333'
-					/>
-				</InputLabel>
-				{fieldSelectorContext.possibleCounties ? (
-					<InputLabel label='County'>
-						<CountySelect name='County' />
-					</InputLabel>
-				) : (
-					<InputLabel label='County'>
-						<TextInput
-							name='county'
-							value={fieldSelectorContext.county}
-							validator={fieldSelectorContext.isCountyValid}
-							placeholder='Multnomah'
-						/>
-					</InputLabel>
-				)}
-				<InputLabel label='Family Size'>
-					<TextInput
-						name='familySize'
-						value={fieldSelectorContext.familySize}
-						validator={fieldSelectorContext.isFamilySizeValid}
-						placeholder='How many people are in your family?'
-					/>
-				</InputLabel>
-			</div>*/}
-
-			{/* <button id='your-location-button' className='p-2 border' onClick={findLocation}>
+			{/* <button id='your-location-button' className='p-2 border flex flex-col' onClick={findLocation}>
 				Your location
 			</button> */}
-			<div className='col-start-3'>
-
 			<button id='toResources' className='p-2 border ' onClick={nextPage}>
 				Get Started
 			</button> 

@@ -23,13 +23,13 @@ const Resources = (props) => {
 				<SearchBar handleIsLoading={handleIsLoading} />
 			</div>
 			{/* <InputLabel label='Resource'> */}
-			<div className='' >
+			<div className=''>
 				<CategorySelector />
 			</div>
 			{/* </InputLabel> */}
-      <div className='mt-32'>
-			<SubmitButton handleIsLoading={handleIsLoading} />
-      </div>
+			<div className='mt-32'>
+				<SubmitButton handleIsLoading={handleIsLoading} />
+			</div>
 		</div>
 	);
 };
