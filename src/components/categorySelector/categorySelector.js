@@ -1,18 +1,17 @@
+/** @format */
 
 import React, { useState, useContext, useEffect } from 'react';
 import ExclusiveOption from '../ExclusiveOption';
-import ApiDataContext from '../context/apiData/ApiDataContext'
+import ApiDataContext from '../context/apiData/ApiDataContext';
 import FieldSelectorContext from '../context/fieldSelectorContext/FieldSelectorContext';
-import ThemeDataContext from '../context/themeData/ThemeDataContext'
-
+import ThemeDataContext from '../context/themeData/ThemeDataContext';
 
 const CategorySelector = () => {
-	const apiDataContext = useContext(ApiDataContext)
-	const fieldSelectorContext = useContext(FieldSelectorContext)
-	const themeDataContext = useContext(ThemeDataContext)
+	const apiDataContext = useContext(ApiDataContext);
+	const fieldSelectorContext = useContext(FieldSelectorContext);
+	const themeDataContext = useContext(ThemeDataContext);
 	const [categories, setCategories] = useState([]);
 	const [keyz, setTheKeyz] = useState([]);
-
 
 	useEffect(() => {
 		const labelsWithImages = createLabelWithImage(
@@ -36,7 +35,8 @@ const CategorySelector = () => {
 
 	//categoryType needs to be 'category' or 'subcategory'
 	const createLabelWithImage = (array, categoryType) => {
-		const svgPathEndings = themeDataContext.themeColor === 'light' ? '-black.svg' : '-white.svg';
+		const svgPathEndings =
+			themeDataContext.themeColor === 'light' ? '-black.svg' : '-white.svg';
 		let objArray = [];
 		for (const item of array) {
 			let obj = {};
@@ -62,7 +62,7 @@ const CategorySelector = () => {
 			localStorage.setItem('keyz', JSON.stringify(keyz));
 
 			fieldSelectorContext.setCategoryId('');
-			fieldSelectorContext.setCategorySelected(3)
+			fieldSelectorContext.setCategorySelected(3);
 
 			return;
 		}
@@ -77,8 +77,10 @@ const CategorySelector = () => {
 			setKey(id);
 			localStorage.setItem('categories', JSON.stringify(newCategory));
 			localStorage.setItem('keyz', JSON.stringify(keyz));
-			fieldSelectorContext.setCategoryId(apiDataContext.categories[id]['categoryID']);
-			fieldSelectorContext.setCategorySelected(1)
+			fieldSelectorContext.setCategoryId(
+				apiDataContext.categories[id]['categoryID']
+			);
+			fieldSelectorContext.setCategorySelected(1);
 		}
 		//subcategory has been selectd. Show subbestCategory.
 		else {
@@ -93,9 +95,11 @@ const CategorySelector = () => {
 				fieldSelectorContext.setCategoryId(
 					apiDataContext.categories[keyz[0]]['subcat'][id]['subcategoryID']
 				);
-				fieldSelectorContext.setCategoryId(apiDataContext.categories[keyz[0]]['subcat'][id]['subcategoryID'])
+				fieldSelectorContext.setCategoryId(
+					apiDataContext.categories[keyz[0]]['subcat'][id]['subcategoryID']
+				);
 				setKey(id);
-				fieldSelectorContext.setCategorySelected(2)
+				fieldSelectorContext.setCategorySelected(2);
 				fieldSelectorContext.setButtonState({
 					...fieldSelectorContext.buttonState,
 					subCat: [
@@ -116,12 +120,14 @@ const CategorySelector = () => {
 	};
 
 	return categories.map((categories, i) => (
-		<ExclusiveOption
-			items={categories}
-			appendCategory={appendCategory}
-			key={i}
-			row={i}
-		/>
+		<div className=''>
+			<ExclusiveOption
+				items={categories}
+				appendCategory={appendCategory}
+				key={i}
+				row={i}
+			/>
+		</div>
 	));
 };
 

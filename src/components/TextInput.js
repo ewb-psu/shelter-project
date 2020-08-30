@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useContext, useEffect, useState, useRef } from 'react';
-import '../Assets/TextInput.scss';
+// import '../Assets/TextInput.scss';
 import InvalidEntryMessage from './InvalidEntryMessage';
 import ThemeDataContext from './context/themeData/ThemeDataContext'
 import FieldSelectorContext from '../components/context/fieldSelectorContext/FieldSelectorContext';

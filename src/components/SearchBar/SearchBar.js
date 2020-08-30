@@ -127,6 +127,7 @@ const SearchBar = ({ fieldSelectorState, handleIsLoading }) => {
 						name='search'
 						value={search}
 						onChange={handleChange}
+						className='bg-blue-300 color-black leading-10'
 					/>
 				</label>
 				<SubmitButton handleIsLoading={handleIsLoading}>Submit</SubmitButton>

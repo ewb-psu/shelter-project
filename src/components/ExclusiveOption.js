@@ -4,10 +4,11 @@
  * from a row of options (should de-select any other active option when
  * pressed).
  *
+ * @format
  */
 
 import React, { useState, useEffect, useContext } from 'react';
-import '../Assets/ExclusiveOption.scss';
+// import '../Assets/ExclusiveOption.scss';
 import InvalidEntryMessage from './InvalidEntryMessage';
 import ThemeDataContext from './context/themeData/ThemeDataContext';
 import FieldSelectorContext from './context/fieldSelectorContext/FieldSelectorContext';
@@ -91,8 +92,8 @@ const ExclusiveGroup = (props) => {
 
 	if (typeof props.appendCategory == 'function') {
 		return (
-			<div className='exclusive-group-container'>
-				<div className='exclusive-group'>
+			<div className='exclusive-group-container w-1/2 mx-auto'>
+				<div className='exclusive-group flex flex-no-wrap overflow-x-auto'>
 					{props.items.map((item, i) => (
 						<ExclusiveButton
 							handleSetSelected={handleSetSelected}
@@ -110,14 +111,16 @@ const ExclusiveGroup = (props) => {
 						/>
 					))}
 				</div>
-				<InvalidEntryMessage message={props.validator ? props.validator.message : ''} />
+				<InvalidEntryMessage
+					message={props.validator ? props.validator.message : ''}
+				/>
 			</div>
 		);
 	}
 
 	return (
-		<div className='exclusive-group-container'>
-			<div className='exclusive-group'>
+		<div className='exclusive-group-container w-1/2 mx-auto'>
+			<div className='exclusive-group flex flex-no-wrap overflow-x-auto'>
 				{props.items.map((item, i) => (
 					<ExclusiveButton
 						handleSetSelected={handleSetSelected}
@@ -134,7 +137,9 @@ const ExclusiveGroup = (props) => {
 					/>
 				))}
 			</div>
-			<InvalidEntryMessage message={props.validator ? props.validator.message : ''} />
+			<InvalidEntryMessage
+				message={props.validator ? props.validator.message : ''}
+			/>
 		</div>
 	);
 };
@@ -171,25 +176,48 @@ const ExclusiveButton = (props) => {
 	if (typeof props.data !== 'string' && props.appendCategory) {
 		// Assume object like {label, image} and build an SVG button
 		return (
-			<button
-				className={
-					'exclusive-button ' +
-					(props.selected ? 'selected ' : ' ') +
-					themeDataContext.themeColor
-				} // changes CSS and appearance when an option is selected/deselected
-				onClick={(e) => {
-					props.onClick(e, props.data, props.id, props.row);
-				}} // changes the name of the pick in ExGroup's state.
-			>
-				<img src={props.data.image}></img>
-				{props.data.label}
-			</button>
+			<div className='p-5'>
+				<button
+				style={{ width: '75px' }}
+					className={
+						'exclusive-button' +
+						(props.selected ? 'selected ' : ' ') +
+						themeDataContext.themeColor
+					} // changes CSS and appearance when an option is selected/deselected
+					onClick={(e) => {
+						props.onClick(e, props.data, props.id, props.row);
+					}} // changes the name of the pick in ExGroup's state.
+				>
+					<img src={props.data.image}></img>
+				</button>
+				<p className='text-xs'>{props.data.label}</p>
+			</div>
 		);
 	}
 	// For buttons with SVG images
 	if (typeof props.data !== 'string') {
 		// Assume object like {label, image} and build an SVG button
 		return (
+			<div className=''>
+				<button
+					className={
+						'exclusive-button w-1/2' +
+						(props.selected ? 'selected ' : ' ') +
+						themeDataContext.themeColor
+					} // changes CSS and appearance when an option is selected/deselected
+					onClick={(e) => {
+						props.onClick(e, props.data, props.id);
+					}} // changes the name of the pick in ExGroup's state.
+				>
+					<img src={props.data.image} style={{ width: '50px' }}></img>
+					{props.data.label}
+				</button>
+			</div>
+		);
+	}
+
+	return (
+		<div>
 			<button
 				className={
 					'exclusive-button ' +
@@ -200,24 +228,8 @@ const ExclusiveButton = (props) => {
 					props.onClick(e, props.data, props.id);
 				}} // changes the name of the pick in ExGroup's state.
 			>
-				<img src={props.data.image}></img>
-				{props.data.label}
+				{props.data}
 			</button>
-		);
-	}
-
-	return (
-		<button
-			className={
-				'exclusive-button ' +
-				(props.selected ? 'selected ' : ' ') +
-				themeDataContext.themeColor
-			} // changes CSS and appearance when an option is selected/deselected
-			onClick={(e) => {
-				props.onClick(e, props.data, props.id);
-			}} // changes the name of the pick in ExGroup's state.
-		>
-			{props.data}
-		</button>
+		</div>
 	);
 };

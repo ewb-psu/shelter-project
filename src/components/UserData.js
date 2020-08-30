@@ -109,18 +109,20 @@ const UserData = (props) => {
 
 	//return a spinner while waiting for data from api to populate category buttons
 	if (apiDataContext.categories.length === 0 || isLoading) {
-		return <img src={Spinner} style={{ width: '200px' }} alt='a spinner gif, indicating that something is still loading'/>;
+		return <img src={Spinner} className='mx-auto' style={{ width: '200px' }} alt='a spinner gif, indicating that something is still loading'/>;
 	}
 
 	return (
 		<div className={'field-selector ' + themeDataContext.themeColor}>
+
 			<InputLabel label='Gender'>
 				<ExclusiveOption
 					items={['Male', 'Female', 'Trans Male', 'Trans Female']}
 					validator={fieldSelectorContext.isGenderValid}
 				/>
 			</InputLabel>
-			<InputLabel label='Age'>
+
+			 <InputLabel label='Age'>
 				<TextInput
 					name='age'
 					value={fieldSelectorContext.age}
@@ -128,6 +130,7 @@ const UserData = (props) => {
 					placeholder='32'
 				/>
 			</InputLabel>
+
 			<div id='zip-and-county'>
 				<InputLabel label='ZIP'>
 					<TextInput

@@ -1,68 +1,68 @@
-@import 'GlobalStyle/globals';
+// @import 'GlobalStyle/globals';
 
-.app {
-  position: absolute;
+// .app {
+//   position: absolute;
 
-  // Stretch the background of the app and pin to all edges
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+//   // Stretch the background of the app and pin to all edges
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   bottom: 0;
 
-  // Define grid to easily position child containers
-  display: grid;
+//   // Define grid to easily position child containers
+//   display: grid;
 
-  // Grid changes based on the size of the screen it's displayed on
-  @include for(smaller-than-phone) {
-    grid-template-columns: [left-edge] 15px [left-gutter] auto [right-gutter] 15px [right-edge];
-    font-size: $small-font-size;
-  }
+//   // Grid changes based on the size of the screen it's displayed on
+//   @include for(smaller-than-phone) {
+//     grid-template-columns: [left-edge] 15px [left-gutter] auto [right-gutter] 15px [right-edge];
+//     font-size: $small-font-size;
+//   }
 
-  @include for(phone-to-laptop) {
-    grid-template-columns: [left-edge] auto [left-gutter] 500px [right-gutter] auto [right-edge];
-    font-size: $medium-font-size;
-  }
+//   @include for(phone-to-laptop) {
+//     grid-template-columns: [left-edge] auto [left-gutter] 500px [right-gutter] auto [right-edge];
+//     font-size: $medium-font-size;
+//   }
 
-  @include for(larger-than-laptop) {
-    grid-template-columns: [left-edge] auto [left-gutter] 650px [right-gutter] auto [right-edge];
-    font-size: $big-font-size;
-  }
+//   @include for(larger-than-laptop) {
+//     grid-template-columns: [left-edge] auto [left-gutter] 650px [right-gutter] auto [right-edge];
+//     font-size: $big-font-size;
+//   }
 
 
-  // Define font and background color defaults for light and dark themes
-  &.light {
-    color: black;
-    background-color: white;
-  }
+//   // Define font and background color defaults for light and dark themes
+//   &.light {
+//     color: black;
+//     background-color: white;
+//   }
 
-  &.dark {
-    color: white;
-    background-color: $dark-theme-primary-color;
-  }
-}
+//   &.dark {
+//     color: white;
+//     background-color: $dark-theme-primary-color;
+//   }
+// }
 
-#left-gutter-container {
-  grid-column-start: left-edge;
-  grid-column-end: left-gutter;
+// #left-gutter-container {
+//   grid-column-start: left-edge;
+//   grid-column-end: left-gutter;
 
-  word-wrap: break-word;
-  overflow: hidden;
-}
+//   word-wrap: break-word;
+//   overflow: hidden;
+// }
 
-#main-container {
-  // Position the container
-  grid-column-start: left-gutter;
-  grid-column-end: right-gutter;
+// #main-container {
+//   // Position the container
+//   grid-column-start: left-gutter;
+//   grid-column-end: right-gutter;
 
-  // Let elements inside use flex positioning
-  display: flex;
-  flex-direction: column;
-}
+//   // Let elements inside use flex positioning
+//   display: flex;
+//   flex-direction: column;
+// }
 
-#right-gutter-container {
-  grid-column-start: right-gutter;
-  grid-column-end: right-edge;
+// #right-gutter-container {
+//   grid-column-start: right-gutter;
+//   grid-column-end: right-edge;
 
-  word-wrap: break-word;
-  overflow: hidden;
-}
+//   word-wrap: break-word;
+//   overflow: hidden;
+// }

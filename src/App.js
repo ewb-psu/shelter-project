@@ -52,10 +52,10 @@ const App = () => {
 
 		//a function to remove user data from localstorage
 		const cleanUp = () => {
-			localStorage.removeItem('sessionId');
+			// localStorage.removeItem('sessionId');
 			localStorage.removeItem('fsContext')
 			localStorage.removeItem('apiDataContext')
-			localStorage.removeItem('categories') // this is redundant, remove and change refferences to apiDataContext.categories
+			localStorage.removeItem('categories') 
 
 		}
 
@@ -65,13 +65,13 @@ const App = () => {
 		}, 1800000);
 
 		//when user hits refresh, navigates away from the page or closes the browser tab, remove state values from localstorage.
-		window.addEventListener(
-			'beforeunload',
-			cleanUp
-		);
-		return () => {
-			window.removeEventListener('beforeUnload', cleanUp )
-		}
+		// window.addEventListener(
+		// 	'beforeunload',
+		// 	cleanUp
+		// );
+		// return () => {
+		// 	window.removeEventListener('beforeUnload', cleanUp )
+		// }
 	}, []);
 
 	return (
