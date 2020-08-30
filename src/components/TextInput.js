@@ -109,7 +109,7 @@ const TextInput = (props) => {
 				value={value}
 				placeholder={props.placeholder}
 				id={props.name.toLowerCase() + '-input'}
-				className={'text-input ' + validEntryClass + themeDataContext.themeColor}
+				className={'text-input border ' + validEntryClass + themeDataContext.themeColor}
 				onChange={handleChange}
 				type='text'
 			/>

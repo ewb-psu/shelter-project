@@ -181,7 +181,7 @@ const ExclusiveButton = (props) => {
 				<button
 					style={{ width: '50px' }}
 					className={
-						'exclusive-button ' +
+						'border p-3 exclusive-button ' +
 						(props.selected ? 'selected ' : ' ') +
 						themeDataContext.themeColor
 					} // changes CSS and appearance when an option is selected/deselected
