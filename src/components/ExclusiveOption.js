@@ -93,9 +93,9 @@ const ExclusiveGroup = (props) => {
 
 	if (typeof props.appendCategory == 'function') {
 		return (
-			<div className='px-16'>
+			<div className=''>
 
-			<div className='exclusive-group-container mx-auto'>
+			<div className='exclusive-group-container mx-auto inline'>
 				<div className='exclusive-group flex overflow-x-auto '>
 					{props.items.map((item, i) => (
 						<ExclusiveButton

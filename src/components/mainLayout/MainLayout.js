@@ -17,7 +17,7 @@ const MainLayout = (props) => {
 					backgroundImage:
 						'linear-gradient(to right, rgba(33, 241, 141, 0), #21F18D)',
 				}}></div>
-			<div className='mx-16 lg:mx-32 grid grid-auto-rows grid-cols-4'>
+			<div className=' mx-5 sm:mx-16 lg:mx-32 grid grid-auto-rows grid-cols-4'>
 				<div className='col-start-1 col-span-4 lg:-col-span-1 row-start-1 '>
 					<div className='mx-auto lg:mx-0' style={{ width: '300px' }}>
 						<Link to='/'>

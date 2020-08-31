@@ -66,7 +66,7 @@ function SubmitButton(props) {
 		}
 	}
 	return (
-		<button type='button' onClick={handleClick} className='p-2 border-4 rounded mx-auto'>
+		<button type='button' onClick={handleClick} className='p-2 sm:px-5 md:px-8 lg:px-16 border rounded rounded-l-none mx-auto'>
 			Go
 		</button>
 	);

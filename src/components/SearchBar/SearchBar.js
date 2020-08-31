@@ -1,3 +1,4 @@
+/** @format */
 
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -119,19 +120,23 @@ const SearchBar = ({ fieldSelectorState, handleIsLoading }) => {
 	};
 
 	return (
-		<div className='mr-5'>
-			<form onSubmit={handleSubmit}>
-				<label htmlFor='search'>
-					<input
-						type='text'
-						name='search'
-						value={search}
-						onChange={handleChange}
-						className='bg-blue-300 color-black leading-10 my-5'
-					/>
-				</label>
-				<SubmitButton handleIsLoading={handleIsLoading}>Submit</SubmitButton>
-			</form>
+		<div className='w-full'>
+			<div className=''>
+				<form onSubmit={handleSubmit} className=' flex items-center justify-center  ml-auto'>
+					<label htmlFor='search' className='w-full'>
+						<input
+							type='text'
+							name='search'
+							value={search}
+							onChange={handleChange}
+							className='bg-blue-200 color-black leading-10 w-full boder rounded rounded-r-none color-black'
+							placeHolder='Search...'
+						/>
+					</label>
+					<SubmitButton handleIsLoading={handleIsLoading}>Submit</SubmitButton>
+				</form>
+			</div>
+
 			<div
 				style={{
 					display: 'flex',

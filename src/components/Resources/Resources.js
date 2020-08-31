@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import FieldSelectorContext from '../context/fieldSelectorContext/FieldSelectorContext';
 import SearchBar from '../SearchBar/SearchBar';
 import CategorySelector from '../categorySelector/CategorySelector';
@@ -18,8 +18,8 @@ const Resources = (props) => {
 
 	return (
 		//<div className={'field-selector ' + themeDataContext.themeColor}>
-		<div className='flex flex-col items-center justify-center mx-32'>
-			<div className='border shadow w-full my-16 flex justify-end'>
+		<div className='flex flex-col items-center justify-center mx-5 sm:mx-16 lg:mx-32'>
+			<div className='border shadow w-full my-16 px-5 py-5 flex justify-end'>
 				<SearchBar handleIsLoading={handleIsLoading} />
 			</div>
 			{/* <InputLabel label='Resource'> */}

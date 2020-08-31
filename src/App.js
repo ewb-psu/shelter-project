@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useState, useEffect, useContext } from 'react';
-// import './App.scss';
+import './App.scss';
 import APIWrapper from './APIWrapper.js';
 import MainLayout from './components/mainLayout/MainLayout';
 import UserData from './components/UserData';
