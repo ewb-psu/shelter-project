@@ -8,7 +8,7 @@
  */
 
 import React, { useState, useEffect, useContext } from 'react';
-// import '../Assets/ExclusiveOption.scss';
+import '../Assets/ExclusiveOption.scss';
 import InvalidEntryMessage from './InvalidEntryMessage';
 import ThemeDataContext from './context/themeData/ThemeDataContext';
 import FieldSelectorContext from './context/fieldSelectorContext/FieldSelectorContext';
@@ -95,7 +95,7 @@ const ExclusiveGroup = (props) => {
 		return (
 			<div className='px-16'>
 
-			<div className='exclusive-group-container w-2/3 mx-auto'>
+			<div className='exclusive-group-container mx-auto'>
 				<div className='exclusive-group flex overflow-x-auto '>
 					{props.items.map((item, i) => (
 						<ExclusiveButton

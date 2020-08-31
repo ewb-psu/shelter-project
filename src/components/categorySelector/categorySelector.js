@@ -120,7 +120,7 @@ const CategorySelector = () => {
 	};
 
 	return categories.map((categories, i) => (
-		<div className='mx-16'>
+		<div className=''>
 			<ExclusiveOption
 				items={categories}
 				appendCategory={appendCategory}

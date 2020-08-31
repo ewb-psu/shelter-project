@@ -18,16 +18,16 @@ const Resources = (props) => {
 
 	return (
 		//<div className={'field-selector ' + themeDataContext.themeColor}>
-		<div className='flex flex-col items-center justify-center'>
-			<div className='w-full flex justify-center'>
+		<div className='flex flex-col items-center justify-center mx-32'>
+			<div className='border shadow w-full my-16 flex justify-end'>
 				<SearchBar handleIsLoading={handleIsLoading} />
 			</div>
 			{/* <InputLabel label='Resource'> */}
-			<div className=''>
+			<div className='border shadow w-full'>
 				<CategorySelector />
 			</div>
 			{/* </InputLabel> */}
-			<div className='mt-32'>
+			<div className='mt-16'>
 				<SubmitButton handleIsLoading={handleIsLoading} />
 			</div>
 		</div>

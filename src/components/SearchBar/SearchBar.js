@@ -119,7 +119,7 @@ const SearchBar = ({ fieldSelectorState, handleIsLoading }) => {
 	};
 
 	return (
-		<div>
+		<div className='mr-5'>
 			<form onSubmit={handleSubmit}>
 				<label htmlFor='search'>
 					<input
