@@ -38,7 +38,7 @@ function SubmitButton(props) {
 
 				//apiDataContext.setResources(await API.getKeywords(obj))
 
-				history.push('/info');
+				// history.push('/info');
 
 				//If category selected
 				//Make getResource call with category data
@@ -50,14 +50,20 @@ function SubmitButton(props) {
 				if (fieldSelectorContext.categorySelected === 3) {
 					obj['st'] = 's';
 					apiDataContext.setResources(await API.getResource(obj));
+					history.push('/info');
+
 				} else if (fieldSelectorContext.categorySelected === 2) {
 					obj['st'] = 'sc';
 					obj['sn'] = '';
 					apiDataContext.setResources(await API.getResource(obj));
+					history.push('/info');
+
 				} else {
 					obj['st'] = 'c';
 					obj['sn'] = '';
 					apiDataContext.setResources(await API.getResource(obj));
+					history.push('/info');
+
 				}
 				console.log('handleClick')
 			}

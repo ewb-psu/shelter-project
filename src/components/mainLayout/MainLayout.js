@@ -29,16 +29,16 @@ const MainLayout = (props) => {
 				<div className=' col-start-1 col-span-4 row-start-2 lg:col-start-2 lg:col-span-3 lg:row-start-1'>
 					<nav className='lg:w-4/5 lg:ml-auto'>
 						<ul className='mt-12 flex p-2 flex-wrap justify-center rounded border shadow text-sm'>
-							<li className='px-5 border active:bg-indigo-400 hover:bg-blue-400 '>
+							<li className='px-5 border active:bg-green-200 hover:bg-indigo-400 '>
 								<Link to='/'>Home</Link>
 							</li>
-							<li className='px-5 border active:bg-indigo-400 hover:bg-blue-400'>
+							<li className='px-5 border active:bg-green-200 hover:bg-indigo-400'>
 								<Link to='resources'> Find Resources</Link>
 							</li>
-							<li className='px-5 border active:bg-indigo-400 hover:bg-blue-400'>About Us</li>
-							<li className='px-5 border'>Our Programs</li>
-							<li className='px-5 border'>For Providers</li>
-							<li className='px-5 border'>Our Data</li>
+							<li className='px-5 border active:bg-green-200 hover:bg-indigo-400'>About Us</li>
+							<li className='px-5 border active:bg-green-200 hover:bg-indigo-400'>Our Programs</li>
+							<li className='px-5 border active:bg-green-200 hover:bg-indigo-400' >For Providers</li>
+							<li className='px-5 border active:bg-green-200 hover:bg-indigo-400'>Our Data</li>
 						</ul>
 					</nav>
 				</div>

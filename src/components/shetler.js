@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ShelterCard from './shelterCard';
 import LeafletMap from './LeafletMap';
 import PropTypes from 'prop-types';
@@ -8,11 +8,16 @@ import ApiDataContext from './context/apiData/ApiDataContext';
 
 const Shelters = ({ shelters }) => {
 	const apiDataContext = useContext(ApiDataContext);
-
-
+	
+	const [coords, setCoords] = useState({lat: '', lng: ''});
+	
 	useEffect(() => {
-		apiDataContext.resources &&
-			console.log(apiDataContext.resources)
+		apiDataContext.resources.length !== 0 &&
+		console.log(apiDataContext.resources)
+		
+		const lat = apiDataContext.resources[0] //TODO why can't i access information deeper in this datastructure??
+		// console.log(lat.Sites) //TODO why doesn't this work? 
+		// setCoords({lat: apiDataContext.resources[0].Sites[0].Latitude, lng: apiDataContext.resources[0].Sites[0].Longitude}) 
 	}, [])
 
 	return (
@@ -22,14 +27,15 @@ const Shelters = ({ shelters }) => {
 					{apiDataContext.resources &&
 						apiDataContext.resources.map((resource) => (
 							<li key={resource.Id}>
-								<ShelterCard {...resource} />
+								<ShelterCard {...resource} setCoords={setCoords}/>
 							</li>
 						))}
 				</ul>
 			</div>
 			<div className='col-start-2 col-span-2 bg-grey-400 ml-10 mt-5 mr-32 sticky'>
-				<div className=''>
-					<LeafletMap coords={{ lat: '45.5051', lng: '122.6750' }} />
+
+				<div className='sticky top-0'>
+					<LeafletMap coords={coords} />
 				</div>
 			</div>
 		</div>

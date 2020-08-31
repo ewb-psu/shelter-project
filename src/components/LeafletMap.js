@@ -8,17 +8,22 @@ class LeafletMap extends React.Component {
     constructor(props) {
       super(props)
       console.log(props)
-      this.state = {
-        lat: this.props.coords.lat,
-        lng: this.props.coords.lng,
-        zoom: 13
-      }
+      
+      //TODO understand why i couldn't set state  this way and have it available when i needed it.
+    //   this.state = {
+    //     lat: this.props.coords.lat,
+    //     lng: this.props.coords.lng,
+    //     zoom: 13
+    //   }
     }
+
     render() {
       console.log(this.props)
-      const position = [this.state.lat, this.state.lng];
+      const position = [this.props.coords.lat, this.props.coords.lng];
+      console.log(position)
+
       return (
-        <Map center={position} zoom={this.state.zoom}>
+        <Map center={position} zoom={10}>
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
