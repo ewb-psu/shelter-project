@@ -18,7 +18,6 @@ const Shelters = ({ shelters }) => {
 	return (
 		<div className='grid grid-auto-rows grid-cols-3 ml-32'>
 			<div className='grid-start-1 grid-span-1'>
-				<h1> Relevant Shelters </h1>
 				<ul className='shetlerList'>
 					{apiDataContext.resources &&
 						apiDataContext.resources.map((resource) => (
@@ -28,7 +27,7 @@ const Shelters = ({ shelters }) => {
 						))}
 				</ul>
 			</div>
-			<div className='col-start-2 col-span-2 bg-grey-400 mr-32 sticky'>
+			<div className='col-start-2 col-span-2 bg-grey-400 ml-10 mt-5 mr-32 sticky'>
 				<div className=''>
 					<LeafletMap coords={{ lat: '45.5051', lng: '122.6750' }} />
 				</div>

@@ -6,7 +6,7 @@ import React from 'react';
 const ShelterCard = (props) => {
 	// console.log(Resources)
 	return (
-		<div className='shelterCard border p-5'>
+		<div className='shelterCard border p-5 mt-5'>
 			<h1 className='shelterName'> {props.Name} </h1>
 			{/* <h4 className='shelterAddress'> {Address} </h4> */}
 			<p className='shelterWebsite'>
