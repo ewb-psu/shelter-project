@@ -129,7 +129,8 @@ const SearchBar = ({ fieldSelectorState, handleIsLoading }) => {
 							name='search'
 							value={search}
 							onChange={handleChange}
-							className='bg-blue-200 color-black leading-10 w-full boder rounded rounded-r-none color-black'
+							style={{backgroundColor: '#E1F6EC'}}
+							className='color-black leading-10 w-full boder rounded rounded-r-none color-black'
 							placeHolder='Search...'
 						/>
 					</label>
