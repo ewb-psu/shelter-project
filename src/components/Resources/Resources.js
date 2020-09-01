@@ -34,4 +34,36 @@ const Resources = (props) => {
 	);
 };
 
+
+// return (
+// 	//<div className={'field-selector ' + themeDataContext.themeColor}>
+// 	<div className=' mx-5 sm:mx-16 lg:mx-32'>
+// 		<div className='border shadow w-full my-16 px-5 py-5 flex justify-end'>
+// 			<SearchBar handleIsLoading={handleIsLoading} />
+// 		</div>
+// 		{/* <InputLabel label='Resource'> */}
+// 		<div className='border shadow w-full grid grid-auto-rows grid-cols-12'>
+// 			<div className='col-start-1 col-span-1 row-start-1'>
+// 				<button className='text-lg'>
+// 					{'<'}
+// 				</button>
+// 			</div>
+// 			<div className='col-start-2 col-span-10'>
+// 			<CategorySelector />
+
+// 			</div>
+// 			<div className='col-start-12 col-span-1 row-start-1'>
+// 				<button className='text-lg'>
+// 					{'>'}
+// 				</button>
+// 			</div>
+// 			{/* <CategorySelector /> */}
+// 		</div>
+// 		{/* </InputLabel> */}
+// 		<div className='mt-16'>
+// 			<SubmitButton handleIsLoading={handleIsLoading} />
+// 		</div>
+// 	</div>
+// );
+// };
 export default Resources;

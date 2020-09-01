@@ -9,7 +9,7 @@ class LeafletMap extends React.Component {
       super(props)
       console.log(props)
       
-      //TODO understand why i couldn't set state  this way and have it available when i needed it.
+      //TODO understand why i couldn't set state this way and have it available when i needed it.
     //   this.state = {
     //     lat: this.props.coords.lat,
     //     lng: this.props.coords.lng,

@@ -26,6 +26,7 @@ const UserData = (props) => {
 		//check category state to see if it has already been populated from local storage, possibly avoid making another api call (even though it would be with the same session id)
 		console.log('trigger callAPI');
 		console.log(apiDataContext.categories.length);
+		if(apiDataContext !== null)
 		if (apiDataContext.categories.length === 0) await API.initialize();
 	}
 
