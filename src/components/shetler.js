@@ -42,9 +42,9 @@ const Shelters = () => {
 			<div className='col-start-1 col-span-3 row-start-2 lg:col-start-1 lg:col-span-1 sm:row-start-1'>
 				<ul className='shetlerList'>
 					{apiDataContext.resources &&
-						apiDataContext.resources.map((resource) => (
+						apiDataContext.resources.map((resource, index) => (
 							<li key={resource.Id}>
-								<ShelterCard {...resource} />
+								<ShelterCard {...resource} index={index}/>
 							</li>
 						))}
 				</ul>

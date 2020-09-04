@@ -8,7 +8,7 @@ const ShelterCard = (props) => {
 		<div className='shelterCard border p-5 mt-5'>
 			<h1 className='shelterName'> {props.Name} </h1>
 			<p className='shelterWebsite'>
-				{' '}
+				{props.index}
 				<a href={`http://${props.Sites[0].URL}`}>{props.Sites[0].URL}</a>{' '}
 			</p>
 			<h2 className='resources'>Resources</h2>
