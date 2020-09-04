@@ -13,6 +13,7 @@ export const ApiDataState = (props) => {
 		sessionID: null,
 		categories: [],
 		resources: [],
+		arrayOfCoords: []
 	};
 
 	const [state, dispatch] = useReducer(ApiDataReducer, initialState);
@@ -25,14 +26,19 @@ export const ApiDataState = (props) => {
 		dispatch({ type: 'SET_RESOURCES', payload: resources });
     };
 
+	const setArrayOfCoords = (newCoords) => {
+		console.log(newCoords)
+		dispatch({type: 'SET_ARRAY_OF_COORDS', payload: newCoords})
+	}
 
     useEffect( () => { 
-		
+		//TODO check localStorage first.
         const getCategories = async () => {
             const categories = await api.getCategories()
             setCategories(categories)
         }
-        getCategories()
+		getCategories()
+
     }, [])
 
 
@@ -42,8 +48,10 @@ export const ApiDataState = (props) => {
 				sessionID: state.sessionID,
 				categories: state.categories,
 				resources: state.resources,
+				arrayOfCoords: state.arrayOfCoords,
 				setCategories,
 				setResources,
+				setArrayOfCoords
 			}}>
 			{props.children}
 		</ApiDataContext.Provider>

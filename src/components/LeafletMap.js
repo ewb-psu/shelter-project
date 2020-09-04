@@ -1,41 +1,72 @@
+/** @format */
+
 // @flow
 
-import React from 'react'
-import { Map, TileLayer, Marker, Popup } from "react-leaflet"
+import React, { useContext, useState, useLayoutEffect, useEffect } from 'react';
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import ApiDataContext from './context/apiData/ApiDataContext';
 
-
-class LeafletMap extends React.Component {
-    constructor(props) {
-      super(props)
-      console.log(props)
-      
-      //TODO understand why i couldn't set state this way and have it available when i needed it.
-    //   this.state = {
-    //     lat: this.props.coords.lat,
-    //     lng: this.props.coords.lng,
-    //     zoom: 13
-    //   }
-    }
-
-    render() {
-      console.log(this.props)
-      const position = [this.props.coords.lat, this.props.coords.lng];
-      console.log(position)
-
-      return (
-        <Map center={position} zoom={10}>
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
-          />
-          <Marker position={position}>
-            <Popup>
-              A pretty CSS3 popup. <br/> Easily customizable.
-            </Popup>
-          </Marker>
-        </Map>
-      );
-    }
-  }
+const LeafletMap = () => {
+  const apiDataContext = useContext(ApiDataContext);
   
-export default LeafletMap
+  const [position, setPosition] = useState([]);
+
+  const handleSetPosition = (coords) => {
+    setPosition(coords)
+  }
+
+//   useEffect(() => {
+// 	  if(apiDataContext.resources.length !== 0) {
+// 		  apiDataContext.resources.forEach((resource) => {
+// 			  apiDataContext.setArrayOfCoords({
+// 				  lat: resource.Sites[0].Latitude,
+// 				  lng: resource.Sites[0].Longitude,
+// 				  name: resource.Sites[0].Name,
+// 				  url: resource.Sites[0].URL && resource.Sites[0].URL
+// 				})
+// 			})
+// 		}
+
+// 	}, []);
+
+useEffect(() => {
+	if (apiDataContext.resources.length !== 0) {
+		const coordsPlusOtherData = apiDataContext.resources.map((resource) => {
+			return {
+				lat: resource.Sites[0].Latitude,
+				lng: resource.Sites[0].Longitude,
+				name: resource.Sites[0].Name,
+				url: resource.Sites[0].URL && resource.Sites[0].URL,
+			};
+		})
+		apiDataContext.setArrayOfCoords(
+			coordsPlusOtherData
+		);
+	}
+}, []);
+	
+	useEffect(() => {
+	  console.log(apiDataContext)
+	  if(apiDataContext.arrayOfCoords.length !== 0) console.log('trigger', apiDataContext.arrayOfCoords)
+	}, [])
+
+	return (
+		<Map center={apiDataContext.arrayOfCoords.length !== 0 ? [apiDataContext.arrayOfCoords[1].lat, apiDataContext.arrayOfCoords[1].lng] : ['45.00', '-122.50']} zoom={10}>
+			<TileLayer
+				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+				url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
+			/>
+			{apiDataContext.arrayOfCoords.map((coords, index) => {
+				return (
+					<Marker position={[coords.lat, coords.lng]}>
+						<Popup>
+							{coords.name} <br /> {coords.url}
+						</Popup>
+					</Marker>
+				);
+			})}
+		</Map>
+	);
+};
+
+export default LeafletMap;

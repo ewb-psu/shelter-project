@@ -26,8 +26,8 @@ const UserData = (props) => {
 		//check category state to see if it has already been populated from local storage, possibly avoid making another api call (even though it would be with the same session id)
 		console.log('trigger callAPI');
 		console.log(apiDataContext.categories.length);
-		if(apiDataContext !== null)
-		if (apiDataContext.categories.length === 0) await API.initialize();
+		if (apiDataContext !== null)
+			if (apiDataContext.categories.length === 0) await API.initialize();
 	}
 
 	//TODO move this last piece of state and handler function into context.....which context?
@@ -108,16 +108,17 @@ const UserData = (props) => {
 	};
 
 	//return a spinner while waiting for data from api to populate category buttons
-	if (apiDataContext.categories.length === 0 || isLoading) {
-		return (
-			<img
-				src={Spinner}
-				className='mx-auto'
-				style={{ width: '200px' }}
-				alt='a spinner gif, indicating that something is still loading'
-			/>
-		);
-	}
+	if (apiDataContext.categories)
+		if (apiDataContext.categories.length === 0 || isLoading) {
+			return (
+				<img
+					src={Spinner}
+					className='mx-auto'
+					style={{ width: '200px' }}
+					alt='a spinner gif, indicating that something is still loading'
+				/>
+			);
+		}
 
 	return (
 		<div>
@@ -183,15 +184,14 @@ const UserData = (props) => {
 					)}
 				</div>
 
-			<div className='col-start-1 lg:col-start-3'>
-
-			{/* <button id='your-location-button' className='p-2 border flex flex-col' onClick={findLocation}>
+				<div className='col-start-1 lg:col-start-3'>
+					{/* <button id='your-location-button' className='p-2 border flex flex-col' onClick={findLocation}>
 				Your location
 			</button> */}
-			<button id='toResources' className='p-2 border ' onClick={nextPage}>
-				Get Started
-			</button> 
-			</div>
+					<button id='toResources' className='p-2 border ' onClick={nextPage}>
+						Get Started
+					</button>
+				</div>
 			</div>
 		</div>
 	);

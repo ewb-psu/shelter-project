@@ -90,7 +90,6 @@ const ExclusiveGroup = (props) => {
 	};
 
 	if (fieldSelectorContext.doValidation) validate();
-	console.log(props.row)
 	if (typeof props.appendCategory == 'function') {
 		return (
 			<div className=''>
