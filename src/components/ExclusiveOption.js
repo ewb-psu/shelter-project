@@ -19,7 +19,7 @@ const ExclusiveGroup = (props) => {
 
 	//a wrapper function for setting state of variable 'selected', determines buttons style (chosen, not chosen)
 	const handleSetSelected = (data) => {
-		console.log('trigger', data)
+		console.log('trigger', data);
 		setSelected(data);
 	};
 
@@ -93,37 +93,38 @@ const ExclusiveGroup = (props) => {
 	if (typeof props.appendCategory == 'function') {
 		return (
 			<div className=''>
-
-			<div className='exclusive-group-container mx-auto inline'>
-				<div className={`exclusive-group flex overflow-x-auto no-scroll${props.row} `}>
-					{props.items.map((item, i) => (
-						<ExclusiveButton
-							handleSetSelected={handleSetSelected}
-							selected={
-								typeof item === 'string'
-									? item === selected
-									: item.label === selected.label
-							}
-							key={i}
-							data={item}
-							onClick={handleClick}
-							appendCategory={props.appendCategory}
-							id={i}
-							row={props.row}
-						/>
-					))}
+				<div className='exclusive-group-container mx-auto inline'>
+					<div
+						className={`exclusive-group flex overflow-x-auto no-scroll${props.row} `}>
+						{props.items.map((item, i) => (
+							<ExclusiveButton
+								handleSetSelected={handleSetSelected}
+								selected={
+									typeof item === 'string'
+										? item === selected
+										: item.label === selected.label
+								}
+								key={i}
+								data={item}
+								onClick={handleClick}
+								appendCategory={props.appendCategory}
+								id={i}
+								row={props.row}
+							/>
+						))}
+					</div>
+					<InvalidEntryMessage
+						message={props.validator ? props.validator.message : ''}
+					/>
 				</div>
-				<InvalidEntryMessage
-					message={props.validator ? props.validator.message : ''}
-				/>
-			</div>
 			</div>
 		);
 	}
 
 	return (
 		<div className='exclusive-group-container'>
-			<div className={`exclusive-group flex overflow-x-auto no-scroll${props.row} `}>
+			<div
+				className={`exclusive-group flex overflow-x-auto no-scroll${props.row} `}>
 				{props.items.map((item, i) => (
 					<ExclusiveButton
 						handleSetSelected={handleSetSelected}
@@ -179,7 +180,12 @@ const ExclusiveButton = (props) => {
 	if (typeof props.data !== 'string' && props.appendCategory) {
 		// Assume object like {label, image} and build an SVG button
 		return (
-			<div className='p-3 w-full'>
+			<div
+				className='p-3 w-full border shadow text-center m-5 transition-all hover:shadow-lg'
+				onClick={(e) => {
+					props.onClick(e, props.data, props.id, props.row);
+				}} // changes the name of the pick in ExGroup's state.
+			>
 				<button
 					style={{ width: '50px' }}
 					className={
@@ -187,11 +193,9 @@ const ExclusiveButton = (props) => {
 						(props.selected ? 'selected ' : ' ') +
 						themeDataContext.themeColor
 					} // changes CSS and appearance when an option is selected/deselected
-					onClick={(e) => {
-						props.onClick(e, props.data, props.id, props.row);
-					}} // changes the name of the pick in ExGroup's state.
+					
 				>
-					<img src={props.data.image}></img>
+					<img src={props.data.image} alt={props.data.label}></img>
 				</button>
 				<p className='text-xs'>{props.data.label}</p>
 			</div>
@@ -223,7 +227,6 @@ const ExclusiveButton = (props) => {
 	return (
 		<div className=' border overflow-hidden'>
 			<button
-
 				style={{ width: '108px' }}
 				className={
 					'flex exclusive-button ' +

@@ -13,7 +13,8 @@ export const ApiDataState = (props) => {
 		sessionID: null,
 		categories: [],
 		resources: [],
-		arrayOfCoords: []
+		arrayOfCoords: [],
+		mapCenter: ['45.00', '-122.50'] // defaut map center position to Portland Oregon
 	};
 
 	const [state, dispatch] = useReducer(ApiDataReducer, initialState);
@@ -31,6 +32,11 @@ export const ApiDataState = (props) => {
 		dispatch({type: 'SET_ARRAY_OF_COORDS', payload: newCoords})
 	}
 
+	const setMapCenter = (newCoords) => {
+		console.log(newCoords)
+		dispatch({type: 'SET_MAP_CENTER', payload: newCoords})
+	}
+
     useEffect( () => { 
 		//TODO check localStorage first.
         const getCategories = async () => {
@@ -45,13 +51,15 @@ export const ApiDataState = (props) => {
 	return (
 		<ApiDataContext.Provider
 			value={{
-				sessionID: state.sessionID,
+				sessionID: state.sessionID, // TODO where is the setter for this?
 				categories: state.categories,
 				resources: state.resources,
 				arrayOfCoords: state.arrayOfCoords,
+				mapCenter: state.mapCenter,
 				setCategories,
 				setResources,
-				setArrayOfCoords
+				setArrayOfCoords,
+				setMapCenter
 			}}>
 			{props.children}
 		</ApiDataContext.Provider>
