@@ -9,10 +9,13 @@ const ApiDataReducer = (state, action) => {
 
 		case 'SET_ARRAY_OF_COORDS':
 			console.log(state, action.payload)
-			return { ...state, arrayOfCoords: action.payload };
+			return { ...state, arrayOfLocations: action.payload };
 		case 'SET_MAP_CENTER':
 			console.log(state, action.payload)
 			return { ...state, mapCenter: action.payload };
+		case 'SET_ZOOM_LEVEL':
+			console.log(state, action.payload)
+			return { ...state, zoomLevel: action.payload };
 
 		default:
 			return;

@@ -29,16 +29,31 @@ const MainLayout = (props) => {
 				<div className=' col-start-1 col-span-4 row-start-2 lg:col-start-2 lg:col-span-3 lg:row-start-1'>
 					<nav className='lg:w-4/5 lg:ml-auto'>
 						<ul className='mt-12 flex p-2 flex-wrap justify-center rounded border shadow text-sm'>
-							<li className='px-5 border active:bg-green-200 hover:bg-indigo-400 '>
-								<Link to='/'>Home</Link>
+							<Link to='/'>
+								{' '}
+								<li className='px-5 border  active:bg-green-200 hover:bg-indigo-400 '>
+									Home
+								</li>
+							</Link>
+							<Link to='resources'>
+								{' '}
+								<li className='px-5 border active:bg-green-200 hover:bg-indigo-400'>
+									Find Resources
+								</li>
+							</Link>
+
+							<li className='px-5 border active:bg-green-200 hover:bg-indigo-400'>
+								About Us
 							</li>
 							<li className='px-5 border active:bg-green-200 hover:bg-indigo-400'>
-								<Link to='resources'> Find Resources</Link>
+								Our Programs
 							</li>
-							<li className='px-5 border active:bg-green-200 hover:bg-indigo-400'>About Us</li>
-							<li className='px-5 border active:bg-green-200 hover:bg-indigo-400'>Our Programs</li>
-							<li className='px-5 border active:bg-green-200 hover:bg-indigo-400' >For Providers</li>
-							<li className='px-5 border active:bg-green-200 hover:bg-indigo-400'>Our Data</li>
+							<li className='px-5 border active:bg-green-200 hover:bg-indigo-400'>
+								For Providers
+							</li>
+							<li className='px-5 border active:bg-green-200 hover:bg-indigo-400'>
+								Our Data
+							</li>
 						</ul>
 					</nav>
 				</div>

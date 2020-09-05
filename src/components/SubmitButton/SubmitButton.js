@@ -35,11 +35,6 @@ function SubmitButton(props) {
 				//save submit button state to local storage for use if / when user navigates backwards
 				localStorage.setItem('apiDataContext', JSON.stringify(apiDataContext));
 				localStorage.setItem('fsContext', JSON.stringify(fieldSelectorContext));
-
-				//apiDataContext.setResources(await API.getKeywords(obj))
-
-				// history.push('/info');
-
 				//If category selected
 				//Make getResource call with category data
 				//If subCategory selected

@@ -93,7 +93,7 @@ const ExclusiveGroup = (props) => {
 	if (typeof props.appendCategory == 'function') {
 		return (
 			<div className=''>
-				<div className='exclusive-group-container mx-auto inline'>
+				<div className='exclusive-group-container mx-auto inline '>
 					<div
 						className={`exclusive-group flex overflow-x-auto no-scroll${props.row} `}>
 						{props.items.map((item, i) => (
@@ -124,7 +124,7 @@ const ExclusiveGroup = (props) => {
 	return (
 		<div className='exclusive-group-container'>
 			<div
-				className={`exclusive-group flex overflow-x-auto no-scroll${props.row} `}>
+				className={`exclusive-group flex flex-wrap overflow-x-auto no-scroll${props.row} `}>
 				{props.items.map((item, i) => (
 					<ExclusiveButton
 						handleSetSelected={handleSetSelected}
@@ -181,7 +181,7 @@ const ExclusiveButton = (props) => {
 		// Assume object like {label, image} and build an SVG button
 		return (
 			<div
-				className='p-3 w-full border shadow text-center m-5 transition-all hover:shadow-lg'
+				className='p-3 w-full border shadow text-center m-5 transition-all hover:shadow-lg cursor-pointer '
 				onClick={(e) => {
 					props.onClick(e, props.data, props.id, props.row);
 				}} // changes the name of the pick in ExGroup's state.
@@ -205,7 +205,7 @@ const ExclusiveButton = (props) => {
 	if (typeof props.data !== 'string') {
 		// Assume object like {label, image} and build an SVG button
 		return (
-			<div className='p-3 w-full '>
+			<div className='p-3 w-full border shadow text-center m-5 transition-all hover:shadow-lg cursor-pointer '>
 				<button
 					style={{ width: '50px' }}
 					className={

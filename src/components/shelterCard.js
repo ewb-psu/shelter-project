@@ -14,6 +14,7 @@ const ShelterCard = (props) => {
 			props.Sites[0].Latitude,
 			props.Sites[0].Longitude,
 		]);
+		apiDataContext.setZoomLevel(16)
 	};
 	//return a card component with data provided via props 
 	return (

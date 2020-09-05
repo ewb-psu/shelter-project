@@ -27,7 +27,6 @@ const SearchBar = ({ fieldSelectorState, handleIsLoading }) => {
 
 	const APIKey = process.env.REACT_APP_211_API_KEY;
 	const API = new APIWrapper(APIKey);
-	// API.initialize();
 
 	//here we unpack the return object from API.getCategories() into the searchTermsArray.
 	const searchTermsArr = [];

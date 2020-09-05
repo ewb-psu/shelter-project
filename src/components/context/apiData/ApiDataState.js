@@ -13,8 +13,9 @@ export const ApiDataState = (props) => {
 		sessionID: null,
 		categories: [],
 		resources: [],
-		arrayOfCoords: [],
-		mapCenter: ['45.00', '-122.50'] // defaut map center position to Portland Oregon
+		arrayOfLocations: [],
+		mapCenter: ['45.00', '-122.50'], // defaut map center position to Portland Oregon
+		zoomLevel: 10
 	};
 
 	const [state, dispatch] = useReducer(ApiDataReducer, initialState);
@@ -27,7 +28,7 @@ export const ApiDataState = (props) => {
 		dispatch({ type: 'SET_RESOURCES', payload: resources });
     };
 
-	const setArrayOfCoords = (newCoords) => {
+	const setArrayOfLocations = (newCoords) => {
 		console.log(newCoords)
 		dispatch({type: 'SET_ARRAY_OF_COORDS', payload: newCoords})
 	}
@@ -35,6 +36,10 @@ export const ApiDataState = (props) => {
 	const setMapCenter = (newCoords) => {
 		console.log(newCoords)
 		dispatch({type: 'SET_MAP_CENTER', payload: newCoords})
+	}
+	
+	const setZoomLevel = (zoomLevel) => {
+		dispatch({type: 'SET_ZOOM_LEVEL', payload: zoomLevel})
 	}
 
     useEffect( () => { 
@@ -54,12 +59,15 @@ export const ApiDataState = (props) => {
 				sessionID: state.sessionID, // TODO where is the setter for this?
 				categories: state.categories,
 				resources: state.resources,
-				arrayOfCoords: state.arrayOfCoords,
+				arrayOfLocations: state.arrayOfLocations,
 				mapCenter: state.mapCenter,
+				zoomLevel: state.zoomLevel,
 				setCategories,
 				setResources,
-				setArrayOfCoords,
-				setMapCenter
+				setArrayOfLocations,
+				setMapCenter,
+				setZoomLevel
+
 			}}>
 			{props.children}
 		</ApiDataContext.Provider>
