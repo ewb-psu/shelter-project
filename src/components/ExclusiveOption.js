@@ -4,17 +4,18 @@
  * from a row of options (should de-select any other active option when
  * pressed).
  *
+ * @format
  */
 
 import React, { useState, useEffect, useContext } from 'react';
 import '../Assets/ExclusiveOption.scss';
 import InvalidEntryMessage from './InvalidEntryMessage';
 import ThemeDataContext from './context/themeData/ThemeDataContext';
-import FieldSelectorContext from './context/fieldSelectorContext/FieldSelectorContext';
+import UserDataContext from './context/userData/UserDataContext';
 
 const ExclusiveGroup = (props) => {
 	const [selected, setSelected] = useState(props.default ? props.default : '');
-	const fieldSelectorContext = useContext(FieldSelectorContext);
+	const userDataContext = useContext(UserDataContext);
 
 	//a wrapper function for setting state of variable 'selected', determines buttons style (chosen, not chosen)
 	const handleSetSelected = (data) => {
@@ -24,52 +25,51 @@ const ExclusiveGroup = (props) => {
 	let valid = null;
 	let invalidEntryMessage = '';
 
-	//sets Selected state, saves information about buttons state in fieldSelectorContext, to be saved later in localStorage.
+	//sets Selected state, saves information about buttons state in userDataContext, to be saved later in localStorage.
 	const handleClick = (event, data, id, row) => {
-		setSelected(data);
+		handleSetSelected(data);
 		if (typeof data === 'string' && props.appendCategory) {
-			fieldSelectorContext.setServiceName(data);
+			userDataContext.setServiceName(data);
 			props.appendCategory(this.props.row, id);
 		} else if (typeof data === 'string') {
 			//this case is when a gender button is being clicked.
-			console.log(data);
-			fieldSelectorContext.setGender(data);
+			userDataContext.setGender(data);
 		} else if (props.appendCategory) {
-			fieldSelectorContext.setServiceName(data.label);
+			userDataContext.setServiceName(data.label);
 			props.appendCategory(props.row, id);
 			//save service button selections to buttonState, which in turn is saved to localstorage on form submit
 			if (row === 0) {
-				fieldSelectorContext.setButtonState({
-					...fieldSelectorContext.buttonState,
+				userDataContext.setButtonState({
+					...userDataContext.buttonState,
 					category: data.label,
 				});
 			} else if (row === 1) {
-				fieldSelectorContext.setButtonState({
-					...fieldSelectorContext.buttonState,
+				userDataContext.setButtonState({
+					...userDataContext.buttonState,
 					subCat: [
 						{
-							...fieldSelectorContext.buttonState.subCat[0],
+							...userDataContext.buttonState.subCat[0],
 							subCategory: data.label,
 						},
 					],
 				});
 			} else {
-				fieldSelectorContext.setButtonState({
-					...fieldSelectorContext.buttonState,
+				userDataContext.setButtonState({
+					...userDataContext.buttonState,
 					subCat: [
 						{
-							...fieldSelectorContext.buttonState.subCat[0],
+							...userDataContext.buttonState.subCat[0],
 							subCatTerm: [{ sterm: data.label }],
 						},
 					],
 				});
 			}
 		} else {
-			fieldSelectorContext.setButtonState({
-				...fieldSelectorContext.buttonState,
+			userDataContext.setButtonState({
+				...userDataContext.buttonState,
 				category: data.label,
 			});
-			fieldSelectorContext.setServiceName(data.label);
+			userDataContext.setServiceName(data.label);
 		}
 	};
 
@@ -87,37 +87,78 @@ const ExclusiveGroup = (props) => {
 		if (validityObject.valid === true) invalidEntryMessage = '';
 	};
 
-	if (fieldSelectorContext.doValidation) validate();
-
-	if (typeof props.appendCategory == 'function') {
+	if (userDataContext.doValidation) validate();
+	//added second condition, props.row must be the first row for this jsx to render. this is out normally styled buttons with svg's
+	if (typeof props.appendCategory == 'function' && props.row === 0) {
 		return (
-			<div className='exclusive-group-container'>
-				<div className='exclusive-group'>
-					{props.items.map((item, i) => (
-						<ExclusiveButton
-							handleSetSelected={handleSetSelected}
-							selected={
-								typeof item === 'string'
-									? item === selected
-									: item.label === selected.label
-							}
-							key={i}
-							data={item}
-							onClick={handleClick}
-							appendCategory={props.appendCategory}
-							id={i}
-							row={props.row}
-						/>
-					))}
+			<div className=''>
+				<div className='exclusive-group-container mx-auto inline '>
+					<div
+						className={`exclusive-group flex overflow-x-auto no-scroll${props.row} `}>
+						{props.items.map((item, i) => (
+							<ExclusiveButton
+								handleSetSelected={handleSetSelected}
+								selected={
+									typeof item === 'string'
+										? item === selected
+										: item.label === selected.label
+								}
+								key={i}
+								data={item}
+								onClick={handleClick}
+								appendCategory={props.appendCategory}
+								id={i}
+								row={props.row}
+							/>
+						))}
+					</div>
+					<InvalidEntryMessage
+						message={props.validator ? props.validator.message : ''}
+					/>
 				</div>
-				<InvalidEntryMessage message={props.validator ? props.validator.message : ''} />
 			</div>
 		);
 	}
-
+	//must be second row for this jsx render. this will be a column of buttons without svg images.
+	if (typeof props.appendCategory == 'function' && props.row === 1) {
+		return (
+			<div className=''>
+				<div className='exclusive-group-container mx-auto inline '>
+					<div
+						className={`exclusive-group flex flex-wrap overflow-x-auto no-scroll${props.row} `}>
+						{props.items.map((item, i) => (
+							<ExclusiveButton
+								handleSetSelected={handleSetSelected}
+								selected={
+									typeof item === 'string'
+										? item === selected
+										: item.label === selected.label
+								}
+								key={i}
+								data={item}
+								onClick={handleClick}
+								appendCategory={props.appendCategory}
+								id={i}
+								row={props.row}
+							/>
+						))}
+					</div>
+					<InvalidEntryMessage
+						message={props.validator ? props.validator.message : ''}
+					/>
+				</div>
+			</div>
+		);
+	}
+	//do not render a third row of categories. This will be handled in advanced search options at a later date.
+	if (typeof props.appendCategory == 'function' && props.row === 2) {
+		return null;
+	}
+	//default
 	return (
 		<div className='exclusive-group-container'>
-			<div className='exclusive-group'>
+			<div
+				className={`exclusive-group flex flex-wrap overflow-x-auto no-scroll${props.row} `}>
 				{props.items.map((item, i) => (
 					<ExclusiveButton
 						handleSetSelected={handleSetSelected}
@@ -134,7 +175,9 @@ const ExclusiveGroup = (props) => {
 					/>
 				))}
 			</div>
-			<InvalidEntryMessage message={props.validator ? props.validator.message : ''} />
+			<InvalidEntryMessage
+				message={props.validator ? props.validator.message : ''}
+			/>
 		</div>
 	);
 };
@@ -144,80 +187,112 @@ export default ExclusiveGroup;
 // Child component of ExclusiveGroup
 const ExclusiveButton = (props) => {
 	const themeDataContext = useContext(ThemeDataContext);
-	const fieldSelectorContext = useContext(FieldSelectorContext);
+	const userDataContext = useContext(UserDataContext);
 
 	useEffect(() => {
-		//look for fieldSelectorState in localStorage. if its there, use it to determine which buttons should be styled when navigating backwards.
+		//look for userDataState in localStorage. if its there, use it to determine which buttons should be styled when navigating backwards.
 		// if (!JSON.parse(localStorage.getItem('submitButtonProps'))) return;
 
 		if (props.row === undefined) {
-			props.handleSetSelected(fieldSelectorContext.gender);
+			props.handleSetSelected(userDataContext.gender);
 		}
-		if (JSON.parse(localStorage.getItem('fsContext')))
+		if (JSON.parse(localStorage.getItem('userDataContext')))
 			if (
 				props.data.label ===
-					JSON.parse(localStorage.getItem('fsContext')).buttonState.category ||
+					JSON.parse(localStorage.getItem('userDataContext')).buttonState
+						.category ||
 				props.data.label ===
-					JSON.parse(localStorage.getItem('fsContext')).buttonState.subCat[0]
-						.subCategory ||
+					JSON.parse(localStorage.getItem('userDataContext')).buttonState
+						.subCat[0].subCategory ||
 				props.data.label ===
-					JSON.parse(localStorage.getItem('fsContext')).buttonState.subCat[0]
-						.subCatTerm[0].sterm
+					JSON.parse(localStorage.getItem('userDataContext')).buttonState
+						.subCat[0].subCatTerm[0].sterm
 			) {
+				console.log('triggerSelected');
 				props.handleSetSelected(props.data);
 			}
 	}, []);
 
-	if (typeof props.data !== 'string' && props.appendCategory) {
+	//added condition row must be second row to return differently styled button group
+	if (
+		typeof props.data !== 'string' &&
+		props.appendCategory &&
+		props.row === 1
+	) {
 		// Assume object like {label, image} and build an SVG button
 		return (
-			<button
-				className={
-					'exclusive-button ' +
-					(props.selected ? 'selected ' : ' ') +
-					themeDataContext.themeColor
-				} // changes CSS and appearance when an option is selected/deselected
+			<div
+				className={`p-0 w-full border shadow m-0 transition-all hover:shadow-lg cursor-pointer ${
+					props.selected ? 'selected ' : ' '
+				} ${themeDataContext.themeColor}`}
 				onClick={(e) => {
 					props.onClick(e, props.data, props.id, props.row);
 				}} // changes the name of the pick in ExGroup's state.
 			>
-				<img src={props.data.image}></img>
-				{props.data.label}
-			</button>
+				<p className='text-xs'>{props.data.label}</p>
+			</div>
+		);
+	} else if (typeof props.data !== 'string' && props.appendCategory) {
+		return (
+			<div
+				className='p-3 w-full border shadow text-center m-5 transition-all hover:shadow-lg cursor-pointer '
+				onClick={(e) => {
+					props.onClick(e, props.data, props.id, props.row);
+				}} // changes the name of the pick in ExGroup's state.
+			>
+				<button
+					style={{ width: '50px' }}
+					className={
+						'border p-3 exclusive-button ' +
+						(props.selected ? 'selected ' : ' ') +
+						themeDataContext.themeColor
+					} // changes CSS and appearance when an option is selected/deselected
+				>
+					<img src={props.data.image} alt={props.data.label}></img>
+				</button>
+				<p className='text-xs'>{props.data.label}</p>
+			</div>
 		);
 	}
 	// For buttons with SVG images
-	if (typeof props.data !== 'string') {
+	else if (typeof props.data !== 'string') {
 		// Assume object like {label, image} and build an SVG button
 		return (
-			<button
-				className={
-					'exclusive-button ' +
-					(props.selected ? 'selected ' : ' ') +
-					themeDataContext.themeColor
-				} // changes CSS and appearance when an option is selected/deselected
-				onClick={(e) => {
-					props.onClick(e, props.data, props.id);
-				}} // changes the name of the pick in ExGroup's state.
-			>
-				<img src={props.data.image}></img>
-				{props.data.label}
-			</button>
+			<div className='p-3 w-full border shadow text-center m-5 transition-all hover:shadow-lg cursor-pointer '>
+				<button
+					style={{ width: '50px' }}
+					className={
+						'exclusive-button ' +
+						(props.selected ? 'selected ' : ' ') +
+						themeDataContext.themeColor
+					} // changes CSS and appearance when an option is selected/deselected
+					onClick={(e) => {
+						props.onClick(e, props.data, props.id);
+					}} // changes the name of the pick in ExGroup's state.
+				>
+					<img src={props.data.image}></img>
+					{props.data.label}
+				</button>
+			</div>
+		);
+	} else {
+		return (
+			//this case styles the gender button group
+			<div className=' border overflow-hidden'>
+				<button
+					style={{ width: '108px' }}
+					className={
+						'flex exclusive-button ' +
+						(props.selected ? 'selected ' : ' ') +
+						themeDataContext.themeColor
+					} // changes CSS and appearance when an option is selected/deselected
+					onClick={(e) => {
+						props.onClick(e, props.data, props.id);
+					}} // changes the name of the pick in ExGroup's state.
+				>
+					{props.data}
+				</button>
+			</div>
 		);
 	}
-
-	return (
-		<button
-			className={
-				'exclusive-button ' +
-				(props.selected ? 'selected ' : ' ') +
-				themeDataContext.themeColor
-			} // changes CSS and appearance when an option is selected/deselected
-			onClick={(e) => {
-				props.onClick(e, props.data, props.id);
-			}} // changes the name of the pick in ExGroup's state.
-		>
-			{props.data}
-		</button>
-	);
 };

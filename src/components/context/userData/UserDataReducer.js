@@ -1,5 +1,5 @@
 
-const FieldSelectorReducer = (state, action) => {
+const UserDataReducer = (state, action) => {
 	switch (action.type) {
 		case 'SET_SERVICE_NAME':
 			return { ...state, serviceName: action.payload };
@@ -43,4 +43,4 @@ const FieldSelectorReducer = (state, action) => {
 	}
 };
 
-export default FieldSelectorReducer;
+export default UserDataReducer;

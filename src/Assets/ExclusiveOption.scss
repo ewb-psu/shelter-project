@@ -1,74 +1,74 @@
 @import '../GlobalStyle/globals';
 
-.exclusive-group {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
-  margin-top: 10px;
+// .exclusive-group {
+//   display: flex;
+//   flex-wrap: wrap;
+//   flex-direction: row;
+//   justify-content: center;
+//   margin-top: 10px;
 
-  @include for(smaller-than-phone) {
-  }
-}
+//   @include for(smaller-than-phone) {
+//   }
+// }
 
-.exclusive-button {
-  flex-grow: 1;
+// .exclusive-button {
+//   flex-grow: 1;
 
-  border-radius: 0;
-  border: 1px solid $dark-border-color;
-  border-right: 0;
+//   border-radius: 0;
+//   border: 1px solid $dark-border-color;
+//   border-right: 0;
 
-  transition: background-color 0.2s;
+//   transition: background-color 0.2s;
 
-  img {
-    width: 60px;
-    height: 60px;
+//   img {
+//     width: 60px;
+//     height: 60px;
 
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-
-// Round only the outermost corners of the button group
-// to improve visual cohesion
-
-.exclusive-group button:first-child {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-
-  @include for(smaller-than-phone) {
-    border: 1px solid $dark-border-color;
-    border-radius: 0;
-  }
-}
-
-.exclusive-group button:last-child {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-
-  border:1px solid transparent;
-  border-color: $dark-border-color;
-
-  @include for(smaller-than-phone) {
-    border: 1px solid $dark-border-color;
-    border-radius: 0;
-  }
-}
+//     display: flex;
+//     flex-direction: column;
+//   }
+// }
 
 
-button {
-  background-color: inherit;
-  cursor: pointer;
+// // Round only the outermost corners of the button group
+// // to improve visual cohesion
 
-  font-size: inherit;
-  line-height: 1em;
-  padding: 8px 16px;
+// .exclusive-group button:first-child {
+//   border-top-left-radius: 5px;
+//   border-bottom-left-radius: 5px;
 
-  border: 1px solid transparent;
-  border-color: $dark-border-color;
-  border-radius: 5px;
-}
+//   @include for(smaller-than-phone) {
+//     border: 1px solid $dark-border-color;
+//     border-radius: 0;
+//   }
+// }
+
+// .exclusive-group button:last-child {
+//   border-top-right-radius: 5px;
+//   border-bottom-right-radius: 5px;
+
+//   border:1px solid transparent;
+//   border-color: $dark-border-color;
+
+//   @include for(smaller-than-phone) {
+//     border: 1px solid $dark-border-color;
+//     border-radius: 0;
+//   }
+// }
+
+
+// button {
+//   background-color: inherit;
+//   cursor: pointer;
+
+//   font-size: inherit;
+//   line-height: 1em;
+//   padding: 8px 16px;
+
+//   border: 1px solid transparent;
+//   border-color: $dark-border-color;
+//   border-radius: 5px;
+// }
 
 .selected {
   &.light { background-color: rgba(0,0,255,0.2); }
