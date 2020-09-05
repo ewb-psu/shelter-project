@@ -1,3 +1,4 @@
+/** @format */
 
 import React, { useContext } from 'react';
 import './SubmitButton.css';
@@ -13,7 +14,6 @@ function SubmitButton(props) {
 	const apiDataContext = useContext(ApiDataContext);
 	const userDataContext = useContext(UserDataContext);
 
-
 	// API.initialize();
 	let obj = {
 		sn: userDataContext.serviceName,
@@ -25,16 +25,17 @@ function SubmitButton(props) {
 		catid: userDataContext.categoryId,
 	};
 
-
 	async function handleClick() {
-
 		try {
 			props.handleIsLoading();
 			await userDataContext.goBehavior();
 			if (userDataContext.setIsPageDataValid()) {
 				//save submit button state to local storage for use if / when user navigates backwards
 				localStorage.setItem('apiDataContext', JSON.stringify(apiDataContext));
-				localStorage.setItem('userDataContext', JSON.stringify(userDataContext));
+				localStorage.setItem(
+					'userDataContext',
+					JSON.stringify(userDataContext)
+				);
 				//If category selected
 				//Make getResource call with category data
 				//If subCategory selected
@@ -46,28 +47,28 @@ function SubmitButton(props) {
 					obj['st'] = 's';
 					apiDataContext.setResources(await API.getResource(obj));
 					history.push('/info');
-
 				} else if (userDataContext.categorySelected === 2) {
 					obj['st'] = 'sc';
 					obj['sn'] = '';
 					apiDataContext.setResources(await API.getResource(obj));
 					history.push('/info');
-
 				} else {
 					obj['st'] = 'c';
 					obj['sn'] = '';
 					apiDataContext.setResources(await API.getResource(obj));
 					history.push('/info');
-
 				}
-				console.log('handleClick')
+				console.log('handleClick');
 			}
 		} catch (error) {
 			console.log(error);
 		}
 	}
 	return (
-		<button type='button' onClick={handleClick} className='p-2 sm:px-5 md:px-8 lg:px-16 border rounded rounded-l-none mx-auto'>
+		<button
+			type='button'
+			onClick={handleClick}
+			className='transition-all p-2 sm:px-5 md:px-8 lg:px-16 border hover:bg-indigo-400 rounded rounded-l-none mx-auto'>
 			Go
 		</button>
 	);

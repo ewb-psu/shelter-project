@@ -31,7 +31,6 @@ const CategorySelector = () => {
 			setKeys(JSON.parse(localStorage.getItem('keys')));
 	}, []);
 
-
 	//categoryType needs to be 'category' or 'subcategory'
 	const createLabelWithImage = (array, categoryType) => {
 		const svgPathEndings =
@@ -51,9 +50,9 @@ const CategorySelector = () => {
 	const appendCategory = (row, id) => {
 		let newCategory = categories.slice();
 		//remove subCategories and keys if user clicks at a higher level of the tree
-		for (let i = row; i < categories.length -1 ; i++) {
-			newCategory.pop(); 
-			keys.pop();	
+		for (let i = row; i < categories.length - 1; i++) {
+			newCategory.pop();
+			keys.pop();
 		}
 
 		//keep options from growing
@@ -119,58 +118,83 @@ const CategorySelector = () => {
 		}
 	};
 
+	//functions to handle scrolling the different rows to the left or right.
 	const handleScrollResourcesLeft = (e) => {
-		console.log('trigger left', e.target)
-		if(e.target.id === 'scrollLeft0') {
-			const noScroll = document.querySelector('.no-scroll0')
-			console.log(noScroll)
-			noScroll.scrollBy(-50, 0)
-		} else if(e.target.id === 'scrollLeft1') {
-			const noScroll = document.querySelector('.no-scroll1')
-			console.log(noScroll)
-			noScroll.scrollBy(-50, 0)
+		console.log('trigger left', e.target);
+		if (e.target.id === 'scrollLeft0') {
+			const noScroll = document.querySelector('.no-scroll0');
+			console.log(noScroll);
+			noScroll.scrollBy(-50, 0);
+		} else if (e.target.id === 'scrollLeft1') {
+			const noScroll = document.querySelector('.no-scroll1');
+			console.log(noScroll);
+			noScroll.scrollBy(-50, 0);
 		} else {
-			const noScroll = document.querySelector('.no-scroll2')
-			console.log(noScroll)
-			noScroll.scrollBy(-50, 0)
+			const noScroll = document.querySelector('.no-scroll2');
+			console.log(noScroll);
+			noScroll.scrollBy(-50, 0);
 		}
-	}
+	};
 	const handleScrollResourcesRight = (e) => {
-		console.log('trigger right', e.target)
-		if(e.target.id === 'scrollRight0') {
-			const noScroll = document.querySelector('.no-scroll0')
-			console.log(noScroll)
-			noScroll.scrollBy(50, 0)
-		} else if(e.target.id === 'scrollRight1') {
-			const noScroll = document.querySelector('.no-scroll1')
-			console.log(noScroll)
-			noScroll.scrollBy(50, 0)
+		console.log('trigger right', e.target);
+		if (e.target.id === 'scrollRight0') {
+			const noScroll = document.querySelector('.no-scroll0');
+			console.log(noScroll);
+			noScroll.scrollBy(50, 0);
+		} else if (e.target.id === 'scrollRight1') {
+			const noScroll = document.querySelector('.no-scroll1');
+			console.log(noScroll);
+			noScroll.scrollBy(50, 0);
 		} else {
-			const noScroll = document.querySelector('.no-scroll2')
-			console.log(noScroll)
-			noScroll.scrollBy(50, 0)
+			const noScroll = document.querySelector('.no-scroll2');
+			console.log(noScroll);
+			noScroll.scrollBy(50, 0);
 		}
-	}
+	};
 
-	return categories.map((categories, i) => (
-		<div className='grid grid-auto-rows grid-cols-12'>
-			<div id={`scrollLeft${i}`} className='col-start-1 col-span-1 flex justify-center items-center cursor-pointer' onClick={handleScrollResourcesLeft}>
-				{'<'}
-			</div>
-			<div className='col-start-2 col-span-10'>
+	return categories.map((categories, i) => {
+		//if its the first row, render a horizontally scrolling row of resource categories and buttons to scroll right and left
+		if (i === 0)
+			return (
+				<div className='grid grid-auto-rows grid-cols-12'>
+					<button
+						id={`scrollLeft${i}`}
+						className='col-start-1 col-span-1 flex justify-center items-center cursor-pointer'
+						onClick={handleScrollResourcesLeft}>
+						{'<'}
+					</button>
+					<div className='col-start-2 col-span-10'>
+						<ExclusiveOption
+							items={categories}
+							appendCategory={appendCategory}
+							key={i}
+							row={i}
+						/>
+					</div>
+					<button
+						id={`scrollRight${i}`}
+						className='col-start-12 col-span-1 flex justify-center items-center cursor-pointer'
+						onClick={handleScrollResourcesRight}>
+						{'>'}
+					</button>
+				</div>
+			);
+		return (
+			//second row has no arrow buttons for side scrolling because it is a column 
+			<div className='grid grid-auto-rows grid-cols-12'>
 
-			<ExclusiveOption
-				items={categories}
-				appendCategory={appendCategory}
-				key={i}
-				row={i}
-			/>
+				<div className='col-start-2 col-span-10'>
+					<ExclusiveOption
+						items={categories}
+						appendCategory={appendCategory}
+						key={i}
+						row={i}
+					/>
+				</div>
+
 			</div>
-			<div id={`scrollRight${i}`} className='col-start-12 col-span-1 flex justify-center items-center cursor-pointer' onClick={handleScrollResourcesRight}>
-				{'>'}
-			</div>
-		</div>
-	));
+		);
+	});
 };
 
 export default CategorySelector;

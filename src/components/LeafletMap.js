@@ -7,6 +7,7 @@ import ApiDataContext from './context/apiData/ApiDataContext';
 const LeafletMap = () => {
 	//invoke useContext on ApiDataContext component, initializing apiDataContext variable
 	const apiDataContext = useContext(ApiDataContext);
+	
 	//when component mounts, if there are resources in the resource array, map through it and return an array of objects which is then set to apiDataContext
 	useEffect(() => {
 			if (apiDataContext.resources.length !== 0) {

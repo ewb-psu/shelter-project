@@ -131,7 +131,7 @@ const UserData = (props) => {
 
 			<div
 				className={
-					'py-16 mx-5 sm:mx-16 sm:mx-16 lg:mx-32 grid grid-cols-4 grid-auto-rows gap-y-5 border shadow field-selector ' +
+					'py-16 mx-5 sm:mx-16 lg:mx-32 grid grid-cols-4 grid-auto-rows gap-y-5 border shadow field-selector ' +
 					themeDataContext.themeColor
 				}>
 				<div className='mt-5 col-start-1 col-span-4 '>
@@ -185,10 +185,7 @@ const UserData = (props) => {
 				</div>
 
 				<div className='col-start-1 lg:col-start-3'>
-					{/* <button id='your-location-button' className='p-2 border flex flex-col' onClick={findLocation}>
-				Your location
-			</button> */}
-					<button id='toResources' className='p-2 border ' onClick={nextPage}>
+					<button id='toResources' className='p-2 border transition-all hover:bg-indigo-400 ' onClick={nextPage}>
 						Get Started
 					</button>
 				</div>
