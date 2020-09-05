@@ -9,7 +9,7 @@ import InputLabel from './InputLabel';
 import CountySelect from './CountySelect';
 import Spinner from '../Assets/spinner.gif';
 import ApiDataContext from './context/apiData/ApiDataContext';
-import FieldSelectorContext from './context/fieldSelectorContext/FieldSelectorContext';
+import UserDataContext from './context/userData/UserDataContext';
 import ThemeDataContext from './context/themeData/ThemeDataContext';
 import { useHistory } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ const APIKey = process.env.REACT_APP_211_API_KEY;
 const API = new APIWrapper(APIKey);
 
 const UserData = (props) => {
-	const fieldSelectorContext = useContext(FieldSelectorContext);
+	const userDataContext = useContext(UserDataContext);
 	const apiDataContext = useContext(ApiDataContext);
 	const themeDataContext = useContext(ThemeDataContext);
 	let history = useHistory();
@@ -40,8 +40,8 @@ const UserData = (props) => {
 		// // console.log(
 		// "Then we'd try to find their location using a Google API. For now...";
 		// // );
-		fieldSelectorContext.setZipcode('97206');
-		fieldSelectorContext.setCounty('Clackamas');
+		userDataContext.setZipcode('97206');
+		userDataContext.setCounty('Clackamas');
 	};
 
 	//restores form state upon backwards navigation
@@ -61,34 +61,34 @@ const UserData = (props) => {
 				.serviceName;
 			const buttonState = JSON.parse(localStorage.getItem('fsContext'))
 				.buttonState;
-			fieldSelectorContext.setAge(age);
-			fieldSelectorContext.setFamilySize(familySize);
-			fieldSelectorContext.setZipcode(zipcode);
-			fieldSelectorContext.setCounty(county);
-			fieldSelectorContext.setGender(gender);
-			fieldSelectorContext.setCategorySelected(categorySelected);
-			fieldSelectorContext.setCategoryId(catID);
-			fieldSelectorContext.setServiceName(serviceName);
-			fieldSelectorContext.setButtonState(buttonState);
+			userDataContext.setAge(age);
+			userDataContext.setFamilySize(familySize);
+			userDataContext.setZipcode(zipcode);
+			userDataContext.setCounty(county);
+			userDataContext.setGender(gender);
+			userDataContext.setCategorySelected(categorySelected);
+			userDataContext.setCategoryId(catID);
+			userDataContext.setServiceName(serviceName);
+			userDataContext.setButtonState(buttonState);
 		}
 	}, []);
 
-	//monitors the state of fieldSelector.zipCode. When it becomes a valid zip,
+	//monitors the state of userData.zipCode. When it becomes a valid zip,
 	//an api call is made to populate an array with all the possible counties that zipcode could be in.
 	useEffect(() => {
 		const handleValidZip = async () => {
 			console.log('handleValidZip');
 			if (
-				fieldSelectorContext.setIsZipCodeValid(fieldSelectorContext.zipCode)
+				userDataContext.setIsZipCodeValid(userDataContext.zipCode)
 					.valid
 			) {
 				await API.getCountyByZipCode({
-					zip: fieldSelectorContext.zipCode,
+					zip: userDataContext.zipCode,
 				})
 					.then((data) => {
-						fieldSelectorContext.setCounty(data[0]['county']);
-						fieldSelectorContext.getAllPossibleCountiesByZip(
-							fieldSelectorContext.zipCode
+						userDataContext.setCounty(data[0]['county']);
+						userDataContext.getAllPossibleCountiesByZip(
+							userDataContext.zipCode
 						);
 					})
 					.catch((err) => {
@@ -98,11 +98,11 @@ const UserData = (props) => {
 			}
 		};
 		handleValidZip();
-	}, [fieldSelectorContext.zipCode]);
+	}, [userDataContext.zipCode]);
 
 	const nextPage = () => {
-		console.log(fieldSelectorContext);
-		if (fieldSelectorContext.setIsPageDataValid()) {
+		console.log(userDataContext);
+		if (userDataContext.setIsPageDataValid()) {
 			history.push('/resources');
 		}
 	};
@@ -138,7 +138,7 @@ const UserData = (props) => {
 					<InputLabel label='Gender'>
 						<ExclusiveOption
 							items={['Male', 'Female', 'Trans Male', 'Trans Female']}
-							validator={fieldSelectorContext.isGenderValid}
+							validator={userDataContext.isGenderValid}
 						/>
 					</InputLabel>
 				</div>
@@ -147,8 +147,8 @@ const UserData = (props) => {
 					<InputLabel label='Age'>
 						<TextInput
 							name='age'
-							value={fieldSelectorContext.age}
-							validator={fieldSelectorContext.isAgeValid}
+							value={userDataContext.age}
+							validator={userDataContext.isAgeValid}
 							placeholder='32'
 						/>
 					</InputLabel>
@@ -159,8 +159,8 @@ const UserData = (props) => {
 						<InputLabel label='ZIP' className=''>
 							<TextInput
 								name='zip'
-								value={fieldSelectorContext.zipCode}
-								validator={fieldSelectorContext.isZipCodeValid}
+								value={userDataContext.zipCode}
+								validator={userDataContext.isZipCodeValid}
 								placeholder='97333'
 							/>
 						</InputLabel>
@@ -168,7 +168,7 @@ const UserData = (props) => {
 				</div>
 
 				<div className='col-start-1 col-span-4 row-start-4'>
-					{fieldSelectorContext.possibleCounties ? (
+					{userDataContext.possibleCounties ? (
 						<InputLabel label='County'>
 							<CountySelect name='County' />
 						</InputLabel>
@@ -176,8 +176,8 @@ const UserData = (props) => {
 						<InputLabel label='County'>
 							<TextInput
 								name='county'
-								value={fieldSelectorContext.county}
-								validator={fieldSelectorContext.isCountyValid}
+								value={userDataContext.county}
+								validator={userDataContext.isCountyValid}
 								placeholder='Multnomah'
 							/>
 						</InputLabel>

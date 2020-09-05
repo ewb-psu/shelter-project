@@ -11,11 +11,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import '../Assets/ExclusiveOption.scss';
 import InvalidEntryMessage from './InvalidEntryMessage';
 import ThemeDataContext from './context/themeData/ThemeDataContext';
-import FieldSelectorContext from './context/fieldSelectorContext/FieldSelectorContext';
+import UserDataContext from './context/userData/UserDataContext';
 
 const ExclusiveGroup = (props) => {
 	const [selected, setSelected] = useState(props.default ? props.default : '');
-	const fieldSelectorContext = useContext(FieldSelectorContext);
+	const userDataContext = useContext(UserDataContext);
 
 	//a wrapper function for setting state of variable 'selected', determines buttons style (chosen, not chosen)
 	const handleSetSelected = (data) => {
@@ -26,52 +26,52 @@ const ExclusiveGroup = (props) => {
 	let valid = null;
 	let invalidEntryMessage = '';
 
-	//sets Selected state, saves information about buttons state in fieldSelectorContext, to be saved later in localStorage.
+	//sets Selected state, saves information about buttons state in userDataContext, to be saved later in localStorage.
 	const handleClick = (event, data, id, row) => {
 		handleSetSelected(data);
 		if (typeof data === 'string' && props.appendCategory) {
-			fieldSelectorContext.setServiceName(data);
+			userDataContext.setServiceName(data);
 			props.appendCategory(this.props.row, id);
 		} else if (typeof data === 'string') {
 			//this case is when a gender button is being clicked.
 			console.log(data);
-			fieldSelectorContext.setGender(data);
+			userDataContext.setGender(data);
 		} else if (props.appendCategory) {
-			fieldSelectorContext.setServiceName(data.label);
+			userDataContext.setServiceName(data.label);
 			props.appendCategory(props.row, id);
 			//save service button selections to buttonState, which in turn is saved to localstorage on form submit
 			if (row === 0) {
-				fieldSelectorContext.setButtonState({
-					...fieldSelectorContext.buttonState,
+				userDataContext.setButtonState({
+					...userDataContext.buttonState,
 					category: data.label,
 				});
 			} else if (row === 1) {
-				fieldSelectorContext.setButtonState({
-					...fieldSelectorContext.buttonState,
+				userDataContext.setButtonState({
+					...userDataContext.buttonState,
 					subCat: [
 						{
-							...fieldSelectorContext.buttonState.subCat[0],
+							...userDataContext.buttonState.subCat[0],
 							subCategory: data.label,
 						},
 					],
 				});
 			} else {
-				fieldSelectorContext.setButtonState({
-					...fieldSelectorContext.buttonState,
+				userDataContext.setButtonState({
+					...userDataContext.buttonState,
 					subCat: [
 						{
-							...fieldSelectorContext.buttonState.subCat[0],
+							...userDataContext.buttonState.subCat[0],
 							subCatTerm: [{ sterm: data.label }],
 						},
 					],
 				});
 			}
 		} else {
-			fieldSelectorContext.setButtonState({
-				...fieldSelectorContext.buttonState,
+			userDataContext.setButtonState({
+				...userDataContext.buttonState,
 				category: data.label,
 			});
-			fieldSelectorContext.setServiceName(data.label);
+			userDataContext.setServiceName(data.label);
 		}
 	};
 
@@ -89,7 +89,7 @@ const ExclusiveGroup = (props) => {
 		if (validityObject.valid === true) invalidEntryMessage = '';
 	};
 
-	if (fieldSelectorContext.doValidation) validate();
+	if (userDataContext.doValidation) validate();
 	if (typeof props.appendCategory == 'function') {
 		return (
 			<div className=''>
@@ -153,24 +153,24 @@ export default ExclusiveGroup;
 // Child component of ExclusiveGroup
 const ExclusiveButton = (props) => {
 	const themeDataContext = useContext(ThemeDataContext);
-	const fieldSelectorContext = useContext(FieldSelectorContext);
+	const userDataContext = useContext(UserDataContext);
 
 	useEffect(() => {
-		//look for fieldSelectorState in localStorage. if its there, use it to determine which buttons should be styled when navigating backwards.
+		//look for userDataState in localStorage. if its there, use it to determine which buttons should be styled when navigating backwards.
 		// if (!JSON.parse(localStorage.getItem('submitButtonProps'))) return;
 
 		if (props.row === undefined) {
-			props.handleSetSelected(fieldSelectorContext.gender);
+			props.handleSetSelected(userDataContext.gender);
 		}
-		if (JSON.parse(localStorage.getItem('fsContext')))
+		if (JSON.parse(localStorage.getItem('userDataContext')))
 			if (
 				props.data.label ===
-					JSON.parse(localStorage.getItem('fsContext')).buttonState.category ||
+					JSON.parse(localStorage.getItem('userDataContext')).buttonState.category ||
 				props.data.label ===
-					JSON.parse(localStorage.getItem('fsContext')).buttonState.subCat[0]
+					JSON.parse(localStorage.getItem('userDataContext')).buttonState.subCat[0]
 						.subCategory ||
 				props.data.label ===
-					JSON.parse(localStorage.getItem('fsContext')).buttonState.subCat[0]
+					JSON.parse(localStorage.getItem('userDataContext')).buttonState.subCat[0]
 						.subCatTerm[0].sterm
 			) {
 				props.handleSetSelected(props.data);

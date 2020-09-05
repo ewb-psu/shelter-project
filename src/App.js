@@ -6,7 +6,7 @@ import MainLayout from './components/mainLayout/MainLayout';
 import UserData from './components/UserData';
 import Shelter from './components/shetler.js';
 import ApiDataState from './components/context/apiData/ApiDataState';
-import FieldSelectorState from './components/context/fieldSelectorContext/FieldSelectorState';
+import UserDataState from './components/context/userData/UserDataState';
 import ThemeDataState from './components/context/themeData/ThemeDataState';
 import ApiDataContext from './components/context/apiData/ApiDataContext';
 import Resources from './components/Resources/Resources.js';
@@ -48,7 +48,7 @@ const App = () => {
 	}, []);
 
 	return (
-		<FieldSelectorState>
+		<UserDataState>
 			<ApiDataState>
 				<ThemeDataState>
 					<Router>
@@ -66,7 +66,7 @@ const App = () => {
 					</Router>
 				</ThemeDataState>
 			</ApiDataState>
-		</FieldSelectorState>
+		</UserDataState>
 	);
 };
 

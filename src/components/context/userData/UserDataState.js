@@ -1,10 +1,10 @@
 
 import React, { useReducer, useEffect } from 'react';
-import FieldSelectorContext from './FieldSelectorContext';
-import FieldSelectorReducer from './FieldSelectorReducer';
+import UserDataContext from './UserDataContext';
+import UserDataReducer from './UserDataReducer';
 import APIWrapper from '../../../APIWrapper';
 
-export const FieldSelectorState = (props) => {
+export const UserDataState = (props) => {
 	const api = new APIWrapper(process.env.REACT_APP_211_API_KEY);
 	const CensusAPIKey = process.env.REACT_APP_CENSUS_API_KEY;
 
@@ -31,7 +31,7 @@ export const FieldSelectorState = (props) => {
 		isGenderValid: ''
 	};
 
-	const [state, dispatch] = useReducer(FieldSelectorReducer, initialState);
+	const [state, dispatch] = useReducer(UserDataReducer, initialState);
 
 	const setServiceName = (serviceName) => {
 		dispatch({ type: 'SET_SERVICE_NAME', payload: serviceName });
@@ -279,7 +279,7 @@ export const FieldSelectorState = (props) => {
 	};
 
 	return (
-		<FieldSelectorContext.Provider
+		<UserDataContext.Provider
 			value={{
 				serviceName: state.serviceName,
 				setServiceName,
@@ -321,8 +321,8 @@ export const FieldSelectorState = (props) => {
 				setIsFamilySizeValid
 			}}>
 			{props.children}
-		</FieldSelectorContext.Provider>
+		</UserDataContext.Provider>
 	);
 };
 
-export default FieldSelectorState;
+export default UserDataState;

@@ -3,12 +3,12 @@
 import React, { useState, useContext, useEffect } from 'react';
 import ExclusiveOption from '../ExclusiveOption';
 import ApiDataContext from '../context/apiData/ApiDataContext';
-import FieldSelectorContext from '../context/fieldSelectorContext/FieldSelectorContext';
+import UserDataContext from '../context/userData/UserDataContext';
 import ThemeDataContext from '../context/themeData/ThemeDataContext';
 
 const CategorySelector = () => {
 	const apiDataContext = useContext(ApiDataContext);
-	const fieldSelectorContext = useContext(FieldSelectorContext);
+	const userDataContext = useContext(UserDataContext);
 	const themeDataContext = useContext(ThemeDataContext);
 	const [categories, setCategories] = useState([]);
 	const [keys, setKeys] = useState([]);
@@ -61,8 +61,8 @@ const CategorySelector = () => {
 			localStorage.setItem('categories', JSON.stringify(categories));
 			localStorage.setItem('keys', JSON.stringify(keys));
 
-			fieldSelectorContext.setCategoryId('');
-			fieldSelectorContext.setCategorySelected(3);
+			userDataContext.setCategoryId('');
+			userDataContext.setCategorySelected(3);
 
 			return;
 		}
@@ -77,10 +77,10 @@ const CategorySelector = () => {
 			handleSetKeys(id);
 			localStorage.setItem('categories', JSON.stringify(newCategory));
 			localStorage.setItem('keys', JSON.stringify(keys));
-			fieldSelectorContext.setCategoryId(
+			userDataContext.setCategoryId(
 				apiDataContext.categories[id]['categoryID']
 			);
-			fieldSelectorContext.setCategorySelected(1);
+			userDataContext.setCategorySelected(1);
 		}
 		//subcategory has been selectd. Show subbestCategory.
 		else {
@@ -92,19 +92,19 @@ const CategorySelector = () => {
 				setCategories(newCategory);
 				localStorage.setItem('categories', JSON.stringify(newCategory));
 				localStorage.setItem('keys', JSON.stringify(keys));
-				fieldSelectorContext.setCategoryId(
+				userDataContext.setCategoryId(
 					apiDataContext.categories[keys[0]]['subcat'][id]['subcategoryID']
 				);
-				fieldSelectorContext.setCategoryId(
+				userDataContext.setCategoryId(
 					apiDataContext.categories[keys[0]]['subcat'][id]['subcategoryID']
 				);
 				handleSetKeys(id);
-				fieldSelectorContext.setCategorySelected(2);
-				fieldSelectorContext.setButtonState({
-					...fieldSelectorContext.buttonState,
+				userDataContext.setCategorySelected(2);
+				userDataContext.setButtonState({
+					...userDataContext.buttonState,
 					subCat: [
 						{
-							...fieldSelectorContext.buttonState.subCat[0],
+							...userDataContext.buttonState.subCat[0],
 							subCatTerm: [{ sterm: null }],
 						},
 					],

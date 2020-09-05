@@ -6,23 +6,23 @@ import APIWrapper from '../../APIWrapper';
 import SubmitButton from '../SubmitButton/SubmitButton';
 
 import ApiDataContext from '../context//apiData/ApiDataContext';
-import FieldSelectorContext from '../context/fieldSelectorContext/FieldSelectorContext';
+import UserDataContext from '../context/userData/UserDataContext';
 
-const SearchBar = ({ fieldSelectorState, handleIsLoading }) => {
+const SearchBar = ({ handleIsLoading }) => {
 	const apiDataContext = useContext(ApiDataContext);
-	const fieldSelectorContext = useContext(FieldSelectorContext);
+	const userDataContext = useContext(UserDataContext);
 	const [search, setSearch] = useState('');
 	const [filtered, setFiltered] = useState([]);
 	const history = useHistory();
 
 	let obj = {
-		sn: fieldSelectorContext.serviceName,
+		sn: userDataContext.serviceName,
 		st: '',
-		age: Number(fieldSelectorContext.age),
-		gender: fieldSelectorContext.gender,
-		zip: Number(fieldSelectorContext.zipCode),
-		county: fieldSelectorContext.county,
-		catid: fieldSelectorContext.categoryId,
+		age: Number(userDataContext.age),
+		gender: userDataContext.gender,
+		zip: Number(userDataContext.zipCode),
+		county: userDataContext.county,
+		catid: userDataContext.categoryId,
 	};
 
 	const APIKey = process.env.REACT_APP_211_API_KEY;
@@ -57,18 +57,18 @@ const SearchBar = ({ fieldSelectorState, handleIsLoading }) => {
 	const handleClickSearchResult = async (item) => {
 		//activate spinner
 		handleIsLoading();
-		//set service name in fieldSelector state
-		fieldSelectorContext.setServiceName(item);
+		//set service name in userData state
+		userDataContext.setServiceName(item);
 		// county validation
-		await fieldSelectorContext.goBehavior();
-		//if form inputs have valid entries /////////////////////////////
-		if (fieldSelectorContext.setIsPageDataValid()) {
+		await userDataContext.goBehavior();
+		//if form inputs have valid entries 
+		if (userDataContext.setIsPageDataValid()) {
 			//save field selector state to local storage for use if / when user navigates backwards
-			localStorage.setItem(
-				'fieldSelectorState',
-				JSON.stringify(fieldSelectorState)
-			);
-			localStorage.setItem('fsContext', JSON.stringify(fieldSelectorContext));
+			// localStorage.setItem(
+			// 	'userDataState',
+			// 	JSON.stringify(userDataContext)
+			// );
+			localStorage.setItem('userDataContext', JSON.stringify(userDataContext));
 			obj.sn = item;
 			//apiDataContext.setResources(await API.getKeywords(obj))
 			history.push('/info');
@@ -78,22 +78,22 @@ const SearchBar = ({ fieldSelectorState, handleIsLoading }) => {
 			////Make getResource call with subCategory data
 			//If subestCategory selected
 			////Make getResource call with service name data
-			if (fieldSelectorContext.categorySelected === 3) {
+			if (userDataContext.categorySelected === 3) {
 				obj['st'] = 's';
-				console.log(fieldSelectorContext.categorySelected);
+				console.log(userDataContext.categorySelected);
 				console.log(obj);
 				apiDataContext.setResources(await API.getResource(obj));
-			} else if (fieldSelectorContext.categorySelected === 2) {
+			} else if (userDataContext.categorySelected === 2) {
 				obj['st'] = 'sc';
 				obj['sn'] = '';
 				console.log(obj);
-				console.log(fieldSelectorContext.categorySelected);
+				console.log(userDataContext.categorySelected);
 				apiDataContext.setResources(await API.getResource(obj));
 			} else {
 				obj['st'] = 'c';
 				obj['sn'] = '';
 				console.log(obj);
-				console.log(fieldSelectorContext.categorySelected);
+				console.log(userDataContext.categorySelected);
 				apiDataContext.setResources(await API.getResource(obj));
 			}
 		}

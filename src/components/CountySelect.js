@@ -1,17 +1,17 @@
 import React, {useContext} from 'react';
 import ThemeDataContext from './context/themeData/ThemeDataContext'
-import FieldSelectorContext from './context/fieldSelectorContext/FieldSelectorContext'
+import UserDataContext from './context/userData/UserDataContext'
 // import '../Assets/CountySelect.scss';
 
 
 const CountySelect = (props) =>  {
 
 
-  const fieldSelectorContext = useContext(FieldSelectorContext) 
+  const userDataContext = useContext(UserDataContext) 
   const themeDataContext = useContext(ThemeDataContext)
   let valid = null
 
-    let value = fieldSelectorContext.county
+    let value = userDataContext.county
     
     return (
 
@@ -23,13 +23,13 @@ const CountySelect = (props) =>  {
             let newValue = e.currentTarget.value
             if(props.filter)
               newValue = props.filter(newValue)
-            fieldSelectorContext.setCounty(newValue)
+            userDataContext.setCounty(newValue)
           }
         }
-       counties = {fieldSelectorContext.counties}
+       counties = {userDataContext.counties}
       >
         <option value = '' disabled>Choose your county:</option>
-        {fieldSelectorContext.possibleCounties.map((county,index) => {
+        {userDataContext.possibleCounties.map((county,index) => {
           return (
             <option key = {index} value = {county}>{county}</option>
           )
