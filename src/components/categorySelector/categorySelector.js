@@ -11,7 +11,10 @@ const CategorySelector = () => {
 	const fieldSelectorContext = useContext(FieldSelectorContext);
 	const themeDataContext = useContext(ThemeDataContext);
 	const [categories, setCategories] = useState([]);
-	const [keyz, setTheKeyz] = useState([]);
+	const [keys, setKeys] = useState([]);
+	const handleSetKeys = (keyValue) => {
+		setKeys([...keys, keyValue]);
+	};
 
 	useEffect(() => {
 		const labelsWithImages = createLabelWithImage(
@@ -24,14 +27,10 @@ const CategorySelector = () => {
 		if (JSON.parse(localStorage.getItem('categories')))
 			setCategories(JSON.parse(localStorage.getItem('categories')));
 
-		if (JSON.parse(localStorage.getItem('keyz')))
-			setTheKeyz(JSON.parse(localStorage.getItem('keyz')));
+		if (JSON.parse(localStorage.getItem('keys')))
+			setKeys(JSON.parse(localStorage.getItem('keys')));
 	}, []);
 
-	//TODO rename this...
-	const setKey = (keyValue) => {
-		setTheKeyz([...keyz, keyValue]);
-	};
 
 	//categoryType needs to be 'category' or 'subcategory'
 	const createLabelWithImage = (array, categoryType) => {
@@ -48,18 +47,19 @@ const CategorySelector = () => {
 	};
 
 	//TODO need to make menu collapse back down to first button row
+	//TODO change second and third row UI/UX
 	const appendCategory = (row, id) => {
 		let newCategory = categories.slice();
 		//remove subCategories and keys if user clicks at a higher level of the tree
-		for (let i = row; i < categories.length - 1; i++) {
-			newCategory.pop();
-			keyz.pop();
+		for (let i = row; i < categories.length -1 ; i++) {
+			newCategory.pop(); 
+			keys.pop();	
 		}
 
 		//keep options from growing
 		if (row >= 2) {
 			localStorage.setItem('categories', JSON.stringify(categories));
-			localStorage.setItem('keyz', JSON.stringify(keyz));
+			localStorage.setItem('keys', JSON.stringify(keys));
 
 			fieldSelectorContext.setCategoryId('');
 			fieldSelectorContext.setCategorySelected(3);
@@ -74,9 +74,9 @@ const CategorySelector = () => {
 				'subcategory'
 			);
 			setCategories(newCategory);
-			setKey(id);
+			handleSetKeys(id);
 			localStorage.setItem('categories', JSON.stringify(newCategory));
-			localStorage.setItem('keyz', JSON.stringify(keyz));
+			localStorage.setItem('keys', JSON.stringify(keys));
 			fieldSelectorContext.setCategoryId(
 				apiDataContext.categories[id]['categoryID']
 			);
@@ -86,19 +86,19 @@ const CategorySelector = () => {
 		else {
 			try {
 				newCategory[row + 1] = createLabelWithImage(
-					apiDataContext.categories[keyz[0]]['subcat'][id]['subcatterm'],
+					apiDataContext.categories[keys[0]]['subcat'][id]['subcatterm'],
 					'sterm'
 				);
 				setCategories(newCategory);
 				localStorage.setItem('categories', JSON.stringify(newCategory));
-				localStorage.setItem('keyz', JSON.stringify(keyz));
+				localStorage.setItem('keys', JSON.stringify(keys));
 				fieldSelectorContext.setCategoryId(
-					apiDataContext.categories[keyz[0]]['subcat'][id]['subcategoryID']
+					apiDataContext.categories[keys[0]]['subcat'][id]['subcategoryID']
 				);
 				fieldSelectorContext.setCategoryId(
-					apiDataContext.categories[keyz[0]]['subcat'][id]['subcategoryID']
+					apiDataContext.categories[keys[0]]['subcat'][id]['subcategoryID']
 				);
-				setKey(id);
+				handleSetKeys(id);
 				fieldSelectorContext.setCategorySelected(2);
 				fieldSelectorContext.setButtonState({
 					...fieldSelectorContext.buttonState,
@@ -162,7 +162,7 @@ const CategorySelector = () => {
 			<ExclusiveOption
 				items={categories}
 				appendCategory={appendCategory}
-				key={i}/////////////
+				key={i}
 				row={i}
 			/>
 			</div>

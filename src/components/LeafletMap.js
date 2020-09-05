@@ -11,7 +11,6 @@ const LeafletMap = () => {
 	useEffect(() => {
 			if (apiDataContext.resources.length !== 0) {
 				const coordsPlusOtherData = apiDataContext.resources.map((resource) => {
-					console.log(resource)
 					return {
 						lat: resource.Sites[0].Latitude,
 						lng: resource.Sites[0].Longitude,
@@ -19,7 +18,6 @@ const LeafletMap = () => {
 						url: resource.Sites[0].URL && resource.Sites[0].URL
 					};
 				});
-				console.log(coordsPlusOtherData);
 				apiDataContext.setArrayOfLocations(coordsPlusOtherData);
 				// loads the first results coords as the initial center position of map
 				apiDataContext.setMapCenter([
@@ -27,7 +25,6 @@ const LeafletMap = () => {
 					coordsPlusOtherData[0].lng,
 				]);
 			}
-		
 	}, []);
 
 	return (
