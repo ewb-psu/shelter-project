@@ -132,7 +132,7 @@ export const UserDataState = (props) => {
 		return { valid, message };
 	};
 
-	const setIsZipCodeValid = (zip) => {
+	const setIsZipCodeValid = (zip, displayMessage) => {
 
 		let message = '';
 
@@ -149,28 +149,22 @@ export const UserDataState = (props) => {
 		let valid = correctLength && isPositiveInteger;
 		message = (state.isZipCodeValid === 'null' ? '' : message)
 
+		message = (displayMessage ? message : '')
+		console.log(message)
 		dispatch({ type: 'SET_IS_ZIP_CODE_VALID', payload: { valid, message } });
-		return { valid, message };
+
+		return {valid, message}
+
 	};
 
 
 	const setIsPageDataValid = () => {
-		console.log(setIsCountyValid(state.county))
-		console.log(setIsCountyValid(state.county).valid);
-		console.log(setIsGenderValid(state.gender).valid);
-		console.log(setIsAgeValid(state.age).valid);
-		console.log(setIsZipCodeValid(state.zipCode).valid);
-		console.log(setIsFamilySizeValid(state.familySize).valid);
-		setIsZipCodeValid(state.zipCode)
-		setIsCountyValid(state.county);
-		setIsGenderValid(state.gender)
-		setIsAgeValid(state.age)
-		setIsFamilySizeValid(state.familySize)
+		console.log(state.isCountyValid.valid + '' + state.isCountyValid.message)
 		return (
 			setIsCountyValid(state.county).valid &&
 			setIsGenderValid(state.gender).valid &&
 			setIsAgeValid(state.age).valid &&
-			setIsZipCodeValid(state.zipCode).valid &&
+			setIsZipCodeValid(state.zipCode, true).valid &&
 			setIsFamilySizeValid(state.familySize).valid
 		)
 	};
