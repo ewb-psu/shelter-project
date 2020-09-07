@@ -161,10 +161,10 @@ export const UserDataState = (props) => {
 
 	const validateUserData = () => {
 		console.log(state.isCountyValid.valid + '' + state.isCountyValid.message);
-		setIsZipCodeValid(state.county,true);
+		setIsZipCodeValid(state.zipCode,true);
 		setIsGenderValid(state.gender);
 		setIsAgeValid(state.age);
-		setIsCountyValid(state.zipCode);
+		setIsCountyValid(state.county);
 		setIsFamilySizeValid(state.familySize);
 		return (
 			state.isZipCodeValid.valid &&
