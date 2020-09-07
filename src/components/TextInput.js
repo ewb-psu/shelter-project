@@ -100,7 +100,7 @@ const TextInput = (props) => {
 
 	// If we've been asked to validate, do it
 
-	if (userDataContext.doValidation) validate();
+	//if (userDataContext.doValidation) validate();
 
 
 	return (
@@ -114,7 +114,7 @@ const TextInput = (props) => {
 				type='text'
 			/>
 			<hr className={'w-2/3 border underline ' + validEntryClass + themeDataContext.themeColor} />
-			
+
 
 			<InvalidEntryMessage message={props.validator ? props.validator.message : ''} />
 		</>
@@ -122,4 +122,3 @@ const TextInput = (props) => {
 };
 
 export default TextInput;
-

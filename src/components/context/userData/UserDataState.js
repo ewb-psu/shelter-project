@@ -142,6 +142,7 @@ export const UserDataState = (props) => {
 			message = 'Please only use numbers in the ZIP code.';
 
 		// TODO: Verify this assumption. ZIPs can be very weird
+		console.log(zip)
 		let correctLength = zip.length === 5;
 		if (!correctLength)
 			message = 'ZIP codes are usually 5 digits long. Is this mistyped?';
@@ -158,14 +159,19 @@ export const UserDataState = (props) => {
 	};
 
 
-	const setIsPageDataValid = () => {
-		console.log(state.isCountyValid.valid + '' + state.isCountyValid.message)
+	const validateUserData = () => {
+		console.log(state.isCountyValid.valid + '' + state.isCountyValid.message);
+		setIsZipCodeValid(state.county,true);
+		setIsGenderValid(state.gender);
+		setIsAgeValid(state.age);
+		setIsCountyValid(state.zipCode);
+		setIsFamilySizeValid(state.familySize);
 		return (
-			setIsCountyValid(state.county).valid &&
-			setIsGenderValid(state.gender).valid &&
-			setIsAgeValid(state.age).valid &&
-			setIsZipCodeValid(state.zipCode, true).valid &&
-			setIsFamilySizeValid(state.familySize).valid
+			state.isZipCodeValid.valid &&
+			state.isCountyValid.valid &&
+			state.isAgeValid.valid &&
+			state.isFamilySizeValid.valid &&
+			state.isGenderValid.valid
 		)
 	};
 
@@ -301,7 +307,7 @@ export const UserDataState = (props) => {
 				setValidCounty,
 				getAllPossibleCountiesByZip,
 				countyAPICall,
-				setIsPageDataValid,
+				validateUserData,
 				goBehavior,
 				isCountyValid: state.isCountyValid,
 				setIsCountyValid,

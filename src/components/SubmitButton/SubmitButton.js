@@ -28,8 +28,8 @@ function SubmitButton(props) {
 	async function handleClick() {
 		try {
 			props.handleIsLoading();
-			await userDataContext.goBehavior();
-			if (userDataContext.setIsPageDataValid()) {
+			console.log(userDataContext)
+			if (userDataContext.validateUserData()) {
 				//save submit button state to local storage for use if / when user navigates backwards
 				localStorage.setItem('apiDataContext', JSON.stringify(apiDataContext));
 				localStorage.setItem(

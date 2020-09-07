@@ -62,7 +62,7 @@ const SearchBar = ({ handleIsLoading }) => {
 		// county validation
 		await userDataContext.goBehavior();
 		//if form inputs have valid entries 
-		if (userDataContext.setIsPageDataValid()) {
+		if (userDataContext.validateUserData()) {
 			//save field selector state to local storage for use if / when user navigates backwards
 			// localStorage.setItem(
 			// 	'userDataState',

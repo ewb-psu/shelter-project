@@ -102,7 +102,7 @@ const UserData = (props) => {
 
 	const nextPage = () => {
 		console.log(userDataContext);
-		if (userDataContext.setIsPageDataValid()) {
+		if (userDataContext.validateUserData()) {
 			history.push('/resources');
 		}
 	};
