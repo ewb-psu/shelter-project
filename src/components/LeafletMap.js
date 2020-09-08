@@ -7,7 +7,7 @@ import ApiDataContext from './context/apiData/ApiDataContext';
 const LeafletMap = () => {
 	//invoke useContext on ApiDataContext component, initializing apiDataContext variable
 	const apiDataContext = useContext(ApiDataContext);
-	
+
 	//when component mounts, if there are resources in the resource array, map through it and return an array of objects which is then set to apiDataContext
 	useEffect(() => {
 			if (apiDataContext.resources.length !== 0) {
@@ -34,11 +34,12 @@ const LeafletMap = () => {
 				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
 			/>
-			{apiDataContext.arrayOfLocations.map((location, index) => {
+			{apiDataContext.resources.map((resource, index) => {
+				console.log(resource)
 				return (
-					<Marker position={[location.lat, location.lng]} key={index}>
+					<Marker position={[Number(resource['Sites'][0]['Latitude']), Number(resource['Sites'][0]['Longitude'])]} key={index}>
 						<Popup>
-							{location.name} <br /> {location.url} <br />
+							{resource['Name']} <br /> {resource['Sites'][0]['ServiceGroup'][0][URL]} <br />
 						</Popup>
 					</Marker>
 				);
