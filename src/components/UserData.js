@@ -79,7 +79,7 @@ const UserData = (props) => {
 		const handleValidZip = async () => {
 			console.log('handleValidZip');
 			if (
-				userDataContext.setIsZipCodeValid(userDataContext.zipCode)
+				userDataContext.setIsZipCodeValid(userDataContext.zipCode, false)
 					.valid
 			) {
 				await API.getCountyByZipCode({
@@ -102,7 +102,7 @@ const UserData = (props) => {
 
 	const nextPage = () => {
 		console.log(userDataContext);
-		if (userDataContext.setIsPageDataValid()) {
+		if (userDataContext.validateUserData()) {
 			history.push('/resources');
 		}
 	};

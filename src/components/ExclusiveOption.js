@@ -87,7 +87,7 @@ const ExclusiveGroup = (props) => {
 		if (validityObject.valid === true) invalidEntryMessage = '';
 	};
 
-	if (userDataContext.doValidation) validate();
+	//if (userDataContext.doValidation) validate();
 	//added second condition, props.row must be the first row for this jsx to render. this is out normally styled buttons with svg's
 	if (typeof props.appendCategory == 'function' && props.row === 0) {
 		return (
