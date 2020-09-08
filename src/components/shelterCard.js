@@ -9,12 +9,15 @@ const ShelterCard = (props) => {
 	const apiDataContext = useContext(ApiDataContext);
 	//a function for updating the maps center position, triggered when the card is clicked.
 	const handleClick = () => {
-		apiDataContext.setMapCenter([
-			props.Sites[0].Latitude,
-			props.Sites[0].Longitude,
-		]);
-		apiDataContext.setZoomLevel(16)
+		if(props.Sites[0].Latitude != '' || props.Sites[0].Longitude != ''){
+			apiDataContext.setMapCenter([
+				props.Sites[0].Latitude,
+				props.Sites[0].Longitude,
+			]);
+			apiDataContext.setZoomLevel(16)
+		}
 	};
+
 
 	//return a card component with data provided via props
 	return (

@@ -9,7 +9,7 @@ const LeafletMap = () => {
 	const apiDataContext = useContext(ApiDataContext);
 
 	//when component mounts, if there are resources in the resource array, map through it and return an array of objects which is then set to apiDataContext
-	useEffect(() => {
+	/*useEffect(() => {
 			if (apiDataContext.resources.length !== 0) {
 				const coordsPlusOtherData = apiDataContext.resources.map((resource) => {
 					return {
@@ -26,7 +26,7 @@ const LeafletMap = () => {
 					coordsPlusOtherData[0].lng,
 				]);
 			}
-	}, []);
+	}, []);*/
 
 	return (
 		<Map center={apiDataContext.mapCenter} zoom={apiDataContext.zoomLevel}>
@@ -35,14 +35,16 @@ const LeafletMap = () => {
 				url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
 			/>
 			{apiDataContext.resources.map((resource, index) => {
-				console.log(resource)
-				return (
-					<Marker position={[Number(resource['Sites'][0]['Latitude']), Number(resource['Sites'][0]['Longitude'])]} key={index}>
-						<Popup>
-							{resource['Name']} <br /> {resource['Sites'][0]['ServiceGroup'][0][URL]} <br />
-						</Popup>
-					</Marker>
-				);
+				if(resource['Sites'][0]['Latitude'] != '' || resource['Sites'][0]['Longitude'] != ''){
+					console.log(resource['Sites'][0]['Latitude'] + '' + resource['Sites'][0]['Longitude'] )
+					return (
+						<Marker position={[Number(resource['Sites'][0]['Latitude']), Number(resource['Sites'][0]['Longitude'])]} key={index}>
+							<Popup>
+								{resource['Name']} <br /> {resource['Sites'][0]['ServiceGroup'][0]['URL']} <br />
+							</Popup>
+						</Marker>
+					);
+				}
 			})}
 		</Map>
 	);
