@@ -45,14 +45,16 @@ export const ApiDataState = (props) => {
 	};
 
 	//once, when the component mounts, get categories from api to populate buttons.
-	useEffect(() => {
-		const getCategories = async () => {
-			console.log('getting categories');
-			const categories = await api.getCategories();
-			setCategories(categories);
-		};
-		getCategories();
-	}, []);
+	// useEffect(() => {
+	// 	const getCategories = async () => {
+	// 		console.log('getting categories');
+	// 		const categories = await api.getCategories();
+	// 		console.log(categories)
+	// 		console.log(categories.ok)
+	// 		setCategories(categories);
+	// 	};
+	// 	getCategories();
+	// }, []);
 
 	//whenever state.categories changes, run a log statement to see the state change.
 	useEffect(() => {

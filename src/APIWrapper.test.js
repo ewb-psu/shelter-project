@@ -9,21 +9,33 @@ beforeEach(() => {
 });
 
 //test API.getSessionID()
+describe('tests for getSession() method of APIWrapper class', () => {
 
-it('makes a get request to the 211 api and returns a new session ID', async () => {
-	fetch.mockResponseOnce(
-		JSON.stringify([{ session_id: '0ZokOVgx3DBUHou2iBGZ' }])
-	);
-	const response = await API.getSessionID();
-	//expect response to have object with property session_id
-	expect(response).toEqual([{ session_id: '0ZokOVgx3DBUHou2iBGZ' }]);
-	expect(fetch).toHaveBeenCalledTimes(1);
-});
+	it('makes a get request to the 211 api and returns a new session ID', async () => {
+		fetch.mockResponseOnce(
+			JSON.stringify([{ session_id: '0ZokOVgx3DBUHou2iBGZ' }])
+		);
+		const result = await API.getSessionID();
+		//expect result to have object with property session_id
+		console.log(result)
+		const mockResponse = [{ session_id: '0ZokOVgx3DBUHou2iBGZ' }]
+		mockResponse.ok = true
+		expect(result).toEqual(mockResponse);
+		expect(fetch).toHaveBeenCalledTimes(1);
+	});
 
-it('catches errors and returns null', async () => {
-	fetch.mockReject(() => 'API Failure');
-	const result = await API.getSessionID();
-	expect(result).toEqual(null);
+	//include a test here to make sure sessionID is saved to localStorage.
+
+	it('catches errors and returns null', async () => {
+		fetch.mockReject(() => 'API Failure'); // <-----try mockResponseOnce here instead. stringify it, then it should work.
+		const result = await API.getSessionID();
+		console.log(result)
+		expect(result).toEqual(null);
+	});
+
+
+	//include tests here to handle to different http error codes??
+
 });
 
 //test API.getCategories()
@@ -32,7 +44,9 @@ it('returns an array of objects, each with a categories property', async () => {
 	fetch.mockResponseOnce(JSON.stringify([{ category: 'Crisis Hotlines' }]));
 	const result = await API.getCategories();
 	//expect result to have category property, expect typeof property?
-	expect(result).toEqual([{ category: 'Crisis Hotlines' }]);
+	const mockResult = [{ category: 'Crisis Hotlines' }]
+	mockResult.ok = true
+	expect(result).toEqual(mockResult);
 	expect(fetch).toHaveBeenCalledTimes(1);
 });
 
@@ -74,4 +88,3 @@ it('catches errors and returns null', async () => {
 	const result = await API.getCountyByZipCode();
 	expect(result).toEqual(null);
 });
-
