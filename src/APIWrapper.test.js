@@ -9,7 +9,6 @@ beforeEach(() => {
 });
 
 //test API.getSessionID()
-describe('tests for getSession() method of APIWrapper class', () => {
 
 	it('makes a get request to the 211 api and returns a new session ID', async () => {
 		fetch.mockResponseOnce(
@@ -17,26 +16,34 @@ describe('tests for getSession() method of APIWrapper class', () => {
 		);
 		const result = await API.getSessionID();
 		//expect result to have object with property session_id
-		console.log(result)
-		const mockResponse = [{ session_id: '0ZokOVgx3DBUHou2iBGZ' }]
-		mockResponse.ok = true
+		const mockResponse = [{ session_id: '0ZokOVgx3DBUHou2iBGZ' }];
+		mockResponse.ok = true;
 		expect(result).toEqual(mockResponse);
 		expect(fetch).toHaveBeenCalledTimes(1);
 	});
 
 	//include a test here to make sure sessionID is saved to localStorage.
 
-	it('catches errors and returns null', async () => {
-		fetch.mockReject(() => 'API Failure'); // <-----try mockResponseOnce here instead. stringify it, then it should work.
+	it('catches errors and returns the name, status, and message, properties', async () => {
+
+		const mockErrorObject = new Error()
+		mockErrorObject.ok = false
+		mockErrorObject.status = 404
+		mockErrorObject.statusText = 'file not found'
+		mockErrorObject.message = 'testing getSessionID()'
+
+
+		fetch.mockReject(mockErrorObject); 
 		const result = await API.getSessionID();
-		console.log(result)
-		expect(result).toEqual(null);
+
+		expect(result.name).toEqual('Error');
+		expect(result.ok).toEqual(false);
+		expect(result.status).toEqual(404)
+		expect(result.statusText).toEqual('file not found');
+		expect(result.message).toEqual('testing getSessionID()');
+
 	});
 
-
-	//include tests here to handle to different http error codes??
-
-});
 
 //test API.getCategories()
 
@@ -44,16 +51,28 @@ it('returns an array of objects, each with a categories property', async () => {
 	fetch.mockResponseOnce(JSON.stringify([{ category: 'Crisis Hotlines' }]));
 	const result = await API.getCategories();
 	//expect result to have category property, expect typeof property?
-	const mockResult = [{ category: 'Crisis Hotlines' }]
-	mockResult.ok = true
+	const mockResult = [{ category: 'Crisis Hotlines' }];
+	mockResult.ok = true;
 	expect(result).toEqual(mockResult);
 	expect(fetch).toHaveBeenCalledTimes(1);
 });
 
-it('catches errors and returns null', async () => {
-	fetch.mockReject(() => 'API Failure');
+it('catches errors and returns the name, status, and message properties', async () => {
+	const mockErrorObject = new Error()
+	mockErrorObject.ok = false
+	mockErrorObject.status = 404
+	mockErrorObject.statusText = 'file not found'
+	mockErrorObject.message = 'testing getCategories()'
+
+
+	fetch.mockReject(mockErrorObject);
 	const result = await API.getCategories();
-	expect(result).toEqual(null);
+
+	expect(result.ok).toEqual(false);
+	expect(result.name).toEqual('Error');
+	expect(result.status).toEqual(404);
+	expect(result.statusText).toEqual('file not found');
+	expect(result.message).toEqual('testing getCategories()');
 });
 
 //test API.getResources()

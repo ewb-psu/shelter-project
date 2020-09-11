@@ -24,7 +24,6 @@ class APIWrapper {
 		} else {
 			//get sessionID from api
 			let data = await this.getSessionID();
-			console.log(data);
 			//if theres an http error return the data with the error. otherwise set credentials.sid to the return value of getSessionID() and return ok:true
 			if (!data.ok) return data;
 			this.credentials['sid'] = data[0]['session_id'];
@@ -40,15 +39,16 @@ class APIWrapper {
 			);
 			//if theres an http error throw the data with the error to the catch block. otherwise save the data to local storage, and then return it
 			if (!response.ok) {
-				throw {
-					ok: false,
-					status: response.status,
-					message: await response.text(),
-				};
+				const errorObject = new Error();
+				errorObject.ok = false;
+				errorObject.status = response.status;
+				errorObject.statusText = response.statusText;
+				errorObject.message = await response.text();
+				throw errorObject;
 			}
 			let data = await response.json();
+			//set ok property
 			data.ok = true;
-			console.log('getSessionID(): ', data);
 			//save sessionId in localstorage
 			localStorage.setItem('sessionId', JSON.stringify(data));
 			return data;
@@ -66,14 +66,14 @@ class APIWrapper {
 					parameters
 				)}`
 			);
-			console.log(response);
 			//if theres an http error throw the object containing it to the catch block, otherwise call .json on the response, add ok:true property, and return
 			if (!response.ok) {
-				throw {
-					ok: false,
-					status: response.status,
-					message: await response.text(),
-				};
+				const errorObject = new Error();
+				errorObject.ok = false;
+				errorObject.status = response.status;
+				errorObject.statusText = response.statusText;
+				errorObject.message = await response.text();
+				throw errorObject;
 			}
 			let data = await response.json();
 			data.ok = true;

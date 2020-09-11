@@ -24,13 +24,10 @@ const UserData = (props) => {
 
 	async function callAPI() {
 		//check category state to see if it has already been populated from local storage, possibly avoid making another api call (even though it would be with the same session id)
-		console.log('trigger callAPI');
-		console.log(apiDataContext.categories.length);
 		if('categories' in apiDataContext)
 			if (apiDataContext.categories.length === 0) {
 				//no categories found in context so call api method initialize, which calls getSessionID() which makes http request to server for credentials.
 				const result = await API.initialize();
-				console.log(result)
 				if (!result.ok) {
 					history.push({
 						pathname: '/error',
@@ -113,11 +110,9 @@ const UserData = (props) => {
 
 	useEffect(() => {
 		const getCategories = async () => {
-			console.log('getting categories');
 			const result = await API.getCategories();
-			console.log(result)
-			console.log(result.ok)
 			if(!result.ok) {
+				console.log(result)
 				history.push({
 					pathname: '/error',
 					state: {
