@@ -36,7 +36,6 @@ const LeafletMap = () => {
 			/>
 			{apiDataContext.resources.map((resource, index) => {
 				if(resource['Sites'][0]['Latitude'] != '' || resource['Sites'][0]['Longitude'] != ''){
-					console.log(resource['Sites'][0]['Latitude'] + '' + resource['Sites'][0]['Longitude'] )
 					return (
 						<Marker position={[Number(resource['Sites'][0]['Latitude']), Number(resource['Sites'][0]['Longitude'])]} key={index}>
 							<Popup>
