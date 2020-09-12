@@ -9,22 +9,19 @@ beforeEach(() => {
 	fetch.resetMocks();
 });
 
-describe('tests for the getSessionID method', () => {
-	it('makes a get request to the 211 api and returns a new session ID', async () => {
-		fetch.mockResponseOnce(
-			JSON.stringify([{ session_id: '0ZokOVgx3DBUHou2iBGZ' }])
-		);
+describe('tests for the getSessionID() method', () => {
+	it('makes a get request to the 211 api and returns an array with an ok:true property, and an object element with a session ID property', async () => {
+
+		fetch.mockResponseOnce(JSON.stringify([{ session_id: '0ZokOVgx3DBUHou2iBGZ' }]));
 		const result = await API.getSessionID();
-		const mockResponse = [{ session_id: '0ZokOVgx3DBUHou2iBGZ' }];
-		mockResponse.ok = true;
-		//expect result to be an array containing an object with session_id property. the array should have a property called ok set to true.
-		expect(result).toEqual(mockResponse);
 		expect(fetch).toHaveBeenCalledTimes(1);
+		const mockResult = [{ session_id: '0ZokOVgx3DBUHou2iBGZ' }];
+		mockResult.ok = true;
+		expect(result).toEqual(mockResult);
 	});
 
-	//include a test here to make sure sessionID is saved to localStorage.
-
 	it('throws errors correctly, returning the name, ok, status, statusText and message properties', async () => {
+
 		const mockErrorObject = new Error();
 		mockErrorObject.ok = false;
 		mockErrorObject.status = 404;
@@ -32,24 +29,27 @@ describe('tests for the getSessionID method', () => {
 		mockErrorObject.message = 'testing getSessionID()';
 
 		fetch.mockReject(mockErrorObject);
-		const result = await API.getSessionID(); //<----- the fetch call being mocked is here of course
+		const result = await API.getSessionID();
+		expect(fetch).toHaveBeenCalledTimes(1);
 
 		expect(result.name).toEqual('Error');
 		expect(result.ok).toEqual(false);
 		expect(result.status).toEqual(404);
 		expect(result.statusText).toEqual('file not found');
 		expect(result.message).toEqual('testing getSessionID()');
+
 	});
 });
 
 describe('tests for the getCategories() method', () => {
-	it('returns an array of objects, each with a categories property', async () => {
+	it('returns an array of json objects with an ok:true property, from a stringified http response', async () => {
+
 		fetch.mockResponseOnce(JSON.stringify([{ category: 'Crisis Hotlines' }]));
 		const result = await API.getCategories();
+		expect(fetch).toHaveBeenCalledTimes(1);
 		const mockResult = [{ category: 'Crisis Hotlines' }];
 		mockResult.ok = true;
 		expect(result).toEqual(mockResult);
-		expect(fetch).toHaveBeenCalledTimes(1);
 	});
 
 	it('throws errors correctly, returning the name, ok, status, statusText and message properties', async () => {
@@ -61,26 +61,28 @@ describe('tests for the getCategories() method', () => {
 
 		fetch.mockReject(mockErrorObject);
 		const result = await API.getCategories();
+		expect(fetch).toHaveBeenCalledTimes(1);
 
 		expect(result.ok).toEqual(false);
 		expect(result.name).toEqual('Error');
 		expect(result.status).toEqual(404);
 		expect(result.statusText).toEqual('file not found');
 		expect(result.message).toEqual('testing getCategories()');
+
 	});
 });
 
 describe('test for the getResources() method', () => {
-	it('returns an array of objects with resource data', async () => {
+	it('returns an array with an ok:true property, containing elements which are objects with resource data', async () => {
 		fetch.mockResponseOnce(JSON.stringify([{ key: 'INFO4302' }]));
 		const result = await API.getResource();
+		expect(fetch).toHaveBeenCalledTimes(1);
 		const mockResult = [{ key: 'INFO4302' }];
 		mockResult.ok = true;
 		expect(result).toEqual(mockResult);
-		expect(fetch).toHaveBeenCalledTimes(1);
 	});
 
-	it('catches errors and returns an error object', async () => {
+	it('throws errors correctly, returning the name, ok, status, statusText and message properties', async () => {
 		const mockErrorObject = new Error();
 		mockErrorObject.ok = false;
 		mockErrorObject.status = 404;
@@ -89,12 +91,14 @@ describe('test for the getResources() method', () => {
 
 		fetch.mockReject(mockErrorObject);
 		const result = await API.getResource();
+		expect(fetch).toHaveBeenCalledTimes(1);
 
 		expect(result.ok).toEqual(false);
 		expect(result.name).toEqual('Error');
 		expect(result.status).toEqual(404);
 		expect(result.statusText).toEqual('file not found');
 		expect(result.message).toEqual('testing getResources()');
+
 	});
 });
 
@@ -104,13 +108,13 @@ describe('test for the getCountyByZipCode', () => {
 			JSON.stringify([{ c_id: '2335', county: 'Clackamas', state: 'OR' }])
 		);
 		const result = await API.getCountyByZipCode();
+		expect(fetch).toHaveBeenCalledTimes(1);
 		const mockResult = [{ c_id: '2335', county: 'Clackamas', state: 'OR' }];
 		mockResult.ok = true;
 		expect(result).toEqual(mockResult);
-		expect(fetch).toHaveBeenCalledTimes(1);
 	});
 
-	it('catches errors and returns the name, status, and message properties', async () => {
+	it('throws errors correctly, returning the name, ok, status, statusText and message properties', async () => {
 		const mockErrorObject = new Error();
 		mockErrorObject.ok = false;
 		mockErrorObject.status = 404;
@@ -119,6 +123,7 @@ describe('test for the getCountyByZipCode', () => {
 
 		fetch.mockReject(mockErrorObject);
 		const result = await API.getCountyByZipCode();
+		expect(fetch).toHaveBeenCalledTimes(1);
 
 		expect(result.ok).toEqual(false);
 		expect(result.name).toEqual('Error');

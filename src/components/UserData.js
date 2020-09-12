@@ -22,14 +22,13 @@ const UserData = (props) => {
 	const themeDataContext = useContext(ThemeDataContext);
 	let history = useHistory();
 
-	
-
 	//TODO move this last piece of state and handler function into context.....which context?
 	const [isLoading, setIsLoading] = useState(false);
 	const handleIsLoading = () => {
 		setIsLoading(!isLoading);
 	};
 
+	// TODO get this working with some api.....
 	const findLocation = () => {
 		// // console.log(
 		// "Then we'd try to find their location using a Google API. For now...";
@@ -41,7 +40,7 @@ const UserData = (props) => {
 	useEffect(() => {
 		async function callAPI() {
 			//check category state to see if it has already been populated from local storage, possibly avoid making another api call (even though it would be with the same session id)
-			if('categories' in apiDataContext)
+			if ('categories' in apiDataContext)
 				if (apiDataContext.categories.length === 0) {
 					//no categories found in context so call api method initialize, which calls getSessionID() which makes http request to server for credentials.
 					const result = await API.initialize();
@@ -70,6 +69,15 @@ const UserData = (props) => {
 					zip: userDataContext.zipCode,
 				})
 					.then((data) => {
+						console.log(data.ok)
+						if(!data.ok) {
+							history.push({
+								pathname: '/error',
+								state: {
+									error: data
+								}
+							})
+						}
 						userDataContext.setCounty(data[0]['county']);
 						userDataContext.getAllPossibleCountiesByZip(
 							userDataContext.zipCode
@@ -87,14 +95,14 @@ const UserData = (props) => {
 	useEffect(() => {
 		const getCategories = async () => {
 			const result = await API.getCategories();
-			if(!result.ok) {
-				console.log(result)
+			if (!result.ok) {
+				console.log(result);
 				history.push({
 					pathname: '/error',
 					state: {
-						error: result
-					}
-				})
+						error: result,
+					},
+				});
 			}
 			apiDataContext.setCategories(result);
 		};
@@ -122,7 +130,7 @@ const UserData = (props) => {
 		}
 
 	return (
-		<div>
+		<div className=''>
 			<div className='text-center mt-16 px-16'>
 				<h1>Welcome to the 211 info web application.</h1>
 				<p>

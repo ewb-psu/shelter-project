@@ -59,7 +59,7 @@ class APIWrapper {
 	}
 
 	async getCategories() {
-		let parameters = this.credential;
+		let parameters = this.credentials;
 		try {
 			let response = await fetch(
 				`https://www.navigateopen.info/pubres/api/GetCategories/?ip=${JSON.stringify(
@@ -99,7 +99,7 @@ class APIWrapper {
 				errorObject.status = response.status;
 				errorObject.statusText = response.statusText;
 				errorObject.message = await response.text();
-				
+
 				throw errorObject;
 			}
 			let data = await response.json();
@@ -113,7 +113,7 @@ class APIWrapper {
 	}
 
 	async getCountyByZipCode(obj) {
-		let parameters = { ...obj, ...this.credentials };
+		let parameters = { ...obj, ...this.credentia };
 		try {
 			let response = await fetch(
 				`https://www.navigateopen.info/pubres/api/GetCounty/?ip=${JSON.stringify(
@@ -125,11 +125,12 @@ class APIWrapper {
 				errorObject.ok = false;
 				errorObject.status = response.status;
 				errorObject.statusText = response.statusText;
-				errorObject.message = response.text();
+				errorObject.message = await response.text();
 				throw errorObject;
 			}
 			let data = await response.json();
 			data.ok = true;
+			console.log(data)
 			return data;
 		} catch (error) {
 			console.log(error);
@@ -137,6 +138,9 @@ class APIWrapper {
 		}
 	}
 
+
+	////////////////////// these methods don't appear to be used in the application thus far.
+	
 	async getKeywords(obj) {
 		let parameters = { ...obj, ...this.credentials };
 		try {

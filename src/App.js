@@ -33,7 +33,6 @@ const App = () => {
 		//a function to remove user data from localstorage
 		const cleanUp = () => {
 			// localStorage.removeItem('sessionId');
-			localStorage.removeItem('fsContext');
 			localStorage.removeItem('apiDataContext');
 			localStorage.removeItem('categories');
 		};
