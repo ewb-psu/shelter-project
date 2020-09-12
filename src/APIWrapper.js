@@ -16,7 +16,7 @@ class APIWrapper {
 	}
 
 	async initialize() {
-		//check localstorage for sessionId and if present, use it for credentials and return ok:true
+		//check localstorage for sessionId and if present, use it for credentials and return {ok:true}
 		if (JSON.parse(localStorage.getItem('sessionId'))) {
 			this.credentials['sid'] = localStorage.getItem('sessionId')[0].session_id;
 			console.log('sessionId set from localStorage');
@@ -24,7 +24,7 @@ class APIWrapper {
 		} else {
 			//get sessionID from api
 			let data = await this.getSessionID();
-			//if theres an http error return the data with the error. otherwise set credentials.sid to the return value of getSessionID() and return ok:true
+			//if theres an http error return the data with the error. otherwise set credentials.sid to the return value of getSessionID() and return {ok:true}
 			if (!data.ok) return data;
 			this.credentials['sid'] = data[0]['session_id'];
 			console.log('API initalized, new sessionID');
@@ -37,7 +37,7 @@ class APIWrapper {
 			let response = await fetch(
 				`https://www.navigateopen.info/pubres/api/GetSessionID/?ip={apikey: "${this.credentials.APIKey}"}`
 			);
-			//if theres an http error throw the data with the error to the catch block. otherwise save the data to local storage, and then return it
+			//if theres an http error, create new Error object, and assign some properties to be rendered by the error route. throw the error.
 			if (!response.ok) {
 				const errorObject = new Error();
 				errorObject.ok = false;
@@ -59,14 +59,14 @@ class APIWrapper {
 	}
 
 	async getCategories() {
-		let parameters = this.credentials;
+		let parameters = this.credential;
 		try {
 			let response = await fetch(
 				`https://www.navigateopen.info/pubres/api/GetCategories/?ip=${JSON.stringify(
 					parameters
 				)}`
 			);
-			//if theres an http error throw the object containing it to the catch block, otherwise call .json on the response, add ok:true property, and return
+			//if theres an http error, create new Error object, and assign some properties to be rendered by the error route. throw the error.
 			if (!response.ok) {
 				const errorObject = new Error();
 				errorObject.ok = false;
@@ -83,23 +83,32 @@ class APIWrapper {
 			return error;
 		}
 	}
-
 	//TODO: This function will have to loop/map to different shelter info components or shelter info maps them
 	async getResource(obj) {
 		let parameters = { ...this.credentials, ...obj };
-		console.log(parameters);
+		// console.log(parameters);
 		try {
 			let response = await fetch(
 				`https://www.navigateopen.info/pubres/api/ServiceProviders/?ip=${JSON.stringify(
 					parameters
 				)}`
 			);
+			if (!response.ok) {
+				const errorObject = new Error();
+				errorObject.ok = false;
+				errorObject.status = response.status;
+				errorObject.statusText = response.statusText;
+				errorObject.message = await response.text();
+				
+				throw errorObject;
+			}
 			let data = await response.json();
-			console.log(data);
+			data.ok = true
+			console.log('heres the resources', data);
 			return data;
 		} catch (error) {
 			console.log(error);
-			return null;
+			return error;
 		}
 	}
 
@@ -111,11 +120,20 @@ class APIWrapper {
 					parameters
 				)}`
 			);
+			if (!response.ok) {
+				const errorObject = new Error();
+				errorObject.ok = false;
+				errorObject.status = response.status;
+				errorObject.statusText = response.statusText;
+				errorObject.message = response.text();
+				throw errorObject;
+			}
 			let data = await response.json();
+			data.ok = true;
 			return data;
 		} catch (error) {
 			console.log(error);
-			return null;
+			return error;
 		}
 	}
 

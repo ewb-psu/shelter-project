@@ -63,9 +63,7 @@ const App = () => {
 							<Route path='/info'>
 								<Shelter />
 							</Route>
-							<Route path='/error' component={ErrorPage}>
-								
-							</Route>
+							<Route path='/error' component={ErrorPage} />
 						</MainLayout>
 					</Router>
 				</ThemeDataState>

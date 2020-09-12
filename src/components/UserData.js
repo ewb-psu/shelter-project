@@ -22,22 +22,7 @@ const UserData = (props) => {
 	const themeDataContext = useContext(ThemeDataContext);
 	let history = useHistory();
 
-	async function callAPI() {
-		//check category state to see if it has already been populated from local storage, possibly avoid making another api call (even though it would be with the same session id)
-		if('categories' in apiDataContext)
-			if (apiDataContext.categories.length === 0) {
-				//no categories found in context so call api method initialize, which calls getSessionID() which makes http request to server for credentials.
-				const result = await API.initialize();
-				if (!result.ok) {
-					history.push({
-						pathname: '/error',
-						state: {
-							error: result,
-						},
-					});
-				}
-			}
-	}
+	
 
 	//TODO move this last piece of state and handler function into context.....which context?
 	const [isLoading, setIsLoading] = useState(false);
@@ -54,32 +39,23 @@ const UserData = (props) => {
 	};
 
 	useEffect(() => {
+		async function callAPI() {
+			//check category state to see if it has already been populated from local storage, possibly avoid making another api call (even though it would be with the same session id)
+			if('categories' in apiDataContext)
+				if (apiDataContext.categories.length === 0) {
+					//no categories found in context so call api method initialize, which calls getSessionID() which makes http request to server for credentials.
+					const result = await API.initialize();
+					if (!result.ok) {
+						history.push({
+							pathname: '/error',
+							state: {
+								error: result,
+							},
+						});
+					}
+				}
+		}
 		callAPI();
-		//restores form state upon backwards navigation
-		// if (JSON.parse(localStorage.getItem('fsContext'))) {
-		// 	const age = JSON.parse(localStorage.getItem('fsContext')).age;
-		// 	const familySize = JSON.parse(localStorage.getItem('fsContext'))
-		// 		.familySize;
-		// 	const zipcode = JSON.parse(localStorage.getItem('fsContext')).zipCode;
-		// 	const county = JSON.parse(localStorage.getItem('fsContext')).county;
-		// 	const gender = JSON.parse(localStorage.getItem('fsContext')).gender;
-		// 	const categorySelected = JSON.parse(localStorage.getItem('fsContext'))
-		// 		.categorySelected;
-		// 	const catID = JSON.parse(localStorage.getItem('fsContext')).categoryId;
-		// 	const serviceName = JSON.parse(localStorage.getItem('fsContext'))
-		// 		.serviceName;
-		// 	const buttonState = JSON.parse(localStorage.getItem('fsContext'))
-		// 		.buttonState;
-		// 	userDataContext.setAge(age);
-		// 	userDataContext.setFamilySize(familySize);
-		// 	userDataContext.setZipcode(zipcode);
-		// 	userDataContext.setCounty(county);
-		// 	userDataContext.setGender(gender);
-		// 	userDataContext.setCategorySelected(categorySelected);
-		// 	userDataContext.setCategoryId(catID);
-		// 	userDataContext.setServiceName(serviceName);
-		// 	userDataContext.setButtonState(buttonState);
-		// }
 	}, []);
 
 	//monitors the state of userData.zipCode. When it becomes a valid zip,
