@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-const Address = (address) => {
+const TrimetButton = (address) => {
 
   return(
     <div>
@@ -9,4 +9,4 @@ const Address = (address) => {
   )
 
 }
-export default Address;
+export default TrimetButton;

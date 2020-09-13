@@ -3,24 +3,25 @@ import Collapsible from 'react-collapsible';
 import Address from './Address'
 
 const AddressCard = (props) => {
-  console.log(props)
 
-  if(Object.keys(props).length > 1){
+  const isValidAddress = (addresses)=>{
+    let valid = false;
+    Object.keys(addresses).map((index)=>
+      valid = /\d/.test(addresses[index]['Line1'])
+    )
+    return valid;
+  }
+  if(isValidAddress(props)){
     return(
-      <Collapsible trigger="Addresses">
+      <Collapsible trigger="Address">
         {Object.keys(props).map((index)=>
             <Address {...props[index]}/>
           )}
       </Collapsible>
     );
   }
-  else{
-    return(
-    <Collapsible trigger="Address">
-        <Address {...props[0]}/>
-    </Collapsible>)
-  }
 
+  return null
 }
 
 export default  AddressCard;

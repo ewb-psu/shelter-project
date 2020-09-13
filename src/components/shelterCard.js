@@ -25,8 +25,8 @@ const ShelterCard = (props) => {
 	return (
 		<div className='shelterCard transition-all border shadow hover:shadow-lg cursor-pointer p-5 mt-5' onClick={handleClick}>
 			<h1 className='shelterName'> {props.Name} </h1>
-			{props['Sites'][0]['Address'].length !== 0 ? <AddressCard {...props.['Sites'][0]['Address']}/> : <h2>No addres provided</h2>}
-			{props['Sites'][0]['Phones'].length !== 0 ? <PhoneCard {...props.['Sites'][0]['Phones']}/> : <h2>No phone number provided</h2>}
+			{props['Sites'][0]['Address'].length !== 0 ? <AddressCard {...props.['Sites'][0]['Address']}/> : null}
+			{props['Sites'][0]['Phones'].length !== 0 ? <PhoneCard {...props.['Sites'][0]['Phones']}/> : null}
 
 			<p className='shelterWebsite'>
 				<a href={`http://${props.Sites[0].URL}`}>{props.Sites[0].URL}</a>{' '}

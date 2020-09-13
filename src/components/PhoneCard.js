@@ -3,23 +3,27 @@ import Collapsible from 'react-collapsible';
 import PhoneNumber from './PhoneNumber'
 
 const PhoneCard = (props) => {
-  console.log(props)
 
-  if(Object.keys(props).length > 1){
+  const isValidPhone = (phones)=>{
+    let valid = false;
+    console.log(phones)
+    Object.keys(phones).map((index)=>
+      valid = /\d/.test(phones[index]['Phone'])
+    )
+    return valid;
+  }
+
+  if(isValidPhone(props)){
     return(
-      <Collapsible trigger="Phone Numbers">
+      <Collapsible trigger="Phone Number">
         {Object.keys(props).map((index)=>
             <PhoneNumber {...props[index]}/>
           )}
       </Collapsible>
     );
   }
-  else{
-    return(
-    <Collapsible trigger="Phone Number">
-        <PhoneNumber {...props[0]}/>
-    </Collapsible>)
-  }
+
+  return null;
 
 }
 
