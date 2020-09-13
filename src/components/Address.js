@@ -4,7 +4,7 @@ const Address = (address) => {
 
   return(
     <div>
-      <p> {address['Line1']} </p> <button>Trimet</button>
+      <p> {address['Line1']} </p>
     </div>
   )
 

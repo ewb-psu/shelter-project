@@ -5,19 +5,14 @@ import PhoneNumber from './PhoneNumber'
 const PhoneCard = (props) => {
 
   const isValidPhone = (phones)=>{
-    let valid = false;
-    console.log(phones)
-    Object.keys(phones).map((index)=>
-      valid = /\d/.test(phones[index]['Phone'])
-    )
-    return valid;
+    return /\d/.test(phones['Phone']);
   }
 
-  if(isValidPhone(props)){
+  if(isValidPhone(props[0])){
     return(
       <Collapsible trigger="Phone Number">
         {Object.keys(props).map((index)=>
-            <PhoneNumber {...props[index]}/>
+            <PhoneNumber {...isValidPhone(props[index]) ? props[index] : null}/>
           )}
       </Collapsible>
     );
