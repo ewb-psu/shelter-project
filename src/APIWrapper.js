@@ -93,6 +93,7 @@ class APIWrapper {
 					parameters
 				)}`
 			);
+			//if theres an http error, create new Error object, and assign some properties to be rendered by the error route. throw the error.
 			if (!response.ok) {
 				const errorObject = new Error();
 				errorObject.ok = false;
@@ -103,7 +104,7 @@ class APIWrapper {
 				throw errorObject;
 			}
 			let data = await response.json();
-			data.ok = true
+			data.ok = true;
 			console.log('heres the resources', data);
 			return data;
 		} catch (error) {
@@ -113,13 +114,14 @@ class APIWrapper {
 	}
 
 	async getCountyByZipCode(obj) {
-		let parameters = { ...obj, ...this.credentia };
+		let parameters = { ...obj, ...this.credentials };
 		try {
 			let response = await fetch(
 				`https://www.navigateopen.info/pubres/api/GetCounty/?ip=${JSON.stringify(
 					parameters
 				)}`
 			);
+			//if theres an http error, create new Error object, and assign some properties to be rendered by the error route. throw the error.
 			if (!response.ok) {
 				const errorObject = new Error();
 				errorObject.ok = false;
@@ -130,7 +132,7 @@ class APIWrapper {
 			}
 			let data = await response.json();
 			data.ok = true;
-			console.log(data)
+			console.log(data);
 			return data;
 		} catch (error) {
 			console.log(error);
@@ -138,9 +140,8 @@ class APIWrapper {
 		}
 	}
 
-
 	////////////////////// these methods don't appear to be used in the application thus far.
-	
+
 	async getKeywords(obj) {
 		let parameters = { ...obj, ...this.credentials };
 		try {
@@ -170,6 +171,7 @@ class APIWrapper {
 			return data;
 		} catch (error) {
 			console.log(error);
+			return null;
 		}
 	}
 

@@ -15,6 +15,7 @@ const SearchBar = ({ handleIsLoading }) => {
 	const [filtered, setFiltered] = useState([]);
 	const history = useHistory();
 
+	//parameters for api call to get resources based on category chosen from search menu dropdown.
 	let obj = {
 		sn: userDataContext.serviceName,
 		st: '',
@@ -28,15 +29,26 @@ const SearchBar = ({ handleIsLoading }) => {
 	const APIKey = process.env.REACT_APP_211_API_KEY;
 	const API = new APIWrapper(APIKey);
 
-	//here we unpack the return object from API.getCategories() into the searchTermsArray.
+	//here we unpack the return object from API.getCategories() into the searchTermsArr which we will filter through later.
 	const searchTermsArr = [];
 	if (apiDataContext.categories) {
 		apiDataContext.categories.forEach((entry) => {
-			searchTermsArr.push(entry.category);
+			searchTermsArr.push({
+				name: entry.category,
+				categoryID: entry.categoryID,
+				categorySelected: 1
+			});
 			entry.subcat.forEach((subentry) => {
-				searchTermsArr.push(subentry.subcategory);
+				searchTermsArr.push({
+					name: subentry.subcategory,
+					categoryID: subentry.subcategoryID,
+					categorySelected: 2
+				});
 				subentry.subcatterm.forEach((term) => {
-					searchTermsArr.push(term.sterm);
+					searchTermsArr.push({
+						name: term.sterm,
+						categorySelected: 3
+					});
 				});
 			});
 		});
@@ -48,71 +60,57 @@ const SearchBar = ({ handleIsLoading }) => {
 		setSearch(e.target.value);
 		const filteredArr = searchTermsArr.filter((term) => {
 			const regex = new RegExp(e.target.value, 'gi');
-			return term.match(regex);
+			return term.name.match(regex);
 		});
 		setFiltered(filteredArr);
 	};
 
-	//most of this code is lifted from handleClick() in submitButton.js
+	//much of this code is lifted from handleClick() in submitButton.js
+	//adapted slightly to fit our use case.
 	const handleClickSearchResult = async (item) => {
 		//activate spinner
 		handleIsLoading();
-		//set service name in userData state
-		userDataContext.setServiceName(item);
+		// //set service name in userData state
+		// 
+		// userDataContext.setServiceName(item.name);
+		// userDataContext.setCategoryId(item.categoryID)
+		// userDataContext.setCategorySelected(item.categorySelected)
+
 		// county validation
 		await userDataContext.goBehavior();
-		//if form inputs have valid entries 
+
+		//if form inputs have valid entries
 		if (userDataContext.validateUserData()) {
-			//save field selector state to local storage for use if / when user navigates backwards
-			// localStorage.setItem(
-			// 	'userDataState',
-			// 	JSON.stringify(userDataContext)
-			// );
 			localStorage.setItem('userDataContext', JSON.stringify(userDataContext));
-			obj.sn = item;
-			//apiDataContext.setResources(await API.getKeywords(obj))
-			history.push('/info');
 			//If category selected
 			//Make getResource call with category data
 			//If subCategory selected
 			////Make getResource call with subCategory data
 			//If subestCategory selected
 			////Make getResource call with service name data
-			if (userDataContext.categorySelected === 3) {
+			if (item.categorySelected === 3) {
 				obj['st'] = 's';
-				console.log(userDataContext.categorySelected);
-				console.log(obj);
+				obj.sn = item.name
 				apiDataContext.setResources(await API.getResource(obj));
-			} else if (userDataContext.categorySelected === 2) {
+				history.push('/info');
+			} else if (item.categorySelected === 2) {
 				obj['st'] = 'sc';
 				obj['sn'] = '';
-				console.log(obj);
-				console.log(userDataContext.categorySelected);
+				obj.catid = item.categoryID
 				apiDataContext.setResources(await API.getResource(obj));
+				history.push('/info');
 			} else {
 				obj['st'] = 'c';
 				obj['sn'] = '';
-				console.log(obj);
-				console.log(userDataContext.categorySelected);
+				obj.catid = item.categoryID
 				apiDataContext.setResources(await API.getResource(obj));
+				history.push('/info');
 			}
 		}
-		// the getResource call below works because the options are all hardcoded. Above, it doesn't work becasue obj (parameters for the http request) is missing many required properties.
-		//this will be fixed when the refactor is complete and ispagedatavalid() passes, as well and obj being fully populated with necessary data
-		apiDataContext.setResources(
-			await API.getResource({
-				APIKey: 'J7R0W5XK',
-				catid: '2603',
-				sn: '',
-				st: 'c',
-				zip: 97086,
-			})
-		);
-		history.push('/info');
-		handleIsLoading();
 	};
 
 	const handleSubmit = (e) => {
+		//TODO finish this function.
 		e.preventDefault();
 		console.log('here are some filtered results in state', filtered);
 		console.log(obj);
@@ -121,14 +119,16 @@ const SearchBar = ({ handleIsLoading }) => {
 	return (
 		<div className='w-full'>
 			<div className=''>
-				<form onSubmit={handleSubmit} className=' flex items-center justify-center  ml-auto'>
+				<form
+					onSubmit={handleSubmit}
+					className=' flex items-center justify-center  ml-auto'>
 					<label htmlFor='search' className='w-full'>
 						<input
 							type='text'
 							name='search'
 							value={search}
 							onChange={handleChange}
-							style={{backgroundColor: '#E1F6EC'}}
+							style={{ backgroundColor: '#E1F6EC' }}
 							className='color-black leading-10 w-full boder rounded rounded-r-none color-black'
 							placeHolder='Search...'
 						/>
@@ -150,7 +150,7 @@ const SearchBar = ({ handleIsLoading }) => {
 						onClick={() => {
 							handleClickSearchResult(item);
 						}}>
-						{item}
+						{item.name}
 					</div>
 				))}
 			</div>

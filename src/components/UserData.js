@@ -44,6 +44,7 @@ const UserData = (props) => {
 				if (apiDataContext.categories.length === 0) {
 					//no categories found in context so call api method initialize, which calls getSessionID() which makes http request to server for credentials.
 					const result = await API.initialize();
+					//if data ok === false, redirect to error route and set data to state as error object.
 					if (!result.ok) {
 						history.push({
 							pathname: '/error',
@@ -69,14 +70,14 @@ const UserData = (props) => {
 					zip: userDataContext.zipCode,
 				})
 					.then((data) => {
-						console.log(data.ok)
-						if(!data.ok) {
+						//if data ok === false, redirect to error route and set data to state as error object.
+						if (!data.ok) {
 							history.push({
 								pathname: '/error',
 								state: {
-									error: data
-								}
-							})
+									error: data,
+								},
+							});
 						}
 						userDataContext.setCounty(data[0]['county']);
 						userDataContext.getAllPossibleCountiesByZip(

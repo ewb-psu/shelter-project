@@ -11,8 +11,9 @@ beforeEach(() => {
 
 describe('tests for the getSessionID() method', () => {
 	it('makes a get request to the 211 api and returns an array with an ok:true property, and an object element with a session ID property', async () => {
-
-		fetch.mockResponseOnce(JSON.stringify([{ session_id: '0ZokOVgx3DBUHou2iBGZ' }]));
+		fetch.mockResponseOnce(
+			JSON.stringify([{ session_id: '0ZokOVgx3DBUHou2iBGZ' }])
+		);
 		const result = await API.getSessionID();
 		expect(fetch).toHaveBeenCalledTimes(1);
 		const mockResult = [{ session_id: '0ZokOVgx3DBUHou2iBGZ' }];
@@ -21,7 +22,6 @@ describe('tests for the getSessionID() method', () => {
 	});
 
 	it('throws errors correctly, returning the name, ok, status, statusText and message properties', async () => {
-
 		const mockErrorObject = new Error();
 		mockErrorObject.ok = false;
 		mockErrorObject.status = 404;
@@ -37,13 +37,11 @@ describe('tests for the getSessionID() method', () => {
 		expect(result.status).toEqual(404);
 		expect(result.statusText).toEqual('file not found');
 		expect(result.message).toEqual('testing getSessionID()');
-
 	});
 });
 
 describe('tests for the getCategories() method', () => {
 	it('returns an array of json objects with an ok:true property, from a stringified http response', async () => {
-
 		fetch.mockResponseOnce(JSON.stringify([{ category: 'Crisis Hotlines' }]));
 		const result = await API.getCategories();
 		expect(fetch).toHaveBeenCalledTimes(1);
@@ -68,7 +66,6 @@ describe('tests for the getCategories() method', () => {
 		expect(result.status).toEqual(404);
 		expect(result.statusText).toEqual('file not found');
 		expect(result.message).toEqual('testing getCategories()');
-
 	});
 });
 
@@ -98,7 +95,6 @@ describe('test for the getResources() method', () => {
 		expect(result.status).toEqual(404);
 		expect(result.statusText).toEqual('file not found');
 		expect(result.message).toEqual('testing getResources()');
-
 	});
 });
 
