@@ -15,15 +15,15 @@ const SearchBar = ({ handleIsLoading }) => {
 	const [filtered, setFiltered] = useState([]);
 	const history = useHistory();
 
-	//parameters for api call to get resources based on category chosen from search menu dropdown.
+	//parameters for api call to get resources. based on category chosen from search menu dropdown.
 	let obj = {
-		sn: userDataContext.serviceName,
+		sn: '',
 		st: '',
 		age: Number(userDataContext.age),
 		gender: userDataContext.gender,
 		zip: Number(userDataContext.zipCode),
 		county: userDataContext.county,
-		catid: userDataContext.categoryId,
+		catid: '',
 	};
 
 	const APIKey = process.env.REACT_APP_211_API_KEY;
@@ -56,7 +56,6 @@ const SearchBar = ({ handleIsLoading }) => {
 
 	//here we filter through the searchTerms on keypress.
 	const handleChange = (e) => {
-		console.log(e.target.value);
 		setSearch(e.target.value);
 		const filteredArr = searchTermsArr.filter((term) => {
 			const regex = new RegExp(e.target.value, 'gi');
@@ -70,11 +69,6 @@ const SearchBar = ({ handleIsLoading }) => {
 	const handleClickSearchResult = async (item) => {
 		//activate spinner
 		handleIsLoading();
-		// //set service name in userData state
-		// 
-		// userDataContext.setServiceName(item.name);
-		// userDataContext.setCategoryId(item.categoryID)
-		// userDataContext.setCategorySelected(item.categorySelected)
 
 		// county validation
 		await userDataContext.goBehavior();
@@ -82,12 +76,12 @@ const SearchBar = ({ handleIsLoading }) => {
 		//if form inputs have valid entries
 		if (userDataContext.validateUserData()) {
 			localStorage.setItem('userDataContext', JSON.stringify(userDataContext));
-			//If category selected
-			//Make getResource call with category data
-			//If subCategory selected
-			////Make getResource call with subCategory data
-			//If subestCategory selected
-			////Make getResource call with service name data
+			//If category selected(1)
+			//Make getResource call with categoryID.
+			//If subCategory selected(2)
+			////Make getResource call with subCategoryID.
+			//If subestCategory selected(3)
+			////Make getResource call with service name.
 			if (item.categorySelected === 3) {
 				obj['st'] = 's';
 				obj.sn = item.name
@@ -111,9 +105,8 @@ const SearchBar = ({ handleIsLoading }) => {
 
 	const handleSubmit = (e) => {
 		//TODO finish this function.
-		e.preventDefault();
-		console.log('here are some filtered results in state', filtered);
-		console.log(obj);
+		e.preventDefault()
+		handleClickSearchResult(filtered[0])
 	};
 
 	return (
@@ -133,7 +126,9 @@ const SearchBar = ({ handleIsLoading }) => {
 							placeHolder='Search...'
 						/>
 					</label>
-					<SubmitButton handleIsLoading={handleIsLoading}>Submit</SubmitButton>
+					<button className='border p-2' onClick={handleSubmit} >
+						Submit
+					</button>
 				</form>
 			</div>
 
