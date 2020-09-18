@@ -68,7 +68,7 @@ function SubmitButton(props) {
 		<button
 			type='button'
 			onClick={handleClick}
-			className='transition-all p-2 sm:px-5 md:px-8 lg:px-16 border hover:bg-indigo-400 rounded rounded-l-none mx-auto'>
+			className='transition-all p-2 sm:px-5 md:px-8 lg:px-16 border hover:bg-themeTeal rounded rounded-l-none mx-auto'>
 			Go
 		</button>
 	);

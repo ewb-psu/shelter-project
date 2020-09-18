@@ -45,8 +45,6 @@ const CategorySelector = () => {
 		return objArray;
 	};
 
-	//TODO need to make menu collapse back down to first button row
-	//TODO change second and third row UI/UX
 	const appendCategory = (row, id) => {
 		let newCategory = categories.slice();
 		//remove subCategories and keys if user clicks at a higher level of the tree
@@ -180,9 +178,8 @@ const CategorySelector = () => {
 				</div>
 			);
 		return (
-			//second row has no arrow buttons for side scrolling because it is a column 
+			//second row has no arrow buttons for side scrolling because it is a column
 			<div className='grid grid-auto-rows grid-cols-12'>
-
 				<div className='col-start-2 col-span-10'>
 					<ExclusiveOption
 						items={categories}
@@ -191,7 +188,6 @@ const CategorySelector = () => {
 						row={i}
 					/>
 				</div>
-
 			</div>
 		);
 	});

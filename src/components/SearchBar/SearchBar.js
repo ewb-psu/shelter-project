@@ -104,7 +104,6 @@ const SearchBar = ({ handleIsLoading }) => {
 	};
 
 	const handleSubmit = (e) => {
-		//TODO finish this function.
 		e.preventDefault()
 		handleClickSearchResult(filtered[0])
 	};
@@ -121,12 +120,12 @@ const SearchBar = ({ handleIsLoading }) => {
 							name='search'
 							value={search}
 							onChange={handleChange}
-							style={{ backgroundColor: '#E1F6EC' }}
+							style={{ backgroundColor: 'rgba(1, 169, 198,0.4)' }}
 							className='color-black leading-10 w-full boder rounded rounded-r-none color-black'
 							placeHolder='Search...'
 						/>
 					</label>
-					<button className='border p-2' onClick={handleSubmit} >
+					<button className='border p-2 hover:bg-themeTeal' onClick={handleSubmit} >
 						Submit
 					</button>
 				</form>

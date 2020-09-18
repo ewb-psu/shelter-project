@@ -197,7 +197,7 @@ const UserData = (props) => {
 				<div className='col-start-1 lg:col-start-3'>
 					<button
 						id='toResources'
-						className='p-2 border transition-all hover:bg-indigo-400 '
+						className='p-2 border transition-all hover:bg-themeTeal '
 						onClick={nextPage}>
 						Get Started
 					</button>

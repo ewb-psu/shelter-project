@@ -7,7 +7,12 @@ module.exports = {
       'public/**/*.html',
     ],
     theme: {
-      extend: {},
+      extend: {
+        colors: {
+          themeTeal: 'rgba(1, 169, 198,0.7)',
+          themeTealFlat: 'rgb(1, 169, 198)'
+        }
+      },
     },
     variants: {
       backgroundColor: ['responsive', 'hover', 'focus', 'active']
