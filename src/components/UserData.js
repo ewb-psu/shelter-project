@@ -114,6 +114,7 @@ const UserData = (props) => {
 		console.log(userDataContext);
 		if (userDataContext.validateUserData()) {
 			history.push('/resources');
+			themeDataContext.setShowNav(true)
 		}
 	};
 

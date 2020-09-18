@@ -155,10 +155,11 @@ const ExclusiveGroup = (props) => {
 		return null;
 	}
 	//default
+	//TODO change no-scroll class name to something more clearly defined.
 	return (
 		<div className='exclusive-group-container'>
 			<div
-				className={`exclusive-group flex flex-wrap overflow-x-auto no-scroll${props.row} `}>
+				className={`exclusive-group flex flex-wrap overflow-x-auto no-scroll${props.row} `}> 
 				{props.items.map((item, i) => (
 					<ExclusiveButton
 						handleSetSelected={handleSetSelected}
@@ -236,6 +237,9 @@ const ExclusiveButton = (props) => {
 		return (
 			<div
 				className='p-3 w-full border shadow text-center m-5 transition-all hover:shadow-lg cursor-pointer '
+				style={{
+					minWidth: '175px'
+				}}
 				onClick={(e) => {
 					props.onClick(e, props.data, props.id, props.row);
 				}} // changes the name of the pick in ExGroup's state.
