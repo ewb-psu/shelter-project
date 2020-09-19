@@ -263,6 +263,7 @@ export const UserDataState = (props) => {
 			await api.getCountyByZipCode({
 				zip: state.zipCode,
 			}).then((data) => {
+				
 				setPossibleCounties(
 					Object.values(data).map((value) => {
 						return value['county'];

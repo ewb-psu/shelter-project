@@ -22,20 +22,13 @@ const UserData = (props) => {
 	const themeDataContext = useContext(ThemeDataContext);
 	let history = useHistory();
 
-	async function callAPI() {
-		//check category state to see if it has already been populated from local storage, possibly avoid making another api call (even though it would be with the same session id)
-		console.log('trigger callAPI');
-		console.log(apiDataContext.categories.length);
-		if (apiDataContext !== null)
-			if (apiDataContext.categories.length === 0) await API.initialize();
-	}
-
 	//TODO move this last piece of state and handler function into context.....which context?
 	const [isLoading, setIsLoading] = useState(false);
 	const handleIsLoading = () => {
 		setIsLoading(!isLoading);
 	};
 
+	// TODO get this working with some api.....
 	const findLocation = () => {
 		// // console.log(
 		// "Then we'd try to find their location using a Google API. For now...";
@@ -44,33 +37,25 @@ const UserData = (props) => {
 		userDataContext.setCounty('Clackamas');
 	};
 
-	//restores form state upon backwards navigation
 	useEffect(() => {
-		callAPI();
-		if (JSON.parse(localStorage.getItem('fsContext'))) {
-			const age = JSON.parse(localStorage.getItem('fsContext')).age;
-			const familySize = JSON.parse(localStorage.getItem('fsContext'))
-				.familySize;
-			const zipcode = JSON.parse(localStorage.getItem('fsContext')).zipCode;
-			const county = JSON.parse(localStorage.getItem('fsContext')).county;
-			const gender = JSON.parse(localStorage.getItem('fsContext')).gender;
-			const categorySelected = JSON.parse(localStorage.getItem('fsContext'))
-				.categorySelected;
-			const catID = JSON.parse(localStorage.getItem('fsContext')).categoryId;
-			const serviceName = JSON.parse(localStorage.getItem('fsContext'))
-				.serviceName;
-			const buttonState = JSON.parse(localStorage.getItem('fsContext'))
-				.buttonState;
-			userDataContext.setAge(age);
-			userDataContext.setFamilySize(familySize);
-			userDataContext.setZipcode(zipcode);
-			userDataContext.setCounty(county);
-			userDataContext.setGender(gender);
-			userDataContext.setCategorySelected(categorySelected);
-			userDataContext.setCategoryId(catID);
-			userDataContext.setServiceName(serviceName);
-			userDataContext.setButtonState(buttonState);
+		async function callAPI() {
+			//check category state to see if it has already been populated from local storage, possibly avoid making another api call (even though it would be with the same session id)
+			if ('categories' in apiDataContext)
+				if (apiDataContext.categories.length === 0) {
+					//no categories found in context so call api method initialize, which calls getSessionID() which makes http request to server for credentials.
+					const result = await API.initialize();
+					//if data ok === false, redirect to error route and set data to state as error object.
+					if (!result.ok) {
+						history.push({
+							pathname: '/error',
+							state: {
+								error: result,
+							},
+						});
+					}
+				}
 		}
+		callAPI();
 	}, []);
 
 	//monitors the state of userData.zipCode. When it becomes a valid zip,
@@ -79,13 +64,21 @@ const UserData = (props) => {
 		const handleValidZip = async () => {
 			console.log('handleValidZip');
 			if (
-				userDataContext.setIsZipCodeValid(userDataContext.zipCode, false)
-					.valid
+				userDataContext.setIsZipCodeValid(userDataContext.zipCode, false).valid
 			) {
 				await API.getCountyByZipCode({
 					zip: userDataContext.zipCode,
 				})
 					.then((data) => {
+						//if data ok === false, redirect to error route and set data to state as error object.
+						if (!data.ok) {
+							history.push({
+								pathname: '/error',
+								state: {
+									error: data,
+								},
+							});
+						}
 						userDataContext.setCounty(data[0]['county']);
 						userDataContext.getAllPossibleCountiesByZip(
 							userDataContext.zipCode
@@ -100,10 +93,28 @@ const UserData = (props) => {
 		handleValidZip();
 	}, [userDataContext.zipCode]);
 
+	useEffect(() => {
+		const getCategories = async () => {
+			const result = await API.getCategories();
+			if (!result.ok) {
+				console.log(result);
+				history.push({
+					pathname: '/error',
+					state: {
+						error: result,
+					},
+				});
+			}
+			apiDataContext.setCategories(result);
+		};
+		getCategories();
+	}, []);
+
 	const nextPage = () => {
 		console.log(userDataContext);
 		if (userDataContext.validateUserData()) {
 			history.push('/resources');
+			themeDataContext.setShowNav(true)
 		}
 	};
 
@@ -121,7 +132,7 @@ const UserData = (props) => {
 		}
 
 	return (
-		<div>
+		<div className=''>
 			<div className='text-center mt-16 px-16'>
 				<h1>Welcome to the 211 info web application.</h1>
 				<p>
@@ -185,7 +196,10 @@ const UserData = (props) => {
 				</div>
 
 				<div className='col-start-1 lg:col-start-3'>
-					<button id='toResources' className='p-2 border transition-all hover:bg-indigo-400 ' onClick={nextPage}>
+					<button
+						id='toResources'
+						className='p-2 border transition-all hover:bg-themeTeal '
+						onClick={nextPage}>
 						Get Started
 					</button>
 				</div>

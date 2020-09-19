@@ -5,6 +5,8 @@ import ExclusiveOption from '../ExclusiveOption';
 import ApiDataContext from '../context/apiData/ApiDataContext';
 import UserDataContext from '../context/userData/UserDataContext';
 import ThemeDataContext from '../context/themeData/ThemeDataContext';
+import {IoMdArrowDropleft} from 'react-icons/io'
+import {IoMdArrowDropright} from 'react-icons/io'
 
 const CategorySelector = () => {
 	const apiDataContext = useContext(ApiDataContext);
@@ -45,8 +47,6 @@ const CategorySelector = () => {
 		return objArray;
 	};
 
-	//TODO need to make menu collapse back down to first button row
-	//TODO change second and third row UI/UX
 	const appendCategory = (row, id) => {
 		let newCategory = categories.slice();
 		//remove subCategories and keys if user clicks at a higher level of the tree
@@ -120,36 +120,16 @@ const CategorySelector = () => {
 
 	//functions to handle scrolling the different rows to the left or right.
 	const handleScrollResourcesLeft = (e) => {
-		console.log('trigger left', e.target);
-		if (e.target.id === 'scrollLeft0') {
 			const noScroll = document.querySelector('.no-scroll0');
 			console.log(noScroll);
-			noScroll.scrollBy(-50, 0);
-		} else if (e.target.id === 'scrollLeft1') {
-			const noScroll = document.querySelector('.no-scroll1');
-			console.log(noScroll);
-			noScroll.scrollBy(-50, 0);
-		} else {
-			const noScroll = document.querySelector('.no-scroll2');
-			console.log(noScroll);
-			noScroll.scrollBy(-50, 0);
-		}
+			noScroll.scrollBy(-215, 0);
+
 	};
 	const handleScrollResourcesRight = (e) => {
-		console.log('trigger right', e.target);
-		if (e.target.id === 'scrollRight0') {
 			const noScroll = document.querySelector('.no-scroll0');
 			console.log(noScroll);
-			noScroll.scrollBy(50, 0);
-		} else if (e.target.id === 'scrollRight1') {
-			const noScroll = document.querySelector('.no-scroll1');
-			console.log(noScroll);
-			noScroll.scrollBy(50, 0);
-		} else {
-			const noScroll = document.querySelector('.no-scroll2');
-			console.log(noScroll);
-			noScroll.scrollBy(50, 0);
-		}
+			noScroll.scrollBy(215, 0);
+
 	};
 
 	return categories.map((categories, i) => {
@@ -161,7 +141,8 @@ const CategorySelector = () => {
 						id={`scrollLeft${i}`}
 						className='col-start-1 col-span-1 flex justify-center items-center cursor-pointer'
 						onClick={handleScrollResourcesLeft}>
-						{'<'}
+						
+						<IoMdArrowDropleft className='text-4xl text-themeTeal'/>
 					</button>
 					<div className='col-start-2 col-span-10'>
 						<ExclusiveOption
@@ -175,14 +156,14 @@ const CategorySelector = () => {
 						id={`scrollRight${i}`}
 						className='col-start-12 col-span-1 flex justify-center items-center cursor-pointer'
 						onClick={handleScrollResourcesRight}>
-						{'>'}
+						
+						<IoMdArrowDropright  className='text-4xl text-themeTeal'/>
 					</button>
 				</div>
 			);
 		return (
-			//second row has no arrow buttons for side scrolling because it is a column 
+			//second row has no arrow buttons for side scrolling because it is a column
 			<div className='grid grid-auto-rows grid-cols-12'>
-
 				<div className='col-start-2 col-span-10'>
 					<ExclusiveOption
 						items={categories}
@@ -191,7 +172,6 @@ const CategorySelector = () => {
 						row={i}
 					/>
 				</div>
-
 			</div>
 		);
 	});

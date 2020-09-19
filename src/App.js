@@ -10,6 +10,7 @@ import UserDataState from './components/context/userData/UserDataState';
 import ThemeDataState from './components/context/themeData/ThemeDataState';
 import ApiDataContext from './components/context/apiData/ApiDataContext';
 import Resources from './components/Resources/Resources.js';
+import ErrorPage from './components/ErrorPage.js'
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -32,7 +33,6 @@ const App = () => {
 		//a function to remove user data from localstorage
 		const cleanUp = () => {
 			// localStorage.removeItem('sessionId');
-			localStorage.removeItem('fsContext');
 			localStorage.removeItem('apiDataContext');
 			localStorage.removeItem('categories');
 		};
@@ -62,6 +62,7 @@ const App = () => {
 							<Route path='/info'>
 								<Shelter />
 							</Route>
+							<Route path='/error' component={ErrorPage} />
 						</MainLayout>
 					</Router>
 				</ThemeDataState>

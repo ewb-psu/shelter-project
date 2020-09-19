@@ -1,12 +1,11 @@
 /** @format */
 
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer } from 'react';
 import ApiDataContext from './ApiDataContext';
 import ApiDataReducer from './ApiDataReducer';
 import APIWrapper from '../../../APIWrapper';
 
 export const ApiDataState = (props) => {
-	const api = new APIWrapper(process.env.REACT_APP_211_API_KEY);
 
 	//initial state, passed as a parameter to useReducer
 	const initialState = {
@@ -27,6 +26,7 @@ export const ApiDataState = (props) => {
 	};
 
 	const setResources = (resources) => {
+		console.log('trigger', resources)
 		dispatch({ type: 'SET_RESOURCES', payload: resources });
 	};
 
@@ -43,22 +43,6 @@ export const ApiDataState = (props) => {
 	const setZoomLevel = (zoomLevel) => {
 		dispatch({ type: 'SET_ZOOM_LEVEL', payload: zoomLevel });
 	};
-
-	//once, when the component mounts, get categories from api to populate buttons.
-	useEffect(() => {
-		const getCategories = async () => {
-			console.log('getting categories');
-			const categories = await api.getCategories();
-			setCategories(categories);
-		};
-		getCategories();
-	}, []);
-
-	//whenever state.categories changes, run a log statement to see the state change.
-	useEffect(() => {
-		//TODO check localStorage first.
-		console.log(state.categories);
-	}, [state.categories]);
 
 	return (
 		<ApiDataContext.Provider
