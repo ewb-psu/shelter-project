@@ -113,7 +113,7 @@ const SearchBar = ({ handleIsLoading }) => {
 			setFiltered([])
 		})
 		return () => {
-			window.addEventListener('click', (e) => {
+			window.removeEventListener('click', (e) => {
 				setFiltered([])
 			})
 		};
