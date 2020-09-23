@@ -120,13 +120,13 @@ const CategorySelector = () => {
 
 	//functions to handle scrolling the different rows to the left or right.
 	const handleScrollResourcesLeft = (e) => {
-			const noScroll = document.querySelector('.no-scroll0');
+			const noScroll = document.querySelector('.custom-scroll');
 			console.log(noScroll);
 			noScroll.scrollBy(-215, 0);
 
 	};
 	const handleScrollResourcesRight = (e) => {
-			const noScroll = document.querySelector('.no-scroll0');
+			const noScroll = document.querySelector('.custom-scroll');
 			console.log(noScroll);
 			noScroll.scrollBy(215, 0);
 

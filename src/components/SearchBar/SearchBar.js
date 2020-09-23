@@ -3,7 +3,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import APIWrapper from '../../APIWrapper';
-import SubmitButton from '../SubmitButton/SubmitButton';
 
 import ApiDataContext from '../context//apiData/ApiDataContext';
 import UserDataContext from '../context/userData/UserDataContext';
@@ -103,11 +102,15 @@ const SearchBar = ({ handleIsLoading }) => {
 		}
 	};
 
+	//call handleClickSearchResult on the first element in the filtered array when someone hits submit.
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		handleClickSearchResult(filtered[0]);
 	};
 
+
+	//add an event listener (containing annonymous function to clear search results element)
+	// on mount and remove it when component unmounts.
 	useEffect(() => {
 		window.addEventListener('click', (e) => {
 			setFiltered([])
