@@ -94,7 +94,7 @@ const ExclusiveGroup = (props) => {
 			<div className=''>
 				<div className='exclusive-group-container mx-auto inline '>
 					<div
-						className={`exclusive-group flex overflow-x-auto no-scroll${props.row} `}>
+						className={`exclusive-group flex overflow-x-auto custom-scroll `}>
 						{props.items.map((item, i) => (
 							<ExclusiveButton
 								handleSetSelected={handleSetSelected}
@@ -125,7 +125,7 @@ const ExclusiveGroup = (props) => {
 			<div className=''>
 				<div className='exclusive-group-container mx-auto inline '>
 					<div
-						className={`exclusive-group flex flex-wrap overflow-x-auto no-scroll${props.row} `}>
+						className={`exclusive-group flex flex-wrap overflow-x-auto custom-scroll `}>
 						{props.items.map((item, i) => (
 							<ExclusiveButton
 								handleSetSelected={handleSetSelected}

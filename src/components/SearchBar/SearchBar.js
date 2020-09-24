@@ -1,9 +1,8 @@
 /** @format */
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import APIWrapper from '../../APIWrapper';
-import SubmitButton from '../SubmitButton/SubmitButton';
 
 import ApiDataContext from '../context//apiData/ApiDataContext';
 import UserDataContext from '../context/userData/UserDataContext';
@@ -36,18 +35,18 @@ const SearchBar = ({ handleIsLoading }) => {
 			searchTermsArr.push({
 				name: entry.category,
 				categoryID: entry.categoryID,
-				categorySelected: 1
+				categorySelected: 1,
 			});
 			entry.subcat.forEach((subentry) => {
 				searchTermsArr.push({
 					name: subentry.subcategory,
 					categoryID: subentry.subcategoryID,
-					categorySelected: 2
+					categorySelected: 2,
 				});
 				subentry.subcatterm.forEach((term) => {
 					searchTermsArr.push({
 						name: term.sterm,
-						categorySelected: 3
+						categorySelected: 3,
 					});
 				});
 			});
@@ -84,29 +83,45 @@ const SearchBar = ({ handleIsLoading }) => {
 			////Make getResource call with service name.
 			if (item.categorySelected === 3) {
 				obj['st'] = 's';
-				obj.sn = item.name
+				obj.sn = item.name;
 				apiDataContext.setResources(await API.getResource(obj));
 				history.push('/info');
 			} else if (item.categorySelected === 2) {
 				obj['st'] = 'sc';
 				obj['sn'] = '';
-				obj.catid = item.categoryID
+				obj.catid = item.categoryID;
 				apiDataContext.setResources(await API.getResource(obj));
 				history.push('/info');
 			} else {
 				obj['st'] = 'c';
 				obj['sn'] = '';
-				obj.catid = item.categoryID
+				obj.catid = item.categoryID;
 				apiDataContext.setResources(await API.getResource(obj));
 				history.push('/info');
 			}
 		}
 	};
 
+	//call handleClickSearchResult on the first element in the filtered array when someone hits submit.
 	const handleSubmit = (e) => {
-		e.preventDefault()
-		handleClickSearchResult(filtered[0])
+		e.preventDefault();
+		handleClickSearchResult(filtered[0]);
 	};
+
+
+	//add an event listener (containing annonymous function to clear search results element)
+	// on mount and remove it when component unmounts.
+	useEffect(() => {
+		window.addEventListener('click', (e) => {
+			setFiltered([])
+		})
+		return () => {
+			window.removeEventListener('click', (e) => {
+				setFiltered([])
+			})
+		};
+	}, [])
+
 
 	return (
 		<div className='w-full'>
@@ -125,7 +140,9 @@ const SearchBar = ({ handleIsLoading }) => {
 							placeHolder='Search...'
 						/>
 					</label>
-					<button className='border p-2 hover:bg-themeTeal' onClick={handleSubmit} >
+					<button
+						className='border p-2 hover:bg-themeTeal'
+						onClick={handleSubmit}>
 						Submit
 					</button>
 				</form>
@@ -141,6 +158,7 @@ const SearchBar = ({ handleIsLoading }) => {
 				}}>
 				{filtered.map((item) => (
 					<div
+						className='cursor-pointer hover:bg-themeTeal w-full'
 						onClick={() => {
 							handleClickSearchResult(item);
 						}}>
