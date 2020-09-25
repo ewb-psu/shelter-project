@@ -111,8 +111,8 @@ const UserData = (props) => {
 	}, []);
 
 	const nextPage = () => {
-		console.log(userDataContext);
-		if (userDataContext.validateUserData()) {
+
+		if (userDataContext.isUserDataValid()) {
 			history.push('/resources');
 			themeDataContext.setShowNav(true)
 		}
