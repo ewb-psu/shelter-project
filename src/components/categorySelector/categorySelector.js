@@ -8,6 +8,7 @@ import ThemeDataContext from '../context/themeData/ThemeDataContext';
 import {IoMdArrowDropleft} from 'react-icons/io'
 import {IoMdArrowDropright} from 'react-icons/io'
 
+
 const CategorySelector = () => {
 	const apiDataContext = useContext(ApiDataContext);
 	const userDataContext = useContext(UserDataContext);
@@ -141,7 +142,7 @@ const CategorySelector = () => {
 						id={`scrollLeft${i}`}
 						className='col-start-1 col-span-1 flex justify-center items-center cursor-pointer'
 						onClick={handleScrollResourcesLeft}>
-						
+
 						<IoMdArrowDropleft className='text-4xl text-themeTeal'/>
 					</button>
 					<div className='col-start-2 col-span-10'>
@@ -156,7 +157,7 @@ const CategorySelector = () => {
 						id={`scrollRight${i}`}
 						className='col-start-12 col-span-1 flex justify-center items-center cursor-pointer'
 						onClick={handleScrollResourcesRight}>
-						
+
 						<IoMdArrowDropright  className='text-4xl text-themeTeal'/>
 					</button>
 				</div>

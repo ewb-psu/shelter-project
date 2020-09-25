@@ -158,21 +158,24 @@ export const UserDataState = (props) => {
 
 	};
 
+	const isUserDataValid = async () => {
 
-	const validateUserData = () => {
-		console.log(state.isCountyValid.valid + '' + state.isCountyValid.message);
+		await validateUserData();
+		return(state.isZipCodeValid.valid &&
+		state.isCountyValid.valid &&
+		state.isAgeValid.valid &&
+		state.isFamilySizeValid.valid &&
+		state.isGenderValid.valid)
+
+	}
+
+	const validateUserData = async () => {
 		setIsZipCodeValid(state.zipCode,true);
 		setIsGenderValid(state.gender);
 		setIsAgeValid(state.age);
 		setIsCountyValid(state.county);
 		setIsFamilySizeValid(state.familySize);
-		return (
-			state.isZipCodeValid.valid &&
-			state.isCountyValid.valid &&
-			state.isAgeValid.valid &&
-			state.isFamilySizeValid.valid &&
-			state.isGenderValid.valid
-		)
+		return
 	};
 
 	const countyAPICall = async () => {
@@ -263,7 +266,7 @@ export const UserDataState = (props) => {
 			await api.getCountyByZipCode({
 				zip: state.zipCode,
 			}).then((data) => {
-				
+
 				setPossibleCounties(
 					Object.values(data).map((value) => {
 						return value['county'];
@@ -309,6 +312,7 @@ export const UserDataState = (props) => {
 				getAllPossibleCountiesByZip,
 				countyAPICall,
 				validateUserData,
+				isUserDataValid,
 				goBehavior,
 				isCountyValid: state.isCountyValid,
 				setIsCountyValid,
