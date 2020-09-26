@@ -22,6 +22,16 @@ const ShelterCard = (props) => {
 
 
 	//return a card component with data provided via props
+
+	if (!props.Sites) {
+		return (
+			<div
+				className='shelterCard transition-all border shadow hover:shadow-lg p-5 mt-5'
+				>
+				<h1 className='shelterName'> This resource no longer exists. </h1>
+			</div>
+		);
+	}
 	return (
 		<div className='shelterCard transition-all border shadow hover:shadow-lg cursor-pointer p-5 mt-5' onClick={handleClick}>
 			<h1 className='shelterName'> {props.Name} </h1>
