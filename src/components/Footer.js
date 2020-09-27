@@ -19,12 +19,10 @@ const plainInfo = (
 class Footer extends React.Component {
   render() {
     return(
-      <div>
         <footer>
           {plainInfo}
           {listOfLinks}
         </footer>
-      </div>
     );
   }
 };

@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Fragment } from 'react';
 import ExclusiveOption from './ExclusiveOption';
 import TextInput from './TextInput';
 // import '../Assets/FieldSelector.scss';
@@ -45,6 +45,7 @@ const UserData = (props) => {
 					//no categories found in context so call api method initialize, which calls getSessionID() which makes http request to server for credentials.
 					const result = await API.initialize();
 					//if data ok === false, redirect to error route and set data to state as error object.
+					console.log(result)
 					if (!result.ok) {
 						history.push({
 							pathname: '/error',
@@ -96,6 +97,7 @@ const UserData = (props) => {
 	useEffect(() => {
 		const getCategories = async () => {
 			const result = await API.getCategories();
+			console.log(result)
 			if (!result.ok) {
 				console.log(result);
 				history.push({
@@ -132,7 +134,7 @@ const UserData = (props) => {
 		}
 
 	return (
-		<div className=''>
+		<Fragment>
 			<div className='text-center mt-16 px-16'>
 				<h1>Welcome to the 211 info web application.</h1>
 				<p>
@@ -197,6 +199,7 @@ const UserData = (props) => {
 
 				<div className='col-start-1 lg:col-start-3'>
 					<button
+						type='submit'
 						id='toResources'
 						className='p-2 border transition-all hover:bg-themeTeal '
 						onClick={nextPage}>
@@ -204,7 +207,7 @@ const UserData = (props) => {
 					</button>
 				</div>
 			</div>
-		</div>
+		</Fragment>
 	);
 };
 

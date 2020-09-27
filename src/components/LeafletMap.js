@@ -35,6 +35,7 @@ const LeafletMap = () => {
 				url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
 			/>
 			{apiDataContext.resources.map((resource, index) => {
+				if(!resource.Sites) return null
 				if(resource['Sites'][0]['Latitude'] != '' || resource['Sites'][0]['Longitude'] != ''){
 					return (
 						<Marker position={[Number(resource['Sites'][0]['Latitude']), Number(resource['Sites'][0]['Longitude'])]} key={index}>
