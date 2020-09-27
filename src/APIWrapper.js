@@ -105,6 +105,12 @@ class APIWrapper {
 			}
 			let data = await response.json();
 			data.ok = true;
+
+			data.sort(function(a,b) {
+					return a['Sites'][0]['Distance'] > b['Sites'][0]['Distance'];
+				}
+			);
+
 			console.log('heres the resources', data);
 			return data;
 		} catch (error) {
