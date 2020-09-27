@@ -139,6 +139,7 @@ const CategorySelector = () => {
 			return (
 				<div className='grid grid-auto-rows grid-cols-12'>
 					<button
+						type='button'
 						id={`scrollLeft${i}`}
 						className='col-start-1 col-span-1 flex justify-center items-center cursor-pointer'
 						onClick={handleScrollResourcesLeft}>
@@ -154,6 +155,7 @@ const CategorySelector = () => {
 						/>
 					</div>
 					<button
+						type='button'
 						id={`scrollRight${i}`}
 						className='col-start-12 col-span-1 flex justify-center items-center cursor-pointer'
 						onClick={handleScrollResourcesRight}>
