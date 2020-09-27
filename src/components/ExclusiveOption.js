@@ -159,7 +159,7 @@ const ExclusiveGroup = (props) => {
 	return (
 		<div className='exclusive-group-container'>
 			<div
-				className={`exclusive-group flex flex-wrap overflow-x-auto no-scroll${props.row} `}> 
+				className={`exclusive-group flex flex-wrap overflow-x-auto no-scroll${props.row} `}>
 				{props.items.map((item, i) => (
 					<ExclusiveButton
 						handleSetSelected={handleSetSelected}
@@ -214,7 +214,7 @@ const ExclusiveButton = (props) => {
 			}
 	}, []);
 
-	//added condition row must be second row to return differently styled button group
+	//added condition row must be second row (which is row === 1) to return differently styled button group
 	if (
 		typeof props.data !== 'string' &&
 		props.appendCategory &&
@@ -222,7 +222,8 @@ const ExclusiveButton = (props) => {
 	) {
 		// Assume object like {label, image} and build an SVG button
 		return (
-			<div
+			<button
+				type='button'
 				className={`p-0 w-full border shadow m-0 transition-all hover:shadow-lg cursor-pointer ${
 					props.selected ? 'selected ' : ' '
 				} ${themeDataContext.themeColor}`}
@@ -231,20 +232,21 @@ const ExclusiveButton = (props) => {
 				}} // changes the name of the pick in ExGroup's state.
 			>
 				<p className='text-xs'>{props.data.label}</p>
-			</div>
+			</button>
 		);
 	} else if (typeof props.data !== 'string' && props.appendCategory) {
 		return (
 			<div
 				className='p-3 w-full border shadow text-center m-5 transition-all hover:shadow-lg cursor-pointer '
 				style={{
-					minWidth: '175px'
+					minWidth: '175px',
 				}}
 				onClick={(e) => {
 					props.onClick(e, props.data, props.id, props.row);
 				}} // changes the name of the pick in ExGroup's state.
 			>
 				<button
+					type='button'
 					style={{ width: '50px' }}
 					className={
 						'border p-3 exclusive-button ' +
@@ -252,7 +254,9 @@ const ExclusiveButton = (props) => {
 						themeDataContext.themeColor
 					} // changes CSS and appearance when an option is selected/deselected
 				>
-					<img src={props.data.image} alt={props.data.label}></img>
+					<img
+						src={props.data.image}
+						alt={`${props.data.label} category button`}></img>
 				</button>
 				<p className='text-xs'>{props.data.label}</p>
 			</div>
@@ -264,6 +268,7 @@ const ExclusiveButton = (props) => {
 		return (
 			<div className='p-3 w-full border shadow text-center m-5 transition-all hover:shadow-lg cursor-pointer '>
 				<button
+					type='button'
 					style={{ width: '50px' }}
 					className={
 						'exclusive-button ' +
@@ -274,7 +279,9 @@ const ExclusiveButton = (props) => {
 						props.onClick(e, props.data, props.id);
 					}} // changes the name of the pick in ExGroup's state.
 				>
-					<img src={props.data.image}></img>
+					<img
+						src={props.data.image}
+						alt={`${props.data.label} category button`}></img>
 					{props.data.label}
 				</button>
 			</div>
@@ -284,6 +291,7 @@ const ExclusiveButton = (props) => {
 			//this case styles the gender button group
 			<div className=' border overflow-hidden'>
 				<button
+					type='button'
 					style={{ width: '108px' }}
 					className={
 						'flex exclusive-button ' +

@@ -66,7 +66,7 @@ function SubmitButton(props) {
 	}
 	return (
 		<button
-			type='button'
+			type='submit'
 			onClick={handleClick}
 			className='transition-all p-2 sm:px-5 md:px-8 lg:px-16 border hover:bg-themeTeal rounded rounded-l-none mx-auto'>
 			Submit

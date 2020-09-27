@@ -125,7 +125,6 @@ const SearchBar = ({ handleIsLoading }) => {
 
 	return (
 		<div className='w-full'>
-			<div className=''>
 				<form
 					onSubmit={handleSubmit}
 					className=' flex items-center justify-center  ml-auto'>
@@ -141,14 +140,14 @@ const SearchBar = ({ handleIsLoading }) => {
 						/>
 					</label>
 					<button
+						type='submit'
 						className='border p-2 hover:bg-themeTeal'
 						onClick={handleSubmit}>
 						Submit
 					</button>
 				</form>
-			</div>
 
-			<div
+			<ul
 				style={{
 					display: 'flex',
 					flexDirection: 'column',
@@ -157,15 +156,15 @@ const SearchBar = ({ handleIsLoading }) => {
 					backgroundColor: '#e0e0e0',
 				}}>
 				{filtered.map((item) => (
-					<div
+					<li
 						className='cursor-pointer hover:bg-themeTeal w-full'
 						onClick={() => {
 							handleClickSearchResult(item);
 						}}>
 						{item.name}
-					</div>
+					</li>
 				))}
-			</div>
+			</ul>
 		</div>
 	);
 };
