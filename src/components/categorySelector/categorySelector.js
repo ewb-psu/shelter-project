@@ -8,7 +8,7 @@ import ThemeDataContext from '../context/themeData/ThemeDataContext';
 import {IoMdArrowDropleft} from 'react-icons/io'
 import {IoMdArrowDropright} from 'react-icons/io'
 
-
+//text
 const CategorySelector = () => {
 	const apiDataContext = useContext(ApiDataContext);
 	const userDataContext = useContext(UserDataContext);
