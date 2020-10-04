@@ -29,7 +29,7 @@ const Nav = () => {
 					For Providers
 				</li>
 				<li className='px-5 border active:bg-themeTealFlat hover:bg-themeTeal'>
-					Our DaTa
+					Our Data
 				</li>
 			</ul>
 		</nav>
