@@ -10,6 +10,7 @@
     "@material-ui/lab": "latest",
     "bootstrap": "^3.3.5",
     "chokidar-cli": "^2.1.0",
+    "cypress": "^5.3.0",
     "jest-fetch-mock": "^3.0.3",
     "leaflet": "^1.6.0",
     "node-sass": "^4.12.0",
@@ -31,7 +32,7 @@
     "start": "npm-run-all build:tailwind --parallel watch:tailwind start:react",
     "start:react": "react-scripts start",
     "prebuild": "NODE_ENV=production run-s build:tailwind",
-    "build": "react-scripts build",
+    "build": "CI=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
