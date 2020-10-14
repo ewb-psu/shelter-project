@@ -72,6 +72,7 @@ const UserData = (props) => {
 				})
 					.then((data) => {
 						//if data ok === false, redirect to error route and set data to state as error object.
+						//TODO add something here to indicate what api call threw the error.
 						if (!data.ok) {
 							history.push({
 								pathname: '/error',
@@ -135,16 +136,16 @@ const UserData = (props) => {
 
 	return (
 		<Fragment>
-			<div className='text-center mt-16 px-16'>
-				<h1>Welcome to the 211 info web application.</h1>
+			<div className='text-center mt-16 lg:mx-32 '>
+				<h1>Welcome to the 211 Resource Locator.</h1>
 				<p>
-					tell us a little about yourself so we can find you the best services.
+					Please tell us a little about yourself so we can find you the best services.
 				</p>
 			</div>
 
 			<div
 				className={
-					'py-16 mx-5 sm:mx-16 lg:mx-32 grid grid-cols-4 grid-auto-rows gap-y-5 border shadow field-selector ' +
+					'py-16 mx-5 sm:mx-16  xl:mx-16 grid grid-cols-4 grid-auto-rows gap-y-5 border shadow field-selector  ' +
 					themeDataContext.themeColor
 				}>
 				<div className='mt-5 col-start-1 col-span-4 '>
@@ -201,7 +202,7 @@ const UserData = (props) => {
 					<button
 						type='submit'
 						id='toResources'
-						className='p-2 border transition-all hover:bg-themeTeal '
+						className='p-2 border transition-all border-orange-600 rounded-full px-5 mx-auto lg:ml-auto lg:mx-0 hover:bg-orange-600 text-orange-600 hover:text-white'
 						onClick={nextPage}>
 						Get Started
 					</button>
