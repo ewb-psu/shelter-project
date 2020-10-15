@@ -18,7 +18,7 @@ const Resources = (props) => {
 	};
 
 	return (
-		<div className={`flex flex-col items-center justify-center mx-5 sm:mx-16 lg:mx-64 max-w-screen-xl field-Selector ${themeDataContext.themeColor}`}>
+		<div className={`flex flex-col items-center justify-center mx-5 sm:mx-16 lg:mx-64 field-Selector ${themeDataContext.themeColor}`}>
 			<div className='border shadow w-full my-16 px-5 py-5 flex justify-end'>
 				<SearchBar handleIsLoading={handleIsLoading} />
 			</div>

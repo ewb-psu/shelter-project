@@ -145,7 +145,7 @@ const UserData = (props) => {
 
 			<div
 				className={
-					'py-16 mx-5 sm:mx-16  xl:mx-16 grid grid-cols-4 grid-auto-rows gap-y-5 border shadow field-selector  ' +
+					'py-16 mx-5 sm:mx-16 xl:mx-16 grid grid-cols-4 grid-auto-rows gap-y-5 border shadow field-selector  ' +
 					themeDataContext.themeColor
 				}>
 				<div className='mt-5 col-start-1 col-span-4 '>
