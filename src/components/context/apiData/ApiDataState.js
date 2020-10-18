@@ -13,7 +13,7 @@ export const ApiDataState = (props) => {
 		categories: [],
 		resources: [],
 		arrayOfLocations: [],
-		mapCenter: ['45.00', '-122.50'], // defaut map center position to Portland Oregon
+		mapCenter: ['45.5135', '-122.6801'], // defaut map center position to Portland Oregon
 		zoomLevel: 10,
 	};
 
@@ -25,19 +25,25 @@ export const ApiDataState = (props) => {
 		dispatch({ type: 'SET_CATEGORIES', payload: categories });
 	};
 
+	
+	const setMapCenter = (newCoords) => {
+		console.log('new map center coords', newCoords);
+		dispatch({ type: 'SET_MAP_CENTER', payload: newCoords });
+	};
+	
 	const setResources = (resources) => {
 		console.log('trigger', resources)
+		//set map center position here.
+		// const filteredResources = resources.filter(resource => {
+		// 	// console.log(resource)
+		// 	return resource.Sites[0].lat !== "" 
+		// })
+		// console.log(filteredResources)
+		// console.log(filteredResources[0].Sites[0].Latitude)
+		// console.log( filteredResources[0].Sites[0].Longitude)
+		// setMapCenter([filteredResources[0].Sites[0].Latitude, filteredResources[0].Sites[0].Longitude])
+
 		dispatch({ type: 'SET_RESOURCES', payload: resources });
-	};
-
-	const setArrayOfLocations = (newCoords) => {
-		console.log(newCoords);
-		dispatch({ type: 'SET_ARRAY_OF_COORDS', payload: newCoords });
-	};
-
-	const setMapCenter = (newCoords) => {
-		console.log(newCoords);
-		dispatch({ type: 'SET_MAP_CENTER', payload: newCoords });
 	};
 
 	const setZoomLevel = (zoomLevel) => {
@@ -50,12 +56,10 @@ export const ApiDataState = (props) => {
 				sessionID: state.sessionID, // TODO where is the setter for this?
 				categories: state.categories,
 				resources: state.resources,
-				arrayOfLocations: state.arrayOfLocations,
 				mapCenter: state.mapCenter,
 				zoomLevel: state.zoomLevel,
 				setCategories,
 				setResources,
-				setArrayOfLocations,
 				setMapCenter,
 				setZoomLevel,
 			}}>
