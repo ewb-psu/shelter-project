@@ -202,7 +202,7 @@ const UserData = (props) => {
 					<button
 						type='submit'
 						id='toResources'
-						className='p-2 border transition-all border-orange-600 rounded-full px-5 mx-auto lg:ml-auto lg:mx-0 hover:bg-orange-600 text-orange-600 hover:text-white'
+						className='p-2 border transition-all border-orange-600 rounded-full px-5 mx-auto lg:ml-auto lg:mx-0 font-medium hover:bg-orange-600 text-orange-600 hover:text-white'
 						onClick={nextPage}>
 						Get Started
 					</button>
