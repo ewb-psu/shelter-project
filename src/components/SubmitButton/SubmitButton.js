@@ -36,6 +36,8 @@ function SubmitButton(props) {
 					'userDataContext',
 					JSON.stringify(userDataContext)
 				);
+
+				
 				//If category selected
 				//Make getResource call with category data
 				//If subCategory selected
@@ -43,6 +45,7 @@ function SubmitButton(props) {
 				//If subestCategory selected
 				//Make getResource call with service name data
 
+				//TODO finish error handling code for getResource.
 				if (userDataContext.categorySelected === 3) {
 					obj['st'] = 's';
 					apiDataContext.setResources(await API.getResource(obj));
