@@ -167,7 +167,7 @@ const CategorySelector = () => {
 		return (
 			//second row has no arrow buttons for side scrolling because it is a column
 			<div className='grid grid-auto-rows grid-cols-12'>
-				<div className='col-start-2 col-span-10'>
+				<div className='col-start-1 col-span-12'>
 					<ExclusiveOption
 						items={categories}
 						appendCategory={appendCategory}
