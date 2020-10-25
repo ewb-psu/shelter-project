@@ -48,17 +48,39 @@ function SubmitButton(props) {
 				//TODO finish error handling code for getResource.
 				if (userDataContext.categorySelected === 3) {
 					obj['st'] = 's';
-					apiDataContext.setResources(await API.getResource(obj));
+					const result = await API.getResource(obj)
+					console.log(result)
+					apiDataContext.setResources(result);
 					history.push('/info');
 				} else if (userDataContext.categorySelected === 2) {
 					obj['st'] = 'sc';
 					obj['sn'] = '';
-					apiDataContext.setResources(await API.getResource(obj));
+					const result = await API.getResource(obj)
+					console.log(result)
+					if(!result.ok) {
+						history.push({
+							pathname: "/error",
+							state: {
+							  error: result,
+							},
+						  });
+					}
+					apiDataContext.setResources(result);
 					history.push('/info');
 				} else {
 					obj['st'] = 'c';
 					obj['sn'] = '';
-					apiDataContext.setResources(await API.getResource(obj));
+					const result = await API.getResource(obj)
+					console.log(result)
+					if(!result.ok) {
+						history.push({
+							pathname: "/error",
+							state: {
+							  error: result,
+							},
+						  });
+					}
+					apiDataContext.setResources(result);
 					history.push('/info');
 				}
 				console.log('handleClick');
@@ -67,6 +89,7 @@ function SubmitButton(props) {
 			console.log(error);
 		}
 	}
+	
 	return (
 		<button
 			type='submit'
