@@ -28,7 +28,7 @@ export const UserDataState = (props) => {
 		isAgeValid: '',
 		isZipCodeValid: 'null',
 		isFamilySizeValid: '',
-		isGenderValid: ''
+		isGenderValid: '',
 	};
 
 	const [state, dispatch] = useReducer(UserDataReducer, initialState);
@@ -70,6 +70,12 @@ export const UserDataState = (props) => {
 		dispatch({ type: 'SET_VALID_COUNTY', payload: input });
 	};
 
+	const setIsUserDataValid = (input) => {
+		dispatch({type: 'SET_IS_GENDER_VALID', payload: {valid: ''}})
+		dispatch({type: 'SET_IS_AGE_VALID', payload: {valid: ''}})
+		dispatch({type: 'SET_IS_ZIP_CODE_VALID', payload: {valid: ''}})
+		dispatch({type: 'SET_IS_COUNTY_VALID', payload: {valid: ''}})
+	};
 
 	const setIsCountyValid = (county) => {
 		let valid = null;
@@ -109,7 +115,7 @@ export const UserDataState = (props) => {
 		if (empty) message = 'Required entry.';
 
 		let valid = !empty;
-		dispatch({ type: 'SET_IS_GENDER_VALID', payload: { valid: true, message } });
+		dispatch({ type: 'SET_IS_GENDER_VALID', payload: { valid: valid, message } });
 
 		return { valid, message };
 	};
@@ -128,7 +134,7 @@ export const UserDataState = (props) => {
 			message = "It's unlikely this age is correct. Is this a typo?";
 
 		let valid = isPositiveInteger && !isReallyOld;
-		dispatch({ type: 'SET_IS_AGE_VALID', payload: { valid: true, message } });
+		dispatch({ type: 'SET_IS_AGE_VALID', payload: { valid: valid, message } });
 		return { valid, message };
 	};
 
@@ -150,7 +156,10 @@ export const UserDataState = (props) => {
 		let valid = correctLength && isPositiveInteger;
 		message = (state.isZipCodeValid === 'null' ? '' : message)
 
+		//Don't set message if funciton was called from useEffect
 		message = (displayMessage ? message : '')
+		valid = (displayMessage ? valid : '')
+
 		console.log(message)
 		dispatch({ type: 'SET_IS_ZIP_CODE_VALID', payload: { valid, message } });
 
@@ -158,9 +167,8 @@ export const UserDataState = (props) => {
 
 	};
 
-	const isUserDataValid = async () => {
+	const isUserDataValid =  () => {
 
-		await validateUserData();
 		return(state.isZipCodeValid.valid &&
 		state.isCountyValid.valid &&
 		state.isAgeValid.valid &&
@@ -169,12 +177,12 @@ export const UserDataState = (props) => {
 
 	}
 
-	const validateUserData = async () => {
+	const validateUserData = () => {
 		setIsZipCodeValid(state.zipCode,true);
-		setIsGenderValid(state.gender);
-		setIsAgeValid(state.age);
-		setIsCountyValid(state.county);
-		setIsFamilySizeValid(state.familySize);
+	 	setIsGenderValid(state.gender);
+	 	setIsAgeValid(state.age);
+	 	setIsCountyValid(state.county);
+	 	setIsFamilySizeValid(state.familySize);
 		return
 	};
 
@@ -323,7 +331,8 @@ export const UserDataState = (props) => {
 				isGenderValid: state.isGenderValid,
 				setIsGenderValid,
 				isFamilySizeValid: state.isFamilySizeValid,
-				setIsFamilySizeValid
+				setIsFamilySizeValid,
+				setIsUserDataValid
 			}}>
 			{props.children}
 		</UserDataContext.Provider>

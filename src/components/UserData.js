@@ -64,13 +64,13 @@ const UserData = (props) => {
 	useEffect(() => {
 		const handleValidZip = async () => {
 			console.log('handleValidZip');
-			if (
-				userDataContext.setIsZipCodeValid(userDataContext.zipCode, false).valid
-			) {
+			if (userDataContext.setIsZipCodeValid(userDataContext.zipCode, false).valid) {
+
 				await API.getCountyByZipCode({
 					zip: userDataContext.zipCode,
 				})
 					.then((data) => {
+
 						//if data ok === false, redirect to error route and set data to state as error object.
 						//TODO add something here to indicate what api call threw the error.
 						if (!data.ok) {
@@ -113,12 +113,18 @@ const UserData = (props) => {
 		getCategories();
 	}, []);
 
-	const nextPage = () => {
+	useEffect(() => {
+		let userDataIsValid = userDataContext.isUserDataValid();
 
-		if (userDataContext.isUserDataValid()) {
+		if (userDataIsValid) {
 			history.push('/resources');
-			themeDataContext.setShowNav(true)
+			themeDataContext.setShowNav(true);
+			userDataContext.setIsUserDataValid(false);
 		}
+	});
+
+	const nextPage = () => {
+	 	userDataContext.validateUserData();
 	};
 
 	//return a spinner while waiting for data from api to populate category buttons
