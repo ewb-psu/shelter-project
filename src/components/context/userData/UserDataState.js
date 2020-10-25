@@ -70,7 +70,7 @@ export const UserDataState = (props) => {
 		dispatch({ type: 'SET_VALID_COUNTY', payload: input });
 	};
 
-	const setIsUserDataValid = (input) => {
+	const clearIsUserDataValid = () => {
 		dispatch({type: 'SET_IS_GENDER_VALID', payload: {valid: ''}})
 		dispatch({type: 'SET_IS_AGE_VALID', payload: {valid: ''}})
 		dispatch({type: 'SET_IS_ZIP_CODE_VALID', payload: {valid: ''}})
@@ -158,8 +158,6 @@ export const UserDataState = (props) => {
 
 		//Don't set message if funciton was called from useEffect
 		message = (displayMessage ? message : '')
-		valid = (displayMessage ? valid : '')
-
 		console.log(message)
 		dispatch({ type: 'SET_IS_ZIP_CODE_VALID', payload: { valid, message } });
 
@@ -332,7 +330,7 @@ export const UserDataState = (props) => {
 				setIsGenderValid,
 				isFamilySizeValid: state.isFamilySizeValid,
 				setIsFamilySizeValid,
-				setIsUserDataValid
+				clearIsUserDataValid
 			}}>
 			{props.children}
 		</UserDataContext.Provider>

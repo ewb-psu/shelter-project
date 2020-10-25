@@ -65,7 +65,7 @@ const UserData = (props) => {
 		const handleValidZip = async () => {
 			console.log('handleValidZip');
 			if (userDataContext.setIsZipCodeValid(userDataContext.zipCode, false).valid) {
-
+				userDataContext.setDoValidation(false);
 				await API.getCountyByZipCode({
 					zip: userDataContext.zipCode,
 				})
@@ -82,9 +82,8 @@ const UserData = (props) => {
 							});
 						}
 						userDataContext.setCounty(data[0]['county']);
-						userDataContext.getAllPossibleCountiesByZip(
-							userDataContext.zipCode
-						);
+						userDataContext.getAllPossibleCountiesByZip(userDataContext.zipCode);
+
 					})
 					.catch((err) => {
 						// TODO: we'll probably want to take action here to resolve the error
@@ -115,16 +114,19 @@ const UserData = (props) => {
 
 	useEffect(() => {
 		let userDataIsValid = userDataContext.isUserDataValid();
-
-		if (userDataIsValid) {
+		console.log(userDataIsValid && userDataContext.doValidation)
+		if (userDataIsValid && userDataContext.doValidation) {
 			history.push('/resources');
 			themeDataContext.setShowNav(true);
-			userDataContext.setIsUserDataValid(false);
+			userDataContext.clearIsUserDataValid();
+			userDataContext.setDoValidation(false);
 		}
 	});
 
 	const nextPage = () => {
+		userDataContext.setDoValidation(true);
 	 	userDataContext.validateUserData();
+
 	};
 
 	//return a spinner while waiting for data from api to populate category buttons
@@ -206,11 +208,12 @@ const UserData = (props) => {
 
 				<div className='col-start-1 lg:col-start-3'>
 					<button
-						type='submit'
-						id='toResources'
-						className='p-2 border transition-all border-orange-600 rounded-full px-5 mx-auto lg:ml-auto lg:mx-0 font-medium hover:bg-orange-600 text-orange-600 hover:text-white'
-						onClick={nextPage}>
-						Get Started
+						type="submit"
+						id="toResources"
+						className="border transition-all border-orange-600 rounded-full py-2 px-4 md:px-6 lg:ml-auto lg:mx-0 font-medium hover:bg-orange-600 text-orange-600 hover:text-white"
+						onClick={nextPage}
+					>
+						Submit
 					</button>
 				</div>
 			</div>
