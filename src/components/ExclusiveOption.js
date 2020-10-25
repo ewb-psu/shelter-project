@@ -224,7 +224,7 @@ const ExclusiveButton = (props) => {
 		return (
 			<button
 				type='button'
-				className={`p-0 w-full border shadow m-0 transition-all hover:shadow-lg cursor-pointer ${
+				className={`p-2 w-full border shadow m-0 transition-all hover:shadow-lg cursor-pointer ${
 					props.selected ? 'selected ' : ' '
 				} ${themeDataContext.themeColor}`}
 				onClick={(e) => {
