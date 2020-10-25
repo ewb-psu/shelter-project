@@ -1,22 +1,23 @@
 /** @format */
 
-import React, { useState, useEffect, useContext, Fragment } from 'react';
-import ExclusiveOption from './ExclusiveOption';
-import TextInput from './TextInput';
+import React, { useState, useEffect, useContext, Fragment } from "react";
+import ExclusiveOption from "./ExclusiveOption";
+import TextInput from "./TextInput";
 // import '../Assets/FieldSelector.scss';
-import APIWrapper from '../APIWrapper.js';
-import InputLabel from './InputLabel';
-import CountySelect from './CountySelect';
-import Spinner from '../Assets/spinner.gif';
-import ApiDataContext from './context/apiData/ApiDataContext';
-import UserDataContext from './context/userData/UserDataContext';
-import ThemeDataContext from './context/themeData/ThemeDataContext';
-import { useHistory } from 'react-router-dom';
+import APIWrapper from "../APIWrapper.js";
+import InputLabel from "./InputLabel";
+import CountySelect from "./CountySelect";
+import Spinner from "../Assets/spinner.gif";
+import ApiDataContext from "./context/apiData/ApiDataContext";
+import UserDataContext from "./context/userData/UserDataContext";
+import ThemeDataContext from "./context/themeData/ThemeDataContext";
+import { useHistory } from "react-router-dom";
 
 const APIKey = process.env.REACT_APP_211_API_KEY;
 const API = new APIWrapper(APIKey);
 
 const UserData = (props) => {
+
 	const userDataContext = useContext(UserDataContext);
 	const apiDataContext = useContext(ApiDataContext);
 	const themeDataContext = useContext(ThemeDataContext);
@@ -219,6 +220,7 @@ const UserData = (props) => {
 			</div>
 		</Fragment>
 	);
+ 
 };
 
 export default UserData;
