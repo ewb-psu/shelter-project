@@ -29,7 +29,7 @@ function SubmitButton(props) {
 		try {
 			props.handleIsLoading();
 			console.log(userDataContext)
-			if (userDataContext.validateUserData()) {
+			if (true) {
 				//save submit button state to local storage for use if / when user navigates backwards
 				localStorage.setItem('apiDataContext', JSON.stringify(apiDataContext));
 				localStorage.setItem(
@@ -37,7 +37,7 @@ function SubmitButton(props) {
 					JSON.stringify(userDataContext)
 				);
 
-				
+
 				//If category selected
 				//Make getResource call with category data
 				//If subCategory selected
