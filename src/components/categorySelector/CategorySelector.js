@@ -19,6 +19,14 @@ const CategorySelector = () => {
 		setKeys([...keys, keyValue]);
 	};
 
+	console.log(apiDataContext)
+
+	useEffect( () => {
+		if(JSON.parse(localStorage.getItem('apiDataContext'))) {
+			apiDataContext.setCategories(JSON.parse(localStorage.getItem('apiDataContext')).categories)
+		}
+	}, [])
+
 	useEffect(() => {
 		const labelsWithImages = createLabelWithImage(
 			apiDataContext.categories,
@@ -69,6 +77,7 @@ const CategorySelector = () => {
 
 		//Category has been selected. Show subcategory
 		if (row === 0) {
+			console.log(apiDataContext)
 			newCategory[row + 1] = createLabelWithImage(
 				apiDataContext.categories[id]['subcat'],
 				'subcategory'

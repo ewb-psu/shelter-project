@@ -22,8 +22,8 @@ const ExclusiveGroup = (props) => {
 		setSelected(data);
 	};
 
-	let valid = null;
-	let invalidEntryMessage = '';
+	// let valid = null;
+	// let invalidEntryMessage = '';
 
 	//sets Selected state, saves information about buttons state in userDataContext, to be saved later in localStorage.
 	const handleClick = (event, data, id, row) => {
@@ -73,19 +73,19 @@ const ExclusiveGroup = (props) => {
 		}
 	};
 
-	const validate = () => {
-		if (!props.validator) return { valid: true, message: '' };
-		let value = selected;
-		let validEntryClass = '';
-		let invalidEntryMessage = '';
-		// Check if given value is valid
-		let validityObject = props.validator(value);
-		// Note the results for reference in the render
-		valid = validityObject.valid;
-		if (validityObject.valid === false)
-			invalidEntryMessage = validityObject.message;
-		if (validityObject.valid === true) invalidEntryMessage = '';
-	};
+	// const validate = () => {
+	// 	if (!props.validator) return { valid: true, message: '' };
+	// 	let value = selected;
+	// 	let validEntryClass = '';
+	// 	let invalidEntryMessage = '';
+	// 	// Check if given value is valid
+	// 	let validityObject = props.validator(value);
+	// 	// Note the results for reference in the render
+	// 	valid = validityObject.valid;
+	// 	if (validityObject.valid === false)
+	// 		invalidEntryMessage = validityObject.message;
+	// 	if (validityObject.valid === true) invalidEntryMessage = '';
+	// };
 
 	//if (userDataContext.doValidation) validate();
 	//added second condition, props.row must be the first row for this jsx to render. this is out normally styled buttons with svg's

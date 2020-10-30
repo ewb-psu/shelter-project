@@ -13,38 +13,38 @@ import Resources from './components/Resources/Resources.js';
 import ErrorPage from './components/ErrorPage.js'
 import {
 	BrowserRouter as Router,
-	Switch,
+	// Switch,
 	Route,
-	Link,
-	Redirect,
+	// Link,
+	// Redirect,
 } from 'react-router-dom';
 
 
 const App = () => {
-	const apiDataContext = useContext(ApiDataContext);
+	// const apiDataContext = useContext(ApiDataContext);
 	//search localStorage for saved apiDataState and use it to set categories if found.
 	useEffect(() => {
-		if (JSON.parse(localStorage.getItem('apiDataState'))) {
-			console.log('trigger local storage');
-			apiDataContext.setCategories(
-				JSON.parse(localStorage.getItem('appState'))
-			);
-		}
+		// if (JSON.parse(localStorage.getItem('apiDataState'))) {
+		// 	console.log('trigger local storage');
+		// 	apiDataContext.setCategories(
+		// 		JSON.parse(localStorage.getItem('appState'))
+		// 	);
+		// }
 		//a function to remove user data from localstorage
-		const cleanUp = () => {
-			// localStorage.removeItem('sessionId');
-			localStorage.removeItem('apiDataContext');
-			localStorage.removeItem('categories');
-		};
+		// const cleanUp = () => {
+		// 	// localStorage.removeItem('sessionId');
+		// 	localStorage.removeItem('apiDataContext');
+		// 	localStorage.removeItem('categories');
+		// };
 		//after 30 minutes, remove users sessionId from localStorage.
 		setTimeout(() => {
 			localStorage.removeItem('sessionId');
 		}, 1800000);
 		// when user hits refresh, navigates away from the page or closes the browser tab, remove state values from localstorage.
-		window.addEventListener('beforeunload', cleanUp);
-		return () => {
-			window.removeEventListener('beforeUnload', cleanUp);
-		};
+		// window.addEventListener('beforeunload', cleanUp);
+		// return () => {
+		// 	window.removeEventListener('beforeUnload', cleanUp);
+		// };
 	}, []);
 
 	return (

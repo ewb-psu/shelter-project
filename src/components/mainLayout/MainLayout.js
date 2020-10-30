@@ -1,15 +1,14 @@
 /** @format */
 
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Nav from "../Nav";
-import ThemeDataContext from "../context/themeData/ThemeDataContext";
+// import ThemeDataContext from "../context/themeData/ThemeDataContext";
 import logo from "../../Assets/211-logo.png";
 import Footer from "../Footer";
 
 const MainLayout = (props) => {
-  const themeDataContext = useContext(ThemeDataContext);
-  console.log(themeDataContext);
+  // const themeDataContext = useContext(ThemeDataContext);
   return (
     <>
       <div

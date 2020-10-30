@@ -11,7 +11,6 @@ const ThemeDataState = (props) => {
 	};
 
 	const [state, dispatch] = useReducer(ThemeDataReducer, initialState);
-	console.log(state);
 
 	const setThemeColor = (color) => {
 		dispatch({ type: 'SET_THEME_COLOR', payload: color });

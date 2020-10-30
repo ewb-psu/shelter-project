@@ -136,7 +136,7 @@ const SearchBar = ({ handleIsLoading }) => {
 							onChange={handleChange}
 							style={{ backgroundColor: 'rgba(1, 169, 198,0.4)' }}
 							className='color-black leading-10 w-full boder rounded rounded-r-none color-black'
-							placeHolder='Search...'
+							placeholder='Search...'
 						/>
 					</label>
 					<button
