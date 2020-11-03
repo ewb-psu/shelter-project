@@ -8,7 +8,6 @@ import ApiDataContext from "./context/apiData/ApiDataContext";
 const Shelters = () => {
   //invoke useContext on ApiDataContext component, initializing apiDataContext variable
   const apiDataContext = useContext(ApiDataContext);
-  console.log(apiDataContext)
   //return a grid, with each resource returned from 211's api mapped into its own card component from apiDataContext. also render leafletMaps component.
   return (
     <div className="grid grid-auto-rows grid-cols-3 mx-16 lg:mx-32">

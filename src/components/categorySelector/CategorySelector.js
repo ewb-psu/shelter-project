@@ -19,14 +19,14 @@ const CategorySelector = () => {
 		setKeys([...keys, keyValue]);
 	};
 
-	console.log(apiDataContext)
-
+	// when component mounts, if apiDataContext exists in localstorage, use it to populate the apiDataContext.categories array
 	useEffect( () => {
-		if(JSON.parse(localStorage.getItem('apiDataContext'))) {
+		if(JSON.parse(localStorage.getItem('apiDataContext'))) 
 			apiDataContext.setCategories(JSON.parse(localStorage.getItem('apiDataContext')).categories)
-		}
+		
 	}, [])
 
+	//when component mounts, use apidatacontext categories to generate component level category state (labels included)   
 	useEffect(() => {
 		const labelsWithImages = createLabelWithImage(
 			apiDataContext.categories,
@@ -128,16 +128,14 @@ const CategorySelector = () => {
 		}
 	};
 
-	//functions to handle scrolling the different rows to the left or right.
+	//these functions handle scrolling the categories to the left or right.
 	const handleScrollResourcesLeft = (e) => {
 			const noScroll = document.querySelector('.custom-scroll');
-			console.log(noScroll);
 			noScroll.scrollBy(-215, 0);
 
 	};
 	const handleScrollResourcesRight = (e) => {
 			const noScroll = document.querySelector('.custom-scroll');
-			console.log(noScroll);
 			noScroll.scrollBy(215, 0);
 
 	};

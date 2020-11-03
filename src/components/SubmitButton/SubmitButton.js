@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./SubmitButton.css";
 import { useHistory } from "react-router-dom";
 import APIWrapper from "../../APIWrapper.js";
@@ -26,31 +26,40 @@ function SubmitButton(props) {
     catid: userDataContext.categoryId,
   };
 
-//   sn: userDataContext.serviceName || JSON.parse(localStorage.getItem("userDataContext")).serviceName,
-//   st: "",
-//   age: userDataContext.age || JSON.parse(localStorage.getItem("userDataContext")).age,
-//   gender: userDataContext.gender || JSON.parse(localStorage.getItem("userDataContext")).gender,
-//   zip: userDataContext.zipCode || JSON.parse(localStorage.getItem("userDataContext")).zipCode,
-//   county: userDataContext.county || JSON.parse(localStorage.getItem("userDataContext")).county,
-//   catid: userDataContext.categoryId || JSON.parse(localStorage.getItem("userDataContext")).categoryId,
-//   if (JSON.parse(localStorage.getItem("userDataContext"))) {
-//     console.log(JSON.parse(localStorage.getItem("userDataContext")));
-//     obj = {
-//       sn: JSON.parse(localStorage.getItem("userDataContext")).serviceName,
-//       st: "",
-//       age: Number(JSON.parse(localStorage.getItem("userDataContext")).age),
-//       gender: JSON.parse(localStorage.getItem("userDataContext")).gender,
-//       zip: Number(JSON.parse(localStorage.getItem("userDataContext")).zipCode),
-//       county: JSON.parse(localStorage.getItem("userDataContext")).county,
-//       catid: JSON.parse(localStorage.getItem("userDataContext")).categoryId,
-//     };
-//   }
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("userDataContext"))) {
+      console.log(
+        "trigggggger",
+        JSON.parse(localStorage.getItem("userDataContext"))
+      );
+
+      userDataContext.setServiceName(
+        JSON.parse(localStorage.getItem("userDataContext")).serviceName
+      );
+      userDataContext.setAge(
+        JSON.parse(localStorage.getItem("userDataContext")).age
+      );
+      userDataContext.setGender(
+        JSON.parse(localStorage.getItem("userDataContext")).gender
+      );
+      userDataContext.setZipcode(
+        JSON.parse(localStorage.getItem("userDataContext")).zipCode
+      );
+      userDataContext.setCounty(
+        JSON.parse(localStorage.getItem("userDataContext")).county
+      );
+      userDataContext.setCategoryId(
+        JSON.parse(localStorage.getItem("userDataContext")).categoryId
+      );
+    }
+  }, []);
 
   async function handleClick() {
     try {
       props.handleIsLoading();
       if (true) {
         //save submit button state to local storage for use if / when user navigates backwards
+
         localStorage.setItem("apiDataContext", JSON.stringify(apiDataContext));
         localStorage.setItem(
           "userDataContext",
@@ -64,38 +73,10 @@ function SubmitButton(props) {
         //If subestCategory selected
         //Make getResource call with service name data
 
-        //TODO finish error handling code for getResource.
         if (userDataContext.categorySelected === 3) {
           obj["st"] = "s";
-          const result = await API.getResource(obj);
-          console.log(result);
-          apiDataContext.setResources(result);
-          history.push("/info");
-        } else if (userDataContext.categorySelected === 2) {
-          obj["st"] = "sc";
-		  obj["sn"] = "";
-		  console.log('trigger')
-          const result = await API.getResource(obj);
-          console.log(result);
-          if (!result.ok) {
-            history.push({
-              pathname: "/error",
-              state: {
-                error: result,
-              },
-            });
-          }
-          console.log('heres the result',result);
 
-          apiDataContext.setResources(result);
-          history.push("/info");
-        } else {
-          obj["st"] = "c";
-          obj["sn"] = "";
-          console.log(obj);
           const result = await API.getResource(obj);
-          console.log(result);
-          console.log(result.ok);
           if (!result.ok) {
             history.push({
               pathname: "/error",
@@ -104,12 +85,41 @@ function SubmitButton(props) {
               },
             });
           } else {
-			console.log(result);
+            console.log("heres the result", result);
 
-			apiDataContext.setResources(result);
-			history.push("/info");
-		  }
-      
+            apiDataContext.setResources(result);
+            history.push("/info");
+          }
+        } else if (userDataContext.categorySelected === 2) {
+          obj["st"] = "sc";
+          obj["sn"] = "";
+          const result = await API.getResource(obj);
+          if (!result.ok) {
+            history.push({
+              pathname: "/error",
+              state: {
+                error: result,
+              },
+            });
+          } else {
+            apiDataContext.setResources(result);
+            history.push("/info");
+          }
+        } else {
+          obj["st"] = "c";
+          obj["sn"] = "";
+          const result = await API.getResource(obj);
+          if (!result.ok) {
+            history.push({
+              pathname: "/error",
+              state: {
+                error: result,
+              },
+            });
+          } else {
+            apiDataContext.setResources(result);
+            history.push("/info");
+          }
         }
         console.log("handleClick");
       }

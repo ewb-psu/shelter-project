@@ -105,7 +105,6 @@ class APIWrapper {
 			}
 			let data = await response.json();
 			data.ok = true;
-			console.log('heres the resources', data);
 			return data;
 		} catch (error) {
 			console.log(error);
@@ -132,7 +131,6 @@ class APIWrapper {
 			}
 			let data = await response.json();
 			data.ok = true;
-			console.log(data);
 			return data;
 		} catch (error) {
 			console.log(error);

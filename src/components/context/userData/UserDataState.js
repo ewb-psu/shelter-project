@@ -164,13 +164,11 @@ export const UserDataState = (props) => {
 	};
 
 	const isUserDataValid =  () => {
-
 		return(state.isZipCodeValid.valid &&
 		state.isCountyValid.valid &&
 		state.isAgeValid.valid &&
 		state.isFamilySizeValid.valid &&
 		state.isGenderValid.valid)
-
 	}
 
 	const validateUserData = () => {

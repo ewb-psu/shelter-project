@@ -88,7 +88,7 @@ const ExclusiveGroup = (props) => {
 	// };
 
 	//if (userDataContext.doValidation) validate();
-	//added second condition, props.row must be the first row for this jsx to render. this is out normally styled buttons with svg's
+	//added second condition, props.row must be the first row for this jsx to render. this is for our normally styled buttons with svg's.
 	if (typeof props.appendCategory == 'function' && props.row === 0) {
 		return (
 			<div className=''>
@@ -155,11 +155,10 @@ const ExclusiveGroup = (props) => {
 		return null;
 	}
 	//default
-	//TODO change no-scroll class name to something more clearly defined.
 	return (
 		<div className='exclusive-group-container'>
 			<div
-				className={`exclusive-group flex flex-wrap overflow-x-auto no-scroll${props.row} `}>
+				className={`exclusive-group flex flex-wrap overflow-x-auto custom-scroll `}>
 				{props.items.map((item, i) => (
 					<ExclusiveButton
 						handleSetSelected={handleSetSelected}
@@ -191,8 +190,7 @@ const ExclusiveButton = (props) => {
 	const userDataContext = useContext(UserDataContext);
 
 	useEffect(() => {
-		//look for userDataState in localStorage. if its there, use it to determine which buttons should be styled when navigating backwards.
-		// if (!JSON.parse(localStorage.getItem('submitButtonProps'))) return;
+		//on mount, look for userDataState in localStorage. if its there, use it to determine which buttons should be styled.
 
 		if (props.row === undefined) {
 			props.handleSetSelected(userDataContext.gender);
@@ -209,7 +207,6 @@ const ExclusiveButton = (props) => {
 					JSON.parse(localStorage.getItem('userDataContext')).buttonState
 						.subCat[0].subCatTerm[0].sterm
 			) {
-				console.log('triggerSelected');
 				props.handleSetSelected(props.data);
 			}
 	}, []);

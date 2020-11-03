@@ -3,7 +3,7 @@
 import React, { useReducer } from 'react';
 import ApiDataContext from './ApiDataContext';
 import ApiDataReducer from './ApiDataReducer';
-import APIWrapper from '../../../APIWrapper';
+// import APIWrapper from '../../../APIWrapper';
 
 export const ApiDataState = (props) => {
 
@@ -32,8 +32,8 @@ export const ApiDataState = (props) => {
 	};
 	
 	const setResources = (resources) => {
-		console.log('trigger', resources)
-		//set map center position here.
+		
+		//TODO set map center position to be the first resource location here?
 		// const filteredResources = resources.filter(resource => {
 		// 	// console.log(resource)
 		// 	return resource.Sites[0].lat !== "" 
