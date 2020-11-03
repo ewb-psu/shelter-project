@@ -141,7 +141,7 @@ const UserData = (props) => {
 
 	return (
 		<Fragment>
-			<div className='text-center mt-16 lg:mx-32 '>
+			<div className='text-center mt-16 sm:mx-16 lg:mx-32 '>
 				<h1>Welcome to the 211 Resource Locator.</h1>
 				<p>
 					Please tell us a little about yourself so we can find you the best services.
@@ -150,7 +150,7 @@ const UserData = (props) => {
 
 			<div
 				className={
-					'py-16 mx-5 sm:mx-16 xl:mx-16 grid grid-cols-4 grid-auto-rows gap-y-5 border shadow field-selector  ' +
+					'py-16 mx-5 sm:mx-16 lg:mx-32 grid grid-cols-4 grid-auto-rows gap-y-5 border shadow field-selector  ' +
 					themeDataContext.themeColor
 				}>
 				<div className='mt-5 col-start-1 col-span-4 '>

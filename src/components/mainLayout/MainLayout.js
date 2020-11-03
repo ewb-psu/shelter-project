@@ -17,7 +17,7 @@ const MainLayout = (props) => {
       >
         Español | عربى | русский | 繁體中文 | 简体中文 | Tiếng Việt |{" "}
       </div>
-      <header className="mx-5 sm:mx-16 xl:mx-32 grid grid-auto-rows grid-cols-3">
+      <header className="mx-5 sm:mx-16 lg:mx-32 grid grid-auto-rows grid-cols-3">
         <div
           className="col-start-1 col-span-3 row-start-1 lg:-col-span-1"
         >
@@ -31,7 +31,7 @@ const MainLayout = (props) => {
           <Nav />
         </div>
         <div className='col-start-1 col-span-3 row-start-3 xl:row-start-1 xl:col-start-3 text-center xl:text-right '>
-        <button className='mt-12 border border-orange-600 rounded-full px-5 mx-auto lg:ml-auto lg:mx-0 hover:bg-orange-600 text-orange-600 hover:text-white font-medium'>Donate</button>
+        <button className='mt-12 border border-orange-600 rounded-full px-5 py-2 mx-auto lg:ml-auto lg:mx-0 hover:bg-orange-600 text-orange-600 hover:text-white font-medium'>Donate</button>
 
         </div>
       </header>
