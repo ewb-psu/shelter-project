@@ -60,11 +60,11 @@ function SubmitButton(props) {
       if (true) {
         //save submit button state to local storage for use if / when user navigates backwards
 
-        localStorage.setItem("apiDataContext", JSON.stringify(apiDataContext));
-        localStorage.setItem(
-          "userDataContext",
-          JSON.stringify(userDataContext)
-        );
+        // localStorage.setItem("apiDataContext", JSON.stringify(apiDataContext));
+        // localStorage.setItem(
+        //   "userDataContext",
+        //   JSON.stringify(userDataContext)
+        // );
 
         //If category selected
         //Make getResource call with category data
@@ -88,6 +88,14 @@ function SubmitButton(props) {
             console.log("heres the result", result);
 
             apiDataContext.setResources(result);
+            localStorage.setItem(
+              "apiDataContext",
+              JSON.stringify(apiDataContext)
+            );
+            localStorage.setItem(
+              "userDataContext",
+              JSON.stringify(userDataContext)
+            );
             history.push("/info");
           }
         } else if (userDataContext.categorySelected === 2) {
@@ -103,6 +111,14 @@ function SubmitButton(props) {
             });
           } else {
             apiDataContext.setResources(result);
+            localStorage.setItem(
+              "apiDataContext",
+              JSON.stringify(apiDataContext)
+            );
+            localStorage.setItem(
+              "userDataContext",
+              JSON.stringify(userDataContext)
+            );
             history.push("/info");
           }
         } else {
@@ -118,6 +134,14 @@ function SubmitButton(props) {
             });
           } else {
             apiDataContext.setResources(result);
+            localStorage.setItem(
+              "apiDataContext",
+              JSON.stringify(apiDataContext)
+            );
+            localStorage.setItem(
+              "userDataContext",
+              JSON.stringify(userDataContext)
+            );
             history.push("/info");
           }
         }

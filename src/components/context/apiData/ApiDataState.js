@@ -32,7 +32,7 @@ export const ApiDataState = (props) => {
 	};
 	
 	const setResources = (resources) => {
-		
+		console.log('trigger', resources)
 		//TODO set map center position to be the first resource location here?
 		// const filteredResources = resources.filter(resource => {
 		// 	// console.log(resource)
