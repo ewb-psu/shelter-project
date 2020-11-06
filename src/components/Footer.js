@@ -8,10 +8,10 @@ const Footer = () => {
         className=" w-full "
         style={{ minHeight: "400px", backgroundColor: "#acce62" }}
       >
-        <h2 className="py-12 mx-16 xl:mx-64 underline text-4xl font-bold">
+        <h2 className="py-12 mx-5 sm:mx-16 md:mx-32 xl:mx-64 underline text-4xl font-bold">
           About Us
         </h2>
-        <p className="mx-16 xl:mx-64 text-xl">
+        <p className="mx-5 sm:mx-16 md:mx-32 xl:mx-64 text-xl">
           Our nonprofit contact center launched in 1980 as a crisis line. In
           2004, we transformed into a 211 service, providing callers with
           referrals to basic needs programs such as food, shelter, health care
@@ -26,10 +26,10 @@ const Footer = () => {
         className=" w-full"
         style={{ minHeight: "400px", backgroundColor: "#c1da8a" }}
       >
-        <h2 className="py-12 mx-16 xl:mx-64 underline text-4xl font-bold">
+        <h2 className="py-12 mx-5 sm:mx-16 md:mx-32 xl:mx-64 underline text-4xl font-bold">
           Our Data
         </h2>
-        <p className="mx-16 xl:mx-64 text-xl">
+        <p className="mx-5 sm:mx-16  md:mx-32 xl:mx-64 text-xl">
           211info’s Data Team helps explain what is happening in our
           communities: social service needs and unmet needs, demographic trends
           and regional changes. Stakeholders including elected officials and

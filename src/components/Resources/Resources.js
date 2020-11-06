@@ -1,17 +1,16 @@
 /** @format */
 
 import React, { useState, useContext } from 'react';
-import UserDataContext from '../context/userData/UserDataContext';
 import SearchBar from '../SearchBar/SearchBar';
 import CategorySelector from '../categorySelector/CategorySelector';
-import InputLabel from '../InputLabel';
 import SubmitButton from '../SubmitButton/SubmitButton.js';
 import ThemeDataContext from '../context/themeData/ThemeDataContext.js';
 
 const Resources = (props) => {
-	const userDataContext = useContext(UserDataContext);
 	const themeDataContext = useContext(ThemeDataContext);
 	const [isLoading, setIsLoading] = useState(false);
+
+
 
 	const handleIsLoading = () => {
 		setIsLoading(!isLoading);

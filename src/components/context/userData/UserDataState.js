@@ -1,5 +1,5 @@
 
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer } from 'react';
 import UserDataContext from './UserDataContext';
 import UserDataReducer from './UserDataReducer';
 import APIWrapper from '../../../APIWrapper';
@@ -28,7 +28,7 @@ export const UserDataState = (props) => {
 		isAgeValid: '',
 		isZipCodeValid: 'null',
 		isFamilySizeValid: '',
-		isGenderValid: ''
+		isGenderValid: '',
 	};
 
 	const [state, dispatch] = useReducer(UserDataReducer, initialState);
@@ -70,6 +70,12 @@ export const UserDataState = (props) => {
 		dispatch({ type: 'SET_VALID_COUNTY', payload: input });
 	};
 
+	const clearIsUserDataValid = () => {
+		dispatch({type: 'SET_IS_GENDER_VALID', payload: {valid: ''}})
+		dispatch({type: 'SET_IS_AGE_VALID', payload: {valid: ''}})
+		dispatch({type: 'SET_IS_ZIP_CODE_VALID', payload: {valid: ''}})
+		dispatch({type: 'SET_IS_COUNTY_VALID', payload: {valid: ''}})
+	};
 
 	const setIsCountyValid = (county) => {
 		let valid = null;
@@ -109,7 +115,7 @@ export const UserDataState = (props) => {
 		if (empty) message = 'Required entry.';
 
 		let valid = !empty;
-		dispatch({ type: 'SET_IS_GENDER_VALID', payload: { valid: true, message } });
+		dispatch({ type: 'SET_IS_GENDER_VALID', payload: { valid: valid, message } });
 
 		return { valid, message };
 	};
@@ -128,7 +134,7 @@ export const UserDataState = (props) => {
 			message = "It's unlikely this age is correct. Is this a typo?";
 
 		let valid = isPositiveInteger && !isReallyOld;
-		dispatch({ type: 'SET_IS_AGE_VALID', payload: { valid: true, message } });
+		dispatch({ type: 'SET_IS_AGE_VALID', payload: { valid: valid, message } });
 		return { valid, message };
 	};
 
@@ -142,7 +148,6 @@ export const UserDataState = (props) => {
 			message = 'Please only use numbers in the ZIP code.';
 
 		// TODO: Verify this assumption. ZIPs can be very weird
-		console.log(zip)
 		let correctLength = zip.length === 5;
 		if (!correctLength)
 			message = 'ZIP codes are usually 5 digits long. Is this mistyped?';
@@ -150,31 +155,28 @@ export const UserDataState = (props) => {
 		let valid = correctLength && isPositiveInteger;
 		message = (state.isZipCodeValid === 'null' ? '' : message)
 
+		//Don't set message if funciton was called from useEffect
 		message = (displayMessage ? message : '')
-		console.log(message)
 		dispatch({ type: 'SET_IS_ZIP_CODE_VALID', payload: { valid, message } });
 
 		return {valid, message}
 
 	};
 
-	const isUserDataValid = async () => {
-
-		await validateUserData();
+	const isUserDataValid =  () => {
 		return(state.isZipCodeValid.valid &&
 		state.isCountyValid.valid &&
 		state.isAgeValid.valid &&
 		state.isFamilySizeValid.valid &&
 		state.isGenderValid.valid)
-
 	}
 
-	const validateUserData = async () => {
+	const validateUserData = () => {
 		setIsZipCodeValid(state.zipCode,true);
-		setIsGenderValid(state.gender);
-		setIsAgeValid(state.age);
-		setIsCountyValid(state.county);
-		setIsFamilySizeValid(state.familySize);
+	 	setIsGenderValid(state.gender);
+	 	setIsAgeValid(state.age);
+	 	setIsCountyValid(state.county);
+	 	setIsFamilySizeValid(state.familySize);
 		return
 	};
 
@@ -323,7 +325,8 @@ export const UserDataState = (props) => {
 				isGenderValid: state.isGenderValid,
 				setIsGenderValid,
 				isFamilySizeValid: state.isFamilySizeValid,
-				setIsFamilySizeValid
+				setIsFamilySizeValid,
+				clearIsUserDataValid
 			}}>
 			{props.children}
 		</UserDataContext.Provider>

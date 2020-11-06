@@ -9,7 +9,7 @@ const CountySelect = (props) =>  {
 
   const userDataContext = useContext(UserDataContext) 
   const themeDataContext = useContext(ThemeDataContext)
-  let valid = null
+  // let valid = null
 
     let value = userDataContext.county
     
