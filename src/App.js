@@ -12,7 +12,7 @@ import Resources from './components/Resources/Resources.js';
 import ErrorPage from './components/ErrorPage.js'
 import {
 	HashRouter as Router,
-	Switch,
+	// Switch,
 	Route,
 	// Link,
 	// Redirect,
