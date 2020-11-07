@@ -12,7 +12,7 @@ import ApiDataContext from './components/context/apiData/ApiDataContext';
 import Resources from './components/Resources/Resources.js';
 import ErrorPage from './components/ErrorPage.js'
 import {
-	BrowserRouter as Router,
+	HashRouter as Router,
 	Switch,
 	Route,
 	Link,
