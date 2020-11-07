@@ -25,18 +25,18 @@ const UserData = (props) => {
 
 	//TODO move this last piece of state and handler function into context.....which context?
 	const [isLoading, setIsLoading] = useState(false);
-	const handleIsLoading = () => {
-		setIsLoading(!isLoading);
-	};
+	// const handleIsLoading = () => {
+	// 	setIsLoading(!isLoading);
+	// };
 
 	// TODO get this working with some api.....
-	const findLocation = () => {
-		// // console.log(
-		// "Then we'd try to find their location using a Google API. For now...";
-		// // );
-		userDataContext.setZipcode('97206');
-		userDataContext.setCounty('Clackamas');
-	};
+	// const findLocation = () => {
+	// 	// // console.log(
+	// 	// "Then we'd try to find their location using a Google API. For now...";
+	// 	// // );
+	// 	userDataContext.setZipcode('97206');
+	// 	userDataContext.setCounty('Clackamas');
+	// };
 
 	useEffect(() => {
 		async function callAPI() {
@@ -46,7 +46,6 @@ const UserData = (props) => {
 					//no categories found in context so call api method initialize, which calls getSessionID() which makes http request to server for credentials.
 					const result = await API.initialize();
 					//if data ok === false, redirect to error route and set data to state as error object.
-					console.log(result)
 					if (!result.ok) {
 						history.push({
 							pathname: '/error',
@@ -64,7 +63,6 @@ const UserData = (props) => {
 	//an api call is made to populate an array with all the possible counties that zipcode could be in.
 	useEffect(() => {
 		const handleValidZip = async () => {
-			console.log('handleValidZip');
 			if (userDataContext.setIsZipCodeValid(userDataContext.zipCode, false).valid) {
 				userDataContext.setDoValidation(false);
 				await API.getCountyByZipCode({
@@ -98,7 +96,6 @@ const UserData = (props) => {
 	useEffect(() => {
 		const getCategories = async () => {
 			const result = await API.getCategories();
-			console.log(result)
 			if (!result.ok) {
 				console.log(result);
 				history.push({
@@ -118,7 +115,6 @@ const UserData = (props) => {
 		console.log(userDataIsValid && userDataContext.doValidation)
 		if (userDataIsValid && userDataContext.doValidation) {
 			history.push('/resources');
-			themeDataContext.setShowNav(true);
 			userDataContext.clearIsUserDataValid();
 			userDataContext.setDoValidation(false);
 		}
@@ -145,7 +141,7 @@ const UserData = (props) => {
 
 	return (
 		<Fragment>
-			<div className='text-center mt-16 lg:mx-32 '>
+			<div className='text-center mt-16 sm:mx-16 lg:mx-32 '>
 				<h1>Welcome to the 211 Resource Locator.</h1>
 				<p>
 					Please tell us a little about yourself so we can find you the best services.
@@ -154,7 +150,7 @@ const UserData = (props) => {
 
 			<div
 				className={
-					'py-16 mx-5 sm:mx-16 xl:mx-16 grid grid-cols-4 grid-auto-rows gap-y-5 border shadow field-selector  ' +
+					'py-16 mx-5 sm:mx-16 lg:mx-32 grid grid-cols-4 grid-auto-rows gap-y-5 border shadow field-selector  ' +
 					themeDataContext.themeColor
 				}>
 				<div className='mt-5 col-start-1 col-span-4 '>
