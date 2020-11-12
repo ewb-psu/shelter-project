@@ -289,7 +289,7 @@ const ExclusiveButton = (props) => {
 	} else {
 		return (
 			//this case styles the gender button group
-			<div className=' border overflow-hidden'>
+			<div className='rounded-lg m-2 border overflow-hidden  '>
 				<button
 					type='button'
 					style={{ width: '108px' }}

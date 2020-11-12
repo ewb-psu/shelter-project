@@ -29,14 +29,45 @@ const UserData = (props) => {
 		setIsLoading(!isLoading);
 	};
 
-	// TODO get this working with some api.....
 	const findLocation = () => {
-		// // console.log(
-		// "Then we'd try to find their location using a Google API. For now...";
-		// // );
-		userDataContext.setZipcode('97206');
-		userDataContext.setCounty('Clackamas');
+		let api_key = '&key=AIzaSyDM-iDklxh8fn6hNOGHBDgsj3CDMnU2X3w&';
+		let api_url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
+		if ("geolocation" in navigator) {
+				// check if geolocation is supported/enabled on current browser
+				navigator.geolocation.getCurrentPosition(function success(position) {
+				fetch(`${api_url}${position.coords.latitude},${position.coords.longitude}${api_key}`)
+				.then(response => response.json()) 
+				.then(data => {
+				  const postalCodeData = data.results[0].address_components.filter((addressComponent)=>{
+				  return addressComponent.types[0]==="postal_code"
+				  })
+				  const zipcode = (postalCodeData[0].long_name)
+				  userDataContext.setZipcode(zipcode)
+				}, error => {
+				  console.log(error);
+				})
+				return null;
+				});
+			} 
+			else 
+			{
+			  console.log('geolocation is not enabled on this browser')
+			}
 	};
+
+			// for when getting location is a success
+				// axios.get(`${api_url}${position.coords.latitude},${position.coords.longitude}${api_key}`)
+				// .then(response => {
+				//   const postalCodeData = response.data.results[0].address_components.filter((ziggslife)=>{
+				//   return ziggslife.types[0]==="postal_code"
+				//   })
+				//   const zipcode = (postalCodeData[0].long_name)
+				//   userDataContext.setZipcode(zipcode)
+				// }, error => {
+				//   console.log(error);
+				// })
+				// return null;
+				// });
 
 	useEffect(() => {
 		async function callAPI() {
@@ -58,6 +89,7 @@ const UserData = (props) => {
 				}
 		}
 		callAPI();
+		//findLocation(); its best we dont do this on load because users tend to just hit block.  We probably should make a button for lazy users
 	}, []);
 
 	//monitors the state of userData.zipCode. When it becomes a valid zip,
@@ -154,10 +186,10 @@ const UserData = (props) => {
 
 			<div
 				className={
-					'py-16 mx-5 sm:mx-16 xl:mx-16 grid grid-cols-4 grid-auto-rows gap-y-5 border shadow field-selector  ' +
+					'rounded-lg py-16 mx-5 sm:mx-16 xl:mx-16 grid grid-cols-4 grid-auto-rows gap-y-5 border shadow field-selector  ' +
 					themeDataContext.themeColor
 				}>
-				<div className='mt-5 col-start-1 col-span-4 '>
+				<div className=' mt-5 col-start-1 col-span-4 '>
 					<InputLabel label='Gender'>
 						<ExclusiveOption
 							items={['Male', 'Female', 'Trans Male', 'Trans Female']}
@@ -188,8 +220,8 @@ const UserData = (props) => {
 							/>
 						</InputLabel>
 					</div>
+				
 				</div>
-
 				<div className='col-start-1 col-span-4 row-start-4'>
 					{userDataContext.possibleCounties ? (
 						<InputLabel label='County'>
@@ -215,7 +247,11 @@ const UserData = (props) => {
 						onClick={nextPage}
 					>
 						Submit
-					</button>
+					</button >
+					<button ype="submit"
+						id="toResources"
+						className="border transition-all border-orange-600 rounded-full py-2 px-4 md:px-6 lg:ml-auto lg:mx-0 font-medium hover:bg-orange-600 text-orange-600 hover:text-white"
+						onClick={nextPage}onClick={findLocation}>Find My Zipcode</button>
 				</div>
 			</div>
 		</Fragment>

@@ -5,8 +5,6 @@ import UserDataContext from './context/userData/UserDataContext'
 
 
 const CountySelect = (props) =>  {
-
-
   const userDataContext = useContext(UserDataContext) 
   const themeDataContext = useContext(ThemeDataContext)
   let valid = null

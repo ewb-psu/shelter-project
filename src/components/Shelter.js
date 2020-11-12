@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useContext  } from 'react';
-import ShelterCard from './shelterCard';
+import ShelterCard from './ShelterCard';
 import LeafletMap from './LeafletMap';
 import ApiDataContext from './context/apiData/ApiDataContext';
 

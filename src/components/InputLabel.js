@@ -5,6 +5,7 @@ import React from 'react';
 
 class InputLabel extends React.Component {
 	render() {
+	
 		return (
 			<div
 				id={

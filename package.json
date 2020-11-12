@@ -8,6 +8,7 @@
     "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
     "@material-ui/lab": "latest",
+    "axios": "^0.21.0",
     "bootstrap": "^3.3.5",
     "chokidar-cli": "^2.1.0",
     "cypress": "^5.3.0",

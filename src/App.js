@@ -4,7 +4,7 @@ import React, { useEffect, useContext } from 'react';
 import './App.scss';
 import MainLayout from './components/mainLayout/MainLayout';
 import UserData from './components/UserData';
-import Shelter from './components/shetler.js';
+import Shelter from './components/Shelter.js';
 import ApiDataState from './components/context/apiData/ApiDataState';
 import UserDataState from './components/context/userData/UserDataState';
 import ThemeDataState from './components/context/themeData/ThemeDataState';
@@ -13,10 +13,7 @@ import Resources from './components/Resources/Resources.js';
 import ErrorPage from './components/ErrorPage.js'
 import {
 	BrowserRouter as Router,
-	Switch,
 	Route,
-	Link,
-	Redirect,
 } from 'react-router-dom';
 
 
