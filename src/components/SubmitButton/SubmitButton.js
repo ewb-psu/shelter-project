@@ -156,7 +156,7 @@ function SubmitButton(props) {
     <button
       type="submit"
       onClick={handleClick}
-      className="transition-all p-2 sm:px-5 md:px-8 lg:px-16 border hover:bg-themeTeal rounded rounded-l-none mx-auto"
+      className="transition-all py-2 px-6 border border-orange-600 hover:bg-orange-600 hover:text-white rounded-full text-orange-600 mx-auto"
     >
       Submit
     </button>

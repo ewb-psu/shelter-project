@@ -42,7 +42,9 @@ const UserData = (props) => {
 		async function callAPI() {
 			//check category state to see if it has already been populated from local storage, possibly avoid making another api call (even though it would be with the same session id)
 			if ('categories' in apiDataContext)
+				console.log('trigger initialize')
 				if (apiDataContext.categories.length === 0) {
+					console.log(apiDataContext.categories)
 					//no categories found in context so call api method initialize, which calls getSessionID() which makes http request to server for credentials.
 					const result = await API.initialize();
 					//if data ok === false, redirect to error route and set data to state as error object.
@@ -94,25 +96,8 @@ const UserData = (props) => {
 	}, [userDataContext.zipCode]);
 
 	useEffect(() => {
-		const getCategories = async () => {
-			const result = await API.getCategories();
-			if (!result.ok) {
-				console.log(result);
-				history.push({
-					pathname: '/error',
-					state: {
-						error: result,
-					},
-				});
-			}
-			apiDataContext.setCategories(result);
-		};
-		getCategories();
-	}, []);
-
-	useEffect(() => {
 		let userDataIsValid = userDataContext.isUserDataValid();
-		console.log(userDataIsValid && userDataContext.doValidation)
+		// console.log(userDataIsValid && userDataContext.doValidation)
 		if (userDataIsValid && userDataContext.doValidation) {
 			history.push('/resources');
 			userDataContext.clearIsUserDataValid();
