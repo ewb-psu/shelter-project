@@ -7,8 +7,8 @@ import PhoneCard from './PhoneCard'
 //import '../Assets/shelter_info.scss';
 
 const ShelterCard = (props) => {
-	//initialize apiDataContext
 	const apiDataContext = useContext(ApiDataContext);
+	
 	//a function for updating the maps center position, triggered when the card is clicked.
 	const handleClick = () => {
 		if(props.Sites[0].Latitude != '' || props.Sites[0].Longitude != ''){

@@ -1,5 +1,5 @@
 
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer } from 'react';
 import UserDataContext from './UserDataContext';
 import UserDataReducer from './UserDataReducer';
 import APIWrapper from '../../../APIWrapper';
@@ -148,7 +148,6 @@ export const UserDataState = (props) => {
 			message = 'Please only use numbers in the ZIP code.';
 
 		// TODO: Verify this assumption. ZIPs can be very weird
-		console.log(zip)
 		let correctLength = zip.length === 5;
 		if (!correctLength)
 			message = 'ZIP codes are usually 5 digits long. Is this mistyped?';
@@ -158,7 +157,6 @@ export const UserDataState = (props) => {
 
 		//Don't set message if funciton was called from useEffect
 		message = (displayMessage ? message : '')
-		console.log(message)
 		dispatch({ type: 'SET_IS_ZIP_CODE_VALID', payload: { valid, message } });
 
 		return {valid, message}
@@ -166,13 +164,11 @@ export const UserDataState = (props) => {
 	};
 
 	const isUserDataValid =  () => {
-
 		return(state.isZipCodeValid.valid &&
 		state.isCountyValid.valid &&
 		state.isAgeValid.valid &&
 		state.isFamilySizeValid.valid &&
 		state.isGenderValid.valid)
-
 	}
 
 	const validateUserData = () => {

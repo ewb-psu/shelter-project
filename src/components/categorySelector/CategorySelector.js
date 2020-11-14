@@ -19,7 +19,15 @@ const CategorySelector = () => {
 		setKeys([...keys, keyValue]);
 	};
 
+	// when component mounts, if apiDataContext exists in localstorage, use it to populate the apiDataContext.categories array
+	useEffect( () => {
+		if(JSON.parse(localStorage.getItem('apiDataContext'))) 
+			apiDataContext.setCategories(JSON.parse(localStorage.getItem('apiDataContext')).categories )
+	}, [])
+
+	//when component mounts, and each time apiDataContext.categories changes, use apidatacontext.categories to generate component level category state (labels included)   
 	useEffect(() => {
+		console.log(apiDataContext.categories)
 		const labelsWithImages = createLabelWithImage(
 			apiDataContext.categories,
 			'category'
@@ -32,7 +40,7 @@ const CategorySelector = () => {
 
 		if (JSON.parse(localStorage.getItem('keys')))
 			setKeys(JSON.parse(localStorage.getItem('keys')));
-	}, []);
+	}, [apiDataContext.categories]);
 
 	//categoryType needs to be 'category' or 'subcategory'
 	const createLabelWithImage = (array, categoryType) => {
@@ -69,6 +77,7 @@ const CategorySelector = () => {
 
 		//Category has been selected. Show subcategory
 		if (row === 0) {
+			console.log(apiDataContext)
 			newCategory[row + 1] = createLabelWithImage(
 				apiDataContext.categories[id]['subcat'],
 				'subcategory'
@@ -119,16 +128,14 @@ const CategorySelector = () => {
 		}
 	};
 
-	//functions to handle scrolling the different rows to the left or right.
+	//these functions handle scrolling the categories to the left or right.
 	const handleScrollResourcesLeft = (e) => {
 			const noScroll = document.querySelector('.custom-scroll');
-			console.log(noScroll);
 			noScroll.scrollBy(-215, 0);
 
 	};
 	const handleScrollResourcesRight = (e) => {
 			const noScroll = document.querySelector('.custom-scroll');
-			console.log(noScroll);
 			noScroll.scrollBy(215, 0);
 
 	};
@@ -144,7 +151,7 @@ const CategorySelector = () => {
 						className='col-start-1 col-span-1 flex justify-center items-center cursor-pointer'
 						onClick={handleScrollResourcesLeft}>
 
-						<IoMdArrowDropleft className='text-4xl text-themeTeal'/>
+						<IoMdArrowDropleft className='text-4xl text-orange-600'/>
 					</button>
 					<div className='col-start-2 col-span-10'>
 						<ExclusiveOption
@@ -160,7 +167,7 @@ const CategorySelector = () => {
 						className='col-start-12 col-span-1 flex justify-center items-center cursor-pointer'
 						onClick={handleScrollResourcesRight}>
 
-						<IoMdArrowDropright  className='text-4xl text-themeTeal'/>
+						<IoMdArrowDropright  className='text-4xl text-orange-600'/>
 					</button>
 				</div>
 			);

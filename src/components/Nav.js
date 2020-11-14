@@ -12,7 +12,7 @@ const Nav = () => {
             Home
           </li>
         </Link>
-        <Link to="resources">
+        <Link to="/resources">
           {" "}
           <li className=" font-medium bold active:bg-themeTealFlat hover:text-themeTeal">
             Find Resources
