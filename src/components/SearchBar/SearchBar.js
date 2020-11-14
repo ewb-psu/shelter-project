@@ -167,17 +167,16 @@ const SearchBar = ({ handleIsLoading }) => {
             name="search"
             value={search}
             onChange={handleChange}
-            style={{ backgroundColor: "rgba(1, 169, 198,0.4)" }}
-            className="color-black leading-10 w-full boder rounded rounded-r-none color-black"
-            placeholder="Search..."
+            className="color-black leading-10 w-full border border-orange-600 rounded-full rounded-r-none color-black"
+            placeholder=" Search Resources"
           />
         </label>
         <button
           type="submit"
-          className="border p-2 hover:bg-themeTeal"
+          className="border border-orange-600 rounded-full rounded-l-none border-l-0 p-2 text-orange-600 hover:bg-orange-600 hover:text-white"
           onClick={handleSubmit}
         >
-          Submit
+          Search
         </button>
       </form>
 
