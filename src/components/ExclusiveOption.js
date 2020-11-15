@@ -34,11 +34,8 @@ const ExclusiveGroup = (props) => {
     } else if (typeof data === "string") {
       //this case is when a gender button is being clicked.
       userDataContext.setGender(data);
-      ;
     } else if (props.appendCategory) {
       userDataContext.setServiceName(data.label);
-      ;
-
       props.appendCategory(props.row, id);
       //save service button selections to userDataContext.buttonState, which in turn is saved to localstorage on form submit
       if (row === 0) {
@@ -46,10 +43,6 @@ const ExclusiveGroup = (props) => {
           ...userDataContext.buttonState,
           category: data.label,
         });
-        localStorage.setItem(
-          "userDataContext",
-          JSON.stringify(userDataContext)
-        );
       } else if (row === 1) {
         userDataContext.setButtonState({
           ...userDataContext.buttonState,
@@ -60,10 +53,6 @@ const ExclusiveGroup = (props) => {
             },
           ],
         });
-        localStorage.setItem(
-          "userDataContext",
-          JSON.stringify(userDataContext)
-        );
       } else {
         userDataContext.setButtonState({
           ...userDataContext.buttonState,
@@ -74,10 +63,6 @@ const ExclusiveGroup = (props) => {
             },
           ],
         });
-        localStorage.setItem(
-          "userDataContext",
-          JSON.stringify(userDataContext)
-        );
       }
     } else {
       userDataContext.setButtonState({
@@ -85,13 +70,14 @@ const ExclusiveGroup = (props) => {
         category: data.label,
       });
       userDataContext.setServiceName(data.label);
-      ;
     }
   };
 
   useEffect(() => {
     localStorage.setItem("userDataContext", JSON.stringify(userDataContext));
   }, [userDataContext.buttonState]);
+
+  //TODO do we need this?
   // const validate = () => {
   // 	if (!props.validator) return { valid: true, message: '' };
   // 	let value = selected;
@@ -107,6 +93,7 @@ const ExclusiveGroup = (props) => {
   // };
 
   //if (userDataContext.doValidation) validate();
+  
   //added second condition, props.row must be the first row for this jsx to render. this is for our normally styled buttons with svg's.
   if (typeof props.appendCategory == "function" && props.row === 0) {
     return (
@@ -213,7 +200,6 @@ const ExclusiveButton = (props) => {
 
   useEffect(() => {
     //on mount, look for userDataState in localStorage. if its there, use it to determine which buttons should be styled.
-
     if (props.row === undefined) {
       props.handleSetSelected(userDataContext.gender);
     }

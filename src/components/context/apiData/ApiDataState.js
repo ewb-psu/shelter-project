@@ -10,15 +10,21 @@ export const ApiDataState = (props) => {
   const APIKey = process.env.REACT_APP_211_API_KEY;
   const API = new APIWrapper(APIKey);
   const history = useHistory();
+
   //initial state, passed as a parameter to useReducer
-  const initialState = {
-    sessionID: null,
-    categories: [],
-    resources: [],
-    arrayOfLocations: [],
-    mapCenter: ["45.5135", "-122.6801"], // defaut map center position to Portland Oregon
-    zoomLevel: 10,
-  };
+  let initialState = {};
+  if (localStorage.getItem("apiDataContext")) {
+    initialState = JSON.parse(localStorage.getItem("apiDataContext"));
+  } else {
+    initialState = {
+      sessionID: null,
+      categories: [],
+      resources: [],
+      arrayOfLocations: [],
+      mapCenter: ["45.5135", "-122.6801"], // defaut map center position to Portland Oregon
+      zoomLevel: 10,
+    };
+  }
 
   //invoke useReducer passing in our imported reducer function and initial state. returns dispatch method for updating the returned state.
   const [state, dispatch] = useReducer(ApiDataReducer, initialState);
@@ -72,7 +78,7 @@ export const ApiDataState = (props) => {
         );
     };
 
-    getCategories();
+    if (state.categories.length === 0) getCategories();
   }, []);
 
   return (
