@@ -25,7 +25,7 @@ export const ApiDataState = (props) => {
 
   //each function below dispatches new state to our reducer.
   const setCategories = (categories) => {
-	  console.log(categories)
+    console.log(categories);
     dispatch({ type: "SET_CATEGORIES", payload: categories });
   };
 
@@ -63,13 +63,15 @@ export const ApiDataState = (props) => {
             error: result,
           },
         });
-	  }
-	  setCategories(result);
-	  localStorage.setItem(
-		"apiDataContext",
-		JSON.stringify({categories: result})
-	  );
+      }
+      setCategories(result);
+      if (!localStorage.getItem("apiDataContext"))
+        localStorage.setItem(
+          "apiDataContext",
+          JSON.stringify({ categories: result })
+        );
     };
+
     getCategories();
   }, []);
 

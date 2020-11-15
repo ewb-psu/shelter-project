@@ -13,6 +13,7 @@ const Shelters = () => {
   //return a grid, with each resource returned from 211's api mapped into its own card component from apiDataContext. also render leafletMaps component.
 
   useEffect(() => {
+    console.log('trigger', apiDataContext)
     if (apiDataContext && apiDataContext.resources.length !== 0) {
       console.log("resources found", apiDataContext.resources);
       localStorage.setItem("apiDataContext", JSON.stringify(apiDataContext));
