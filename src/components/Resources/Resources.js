@@ -10,8 +10,6 @@ const Resources = (props) => {
 	const themeDataContext = useContext(ThemeDataContext);
 	const [isLoading, setIsLoading] = useState(false);
 
-
-
 	const handleIsLoading = () => {
 		setIsLoading(!isLoading);
 	};
