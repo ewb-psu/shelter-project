@@ -246,7 +246,7 @@ const ExclusiveButton = (props) => {
 					type='button'
 					style={{ width: '50px' }}
 					className={
-						'border p-3 exclusive-button ' +
+						'border p-3 exclusive-button' +
 						(props.selected ? 'selected ' : ' ') +
 						themeDataContext.themeColor
 					} // changes CSS and appearance when an option is selected/deselected
@@ -277,6 +277,8 @@ const ExclusiveButton = (props) => {
 					}} // changes the name of the pick in ExGroup's state.
 				>
 					<img
+																	className='text-red-400'
+
 						src={props.data.image}
 						alt={`${props.data.label} category button`}></img>
 					{props.data.label}

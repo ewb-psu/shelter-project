@@ -214,7 +214,7 @@ const UserData = (props) => {
 					)}
 				</div>
 
-				<div className='col-start-1 lg:col-start-3'>
+				<div className='col-start-1 lg:col-start-3 space-x-10'>
 					<button
 						type="submit"
 						id="toResources"
@@ -223,10 +223,7 @@ const UserData = (props) => {
 					>
 						Submit
 					</button>
-					<button ype="submit"
-						id="toResources"
-						className="border transition-all border-orange-600 rounded-full py-2 px-4 md:px-6 lg:ml-auto lg:mx-0 font-medium hover:bg-orange-600 text-orange-600 hover:text-white"
-						onClick={nextPage}onClick={findLocation}>Find My Zipcode</button>
+
 				</div>
 			</div>
 		</Fragment>
