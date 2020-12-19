@@ -8,7 +8,7 @@ const LeafletMap = () => {
   const apiDataContext = useContext(ApiDataContext);
 
   return (
-    <Map center={apiDataContext.mapCenter} zoom={apiDataContext.zoomLevel}>
+    <Map center={apiDataContext.mapCenter || ["45.5135", "-122.6801"]} zoom={apiDataContext.zoomLevel || 10}>
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"

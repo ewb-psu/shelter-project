@@ -37,7 +37,7 @@ const ExclusiveGroup = (props) => {
     } else if (props.appendCategory) {
       userDataContext.setServiceName(data.label);
       props.appendCategory(props.row, id);
-      //save service button selections to buttonState, which in turn is saved to localstorage on form submit
+      //save service button selections to userDataContext.buttonState, which in turn is saved to localstorage on form submit
       if (row === 0) {
         userDataContext.setButtonState({
           ...userDataContext.buttonState,
@@ -73,6 +73,11 @@ const ExclusiveGroup = (props) => {
     }
   };
 
+  useEffect(() => {
+    localStorage.setItem("userDataContext", JSON.stringify(userDataContext));
+  }, [userDataContext.buttonState]);
+
+  //TODO do we need this?
   // const validate = () => {
   // 	if (!props.validator) return { valid: true, message: '' };
   // 	let value = selected;
@@ -88,6 +93,7 @@ const ExclusiveGroup = (props) => {
   // };
 
   //if (userDataContext.doValidation) validate();
+  
   //added second condition, props.row must be the first row for this jsx to render. this is for our normally styled buttons with svg's.
   if (typeof props.appendCategory == "function" && props.row === 0) {
     return (
@@ -194,7 +200,6 @@ const ExclusiveButton = (props) => {
 
   useEffect(() => {
     //on mount, look for userDataState in localStorage. if its there, use it to determine which buttons should be styled.
-
     if (props.row === undefined) {
       props.handleSetSelected(userDataContext.gender);
     }

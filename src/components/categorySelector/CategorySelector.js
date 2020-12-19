@@ -19,15 +19,8 @@ const CategorySelector = () => {
 		setKeys([...keys, keyValue]);
 	};
 
-	// when component mounts, if apiDataContext exists in localstorage, use it to populate the apiDataContext.categories array
-	useEffect( () => {
-		if(JSON.parse(localStorage.getItem('apiDataContext'))) 
-			apiDataContext.setCategories(JSON.parse(localStorage.getItem('apiDataContext')).categories )
-	}, [])
-
 	//when component mounts, and each time apiDataContext.categories changes, use apidatacontext.categories to generate component level category state (labels included)   
 	useEffect(() => {
-		console.log(apiDataContext.categories)
 		const labelsWithImages = createLabelWithImage(
 			apiDataContext.categories,
 			'category'
