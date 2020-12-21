@@ -15,11 +15,11 @@ const Resources = (props) => {
 	};
 
 	return (
-		<div className={`flex flex-col items-center justify-center mx-5 sm:mx-16 lg:mx-32 field-Selector ${themeDataContext.themeColor}`}>
-			<div className='border shadow w-full my-16 px-5 py-5 flex justify-end'>
+		<div className={`flex flex-col items-center justify-center mx-5 sm:mx-16 lg:mx-32  ${themeDataContext.themeColor}`}>
+			<div className='border shadow w-full sm:w-small md:w-medium lg:w-large xl:w-extraLarge my-16 px-5 py-5'>
 				<SearchBar handleIsLoading={handleIsLoading} />
 			</div>
-			<div className='border shadow w-full'>
+			<div className='border shadow w-xsmall sm:w-small md:w-medium lg:w-large xl:w-extraLarge '>
 				<CategorySelector />
 			</div>
 			<div className='mt-16'>
