@@ -9,8 +9,8 @@ export const UserDataState = (props) => {
   const CensusAPIKey = process.env.REACT_APP_CENSUS_API_KEY;
 
   let initialState = {};
-  if (localStorage.getItem("userDataContext")) {
-    initialState = JSON.parse(localStorage.getItem("userDataContext"));
+  if (sessionStorage.getItem("userDataContext")) {
+    initialState = JSON.parse(sessionStorage.getItem("userDataContext"));
   } else {
     initialState = {
       serviceName: "",

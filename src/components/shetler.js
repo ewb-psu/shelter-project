@@ -14,7 +14,7 @@ const Shelters = () => {
 
   useEffect(() => {
     if (apiDataContext && apiDataContext.resources.length !== 0) {
-      localStorage.setItem("apiDataContext", JSON.stringify(apiDataContext));
+      sessionStorage.setItem("apiDataContext", JSON.stringify(apiDataContext));
     }
   });
 

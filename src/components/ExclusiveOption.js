@@ -25,7 +25,7 @@ const ExclusiveGroup = (props) => {
   // let valid = null;
   // let invalidEntryMessage = '';
 
-  //sets Selected state, saves information about buttons state in userDataContext, to be saved later in localStorage.
+  //sets Selected state, saves information about buttons state in userDataContext, to be saved later in sessionStorage.
   const handleClick = (event, data, id, row) => {
     handleSetSelected(data);
     if (typeof data === "string" && props.appendCategory) {
@@ -37,7 +37,7 @@ const ExclusiveGroup = (props) => {
     } else if (props.appendCategory) {
       userDataContext.setServiceName(data.label);
       props.appendCategory(props.row, id);
-      //save service button selections to userDataContext.buttonState, which in turn is saved to localstorage on form submit
+      //save service button selections to userDataContext.buttonState, which in turn is saved to sessionstorage on form submit
       if (row === 0) {
         userDataContext.setButtonState({
           ...userDataContext.buttonState,
@@ -74,7 +74,7 @@ const ExclusiveGroup = (props) => {
   };
 
   useEffect(() => {
-    localStorage.setItem("userDataContext", JSON.stringify(userDataContext));
+    sessionStorage.setItem("userDataContext", JSON.stringify(userDataContext));
   }, [userDataContext.buttonState]);
 
   //TODO do we need this?
@@ -199,20 +199,20 @@ const ExclusiveButton = (props) => {
   const userDataContext = useContext(UserDataContext);
 
   useEffect(() => {
-    //on mount, look for userDataState in localStorage. if its there, use it to determine which buttons should be styled.
+    //on mount, look for userDataState in sessionStorage. if its there, use it to determine which buttons should be styled.
     if (props.row === undefined) {
       props.handleSetSelected(userDataContext.gender);
     }
-    if (JSON.parse(localStorage.getItem("userDataContext")))
+    if (JSON.parse(sessionStorage.getItem("userDataContext")))
       if (
         props.data.label ===
-          JSON.parse(localStorage.getItem("userDataContext")).buttonState
+          JSON.parse(sessionStorage.getItem("userDataContext")).buttonState
             .category ||
         props.data.label ===
-          JSON.parse(localStorage.getItem("userDataContext")).buttonState
+          JSON.parse(sessionStorage.getItem("userDataContext")).buttonState
             .subCat[0].subCategory ||
         props.data.label ===
-          JSON.parse(localStorage.getItem("userDataContext")).buttonState
+          JSON.parse(sessionStorage.getItem("userDataContext")).buttonState
             .subCat[0].subCatTerm[0].sterm
       ) {
         props.handleSetSelected(props.data);

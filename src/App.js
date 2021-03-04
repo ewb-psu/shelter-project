@@ -20,22 +20,22 @@ import {
 
 
 const App = () => {
-	//search localStorage for saved apiDataState and use it to set categories if found.
+	//search sessionStorage for saved apiDataState and use it to set categories if found.
 	useEffect(() => {
 	
-		//after 30 minutes, remove users sessionId from localStorage.
+		//after 30 minutes, remove users sessionId from sessionStorage.
 		setTimeout(() => {
-			localStorage.removeItem('sessionId');
+			sessionStorage.removeItem('sessionId');
 		}, 1800000);
 
-		//a function to remove user data from localstorage
+		//a function to remove user data from sessionstorage
 		// const cleanUp = () => {
-		// 	// localStorage.removeItem('sessionId');
-		// 	localStorage.removeItem('apiDataContext');
-		// 	localStorage.removeItem('categories');
+		// 	// sessionStorage.removeItem('sessionId');
+		// 	sessionStorage.removeItem('apiDataContext');
+		// 	sessionStorage.removeItem('categories');
 		// };
 		
-		// when user hits refresh, navigates away from the page or closes the browser tab, remove state values from localstorage.
+		// when user hits refresh, navigates away from the page or closes the browser tab, remove state values from sessionstorage.
 		// window.addEventListener('beforeunload', cleanUp);
 		// return () => {
 		// 	window.removeEventListener('beforeUnload', cleanUp);
