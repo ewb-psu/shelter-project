@@ -137,7 +137,7 @@ const CategorySelector = () => {
 		//if its the first row, render a horizontally scrolling row of resource categories and buttons to scroll right and left
 		if (i === 0)
 			return (
-				<div className='grid grid-auto-rows grid-cols-12'>
+				<div className='grid grid-auto-rows grid-cols-12' key={i}>
 					<button
 						type='button'
 						id={`scrollLeft${i}`}
@@ -166,7 +166,7 @@ const CategorySelector = () => {
 			);
 		return (
 			//second row has no arrow buttons for side scrolling because it is a column
-			<div className='grid grid-auto-rows grid-cols-12'>
+			<div className='grid grid-auto-rows grid-cols-12' key={i}>
 				<div className='col-start-1 col-span-12'>
 					<ExclusiveOption
 						items={categories}
