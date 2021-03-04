@@ -144,7 +144,7 @@ const TextInput = (props) => {
         onChange={handleChange}
         type="text"
       />
-      {props.name === "zip" && (
+      {/* {props.name === "zip" && (
         <button
           type="submit"
           id="toResources"
@@ -154,7 +154,7 @@ const TextInput = (props) => {
 		<GoLocation className='text-3xl text-orange-600 inline hover:text-orange-400'/>
           <span className='text-orange-600 text-sm'>Find ZIP</span>
         </button>
-      )}
+      )} */}
       <hr
         className={
           "w-2/3 border underline " +
