@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import "./SubmitButton.css";
 import { useHistory } from "react-router-dom";
 import APIWrapper from "../../APIWrapper.js";
@@ -26,46 +26,10 @@ function SubmitButton(props) {
     catid: userDataContext.categoryId,
   };
 
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem("userDataContext"))) {
-      console.log(
-        "trigggggger",
-        JSON.parse(localStorage.getItem("userDataContext"))
-      );
-
-      userDataContext.setServiceName(
-        JSON.parse(localStorage.getItem("userDataContext")).serviceName
-      );
-      userDataContext.setAge(
-        JSON.parse(localStorage.getItem("userDataContext")).age
-      );
-      userDataContext.setGender(
-        JSON.parse(localStorage.getItem("userDataContext")).gender
-      );
-      userDataContext.setZipcode(
-        JSON.parse(localStorage.getItem("userDataContext")).zipCode
-      );
-      userDataContext.setCounty(
-        JSON.parse(localStorage.getItem("userDataContext")).county
-      );
-      userDataContext.setCategoryId(
-        JSON.parse(localStorage.getItem("userDataContext")).categoryId
-      );
-    }
-  }, []);
-
   async function handleClick() {
     try {
       props.handleIsLoading();
-      if (true) {
-        //save submit button state to local storage for use if / when user navigates backwards
-
-        // localStorage.setItem("apiDataContext", JSON.stringify(apiDataContext));
-        // localStorage.setItem(
-        //   "userDataContext",
-        //   JSON.stringify(userDataContext)
-        // );
-
+      if (true) { //TODO if true? why?
         //If category selected
         //Make getResource call with category data
         //If subCategory selected
@@ -88,11 +52,11 @@ function SubmitButton(props) {
             console.log("heres the result", result);
 
             apiDataContext.setResources(result);
-            localStorage.setItem(
+            sessionStorage.setItem(
               "apiDataContext",
               JSON.stringify(apiDataContext)
             );
-            localStorage.setItem(
+            sessionStorage.setItem(
               "userDataContext",
               JSON.stringify(userDataContext)
             );
@@ -111,11 +75,11 @@ function SubmitButton(props) {
             });
           } else {
             apiDataContext.setResources(result);
-            localStorage.setItem(
+            sessionStorage.setItem(
               "apiDataContext",
               JSON.stringify(apiDataContext)
             );
-            localStorage.setItem(
+            sessionStorage.setItem(
               "userDataContext",
               JSON.stringify(userDataContext)
             );
@@ -134,11 +98,11 @@ function SubmitButton(props) {
             });
           } else {
             apiDataContext.setResources(result);
-            localStorage.setItem(
+            sessionStorage.setItem(
               "apiDataContext",
               JSON.stringify(apiDataContext)
             );
-            localStorage.setItem(
+            sessionStorage.setItem(
               "userDataContext",
               JSON.stringify(userDataContext)
             );

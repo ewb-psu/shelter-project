@@ -38,28 +38,32 @@ const UserData = (props) => {
 	// 	userDataContext.setCounty('Clackamas');
 	// };
 
-	useEffect(() => {
-		async function callAPI() {
-			//check category state to see if it has already been populated from local storage, possibly avoid making another api call (even though it would be with the same session id)
-			if ('categories' in apiDataContext)
-				console.log('trigger initialize')
-				if (apiDataContext.categories.length === 0) {
-					console.log(apiDataContext.categories)
-					//no categories found in context so call api method initialize, which calls getSessionID() which makes http request to server for credentials.
-					const result = await API.initialize();
-					//if data ok === false, redirect to error route and set data to state as error object.
-					if (!result.ok) {
-						history.push({
-							pathname: '/error',
-							state: {
-								error: result,
-							},
-						});
-					}
-				}
-		}
-		callAPI();
-	}, []);
+	const findLocation = () => {
+		let api_key = '&key=AIzaSyDM-iDklxh8fn6hNOGHBDgsj3CDMnU2X3w&';
+		let api_url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
+		if ("geolocation" in navigator) {
+				// check if geolocation is supported/enabled on current browser
+				navigator.geolocation.getCurrentPosition(function success(position) {
+				fetch(`${api_url}${position.coords.latitude},${position.coords.longitude}${api_key}`)
+				.then(response => response.json()) 
+				.then(data => {
+				  const postalCodeData = data.results[0].address_components.filter((addressComponent)=>{
+				  return addressComponent.types[0]==="postal_code"
+				  })
+				  const zipcode = (postalCodeData[0].long_name)
+				  userDataContext.setZipcode(zipcode)
+				}, error => {
+				  console.log(error);
+				})
+				return null;
+				});
+			} 
+			else 
+			{
+			  console.log('geolocation is not enabled on this browser')
+			}
+	};
+
 
 	//monitors the state of userData.zipCode. When it becomes a valid zip,
 	//an api call is made to populate an array with all the possible counties that zipcode could be in.
@@ -188,7 +192,7 @@ const UserData = (props) => {
 					)}
 				</div>
 
-				<div className='col-start-1 lg:col-start-3'>
+				<div className='col-start-1 lg:col-start-3 space-x-10'>
 					<button
 						type="submit"
 						id="toResources"
@@ -197,6 +201,7 @@ const UserData = (props) => {
 					>
 						Submit
 					</button>
+
 				</div>
 			</div>
 		</Fragment>

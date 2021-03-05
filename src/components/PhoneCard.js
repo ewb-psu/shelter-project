@@ -11,8 +11,8 @@ const PhoneCard = (props) => {
   if(isValidPhone(props[0])){
     return(
       <Collapsible trigger="Phone Number">
-        {Object.keys(props).map((index)=>
-            <PhoneNumber {...isValidPhone(props[index]) ? props[index] : null}/>
+        {Object.keys(props).map((index, i)=>
+            <PhoneNumber {...isValidPhone(props[index]) ? props[index] : null} key={i}/>
           )}
       </Collapsible>
     );

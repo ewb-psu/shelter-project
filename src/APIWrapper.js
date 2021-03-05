@@ -16,10 +16,10 @@ class APIWrapper {
 	}
 
 	async initialize() {
-		//check localstorage for sessionId and if present, use it for credentials and return {ok:true}
-		if (JSON.parse(localStorage.getItem('sessionId'))) {
-			this.credentials['sid'] = localStorage.getItem('sessionId')[0].session_id;
-			console.log('sessionId set from localStorage');
+		//check sessionstorage for sessionId and if present, use it for credentials and return {ok:true}
+		if (JSON.parse(sessionStorage.getItem('sessionId'))) {
+			this.credentials['sid'] = sessionStorage.getItem('sessionId')[0].session_id;
+			console.log('sessionId set from sessionStorage');
 			return { ok: true };
 		} else {
 			//get sessionID from api
@@ -49,8 +49,8 @@ class APIWrapper {
 			let data = await response.json();
 			//set ok property
 			data.ok = true;
-			//save sessionId in localstorage
-			localStorage.setItem('sessionId', JSON.stringify(data));
+			//save sessionId in sessionstorage
+			sessionStorage.setItem('sessionId', JSON.stringify(data));
 			return data;
 		} catch (error) {
 			console.log(error);

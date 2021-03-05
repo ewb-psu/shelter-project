@@ -14,23 +14,9 @@ const Shelters = () => {
 
   useEffect(() => {
     if (apiDataContext && apiDataContext.resources.length !== 0) {
-      console.log("resources found", apiDataContext.resources);
-      localStorage.setItem("apiDataContext", JSON.stringify(apiDataContext));
+      sessionStorage.setItem("apiDataContext", JSON.stringify(apiDataContext));
     }
   });
-
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem("apiDataContext"))) {
-      apiDataContext.setCategories(
-        JSON.parse(localStorage.getItem("apiDataContext")).categories
-      );
-
-      apiDataContext.setResources(
-        JSON.parse(localStorage.getItem("apiDataContext")).resources
-      );
-    }
-  }, []);
-
 
   return (
     <div className="grid grid-auto-rows grid-cols-3 mx-16 lg:mx-32">
@@ -38,7 +24,7 @@ const Shelters = () => {
         <ul className="shetlerList">
           {apiDataContext.resources &&
             apiDataContext.resources.map((resource, index) => (
-              <li key={resource.Id}>
+              <li key={resource.Id} key={index}>
                 <ShelterCard {...resource} index={index} />
               </li>
             ))}

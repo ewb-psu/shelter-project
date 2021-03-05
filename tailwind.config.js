@@ -11,6 +11,13 @@ module.exports = {
         colors: {
           themeTeal: 'rgba(1, 169, 198,0.7)',
           themeTealFlat: 'rgb(1, 169, 198)'
+        },
+        width: {
+          'extraLarge': '1280px',
+          'large': '1024px',
+          'medium': '768px',
+          'small': '500px',
+          'xsmall': '250px'
         }
       },
     },
