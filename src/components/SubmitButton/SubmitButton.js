@@ -52,11 +52,11 @@ function SubmitButton(props) {
             console.log("heres the result", result);
 
             apiDataContext.setResources(result);
-            localStorage.setItem(
+            sessionStorage.setItem(
               "apiDataContext",
               JSON.stringify(apiDataContext)
             );
-            localStorage.setItem(
+            sessionStorage.setItem(
               "userDataContext",
               JSON.stringify(userDataContext)
             );
@@ -75,11 +75,11 @@ function SubmitButton(props) {
             });
           } else {
             apiDataContext.setResources(result);
-            localStorage.setItem(
+            sessionStorage.setItem(
               "apiDataContext",
               JSON.stringify(apiDataContext)
             );
-            localStorage.setItem(
+            sessionStorage.setItem(
               "userDataContext",
               JSON.stringify(userDataContext)
             );
@@ -98,11 +98,11 @@ function SubmitButton(props) {
             });
           } else {
             apiDataContext.setResources(result);
-            localStorage.setItem(
+            sessionStorage.setItem(
               "apiDataContext",
               JSON.stringify(apiDataContext)
             );
-            localStorage.setItem(
+            sessionStorage.setItem(
               "userDataContext",
               JSON.stringify(userDataContext)
             );

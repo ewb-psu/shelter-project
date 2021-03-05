@@ -72,8 +72,8 @@ const SearchBar = ({ handleIsLoading }) => {
     //if the item passed handleclicksearchresult is undefined, this will not run and no exception will be generated.
     //TODO decide how to handle undefined items.
     if (item) {
-      localStorage.setItem("userDataContext", JSON.stringify(userDataContext));
-      localStorage.setItem("apiDataContext", JSON.stringify(apiDataContext));
+      sessionStorage.setItem("userDataContext", JSON.stringify(userDataContext));
+      sessionStorage.setItem("apiDataContext", JSON.stringify(apiDataContext));
 
       //If category selected(1)
       //Make getResource call with categoryID.

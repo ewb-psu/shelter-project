@@ -13,8 +13,8 @@ export const ApiDataState = (props) => {
 
   //initial state, passed as a parameter to useReducer
   let initialState = {};
-  if (localStorage.getItem("apiDataContext")) {
-    initialState = JSON.parse(localStorage.getItem("apiDataContext"));
+  if (sessionStorage.getItem("apiDataContext")) {
+    initialState = JSON.parse(sessionStorage.getItem("apiDataContext"));
   } else {
     initialState = {
       sessionID: null,
@@ -71,8 +71,8 @@ export const ApiDataState = (props) => {
         });
       }
       setCategories(result);
-      if (!localStorage.getItem("apiDataContext"))
-        localStorage.setItem(
+      if (!sessionStorage.getItem("apiDataContext"))
+        sessionStorage.setItem(
           "apiDataContext",
           JSON.stringify({ categories: result })
         );
